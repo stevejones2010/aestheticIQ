@@ -124,7 +124,7 @@ const questions = [
 // ============================================================
 // PULL LATEST INSIGHTS from content collection
 // ============================================================
-let latestInsights = [];
+let latestInsights: any[] = [];
 try {
   const allInsights = await getCollection('insights', ({ data }) => !data.draft);
   latestInsights = allInsights
