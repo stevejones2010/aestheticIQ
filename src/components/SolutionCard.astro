@@ -1,0 +1,67 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  href: string;
+  workflow?: 'target' | 'track' | 'verify' | 'cross-cutting'; // visual category
+  startingPrice?: string;
+  features?: string[];
+}
+
+const { title, description, href, workflow, startingPrice, features } = Astro.props;
+
+// Workflow-tinted accent
+const workflowColors = {
+  target: 'border-l-4 border-l-cyan-500',
+  track: 'border-l-4 border-l-cyan-700',
+  verify: 'border-l-4 border-l-amber-500',
+  'cross-cutting': 'border-l-4 border-l-slate-400',
+};
+
+const workflowLabel = {
+  target: 'TARGET',
+  track: 'TRACK',
+  verify: 'VERIFY',
+  'cross-cutting': 'CROSS-CUTTING',
+};
+
+const accentClass = workflow ? workflowColors[workflow] : '';
+const labelText = workflow ? workflowLabel[workflow] : null;
+---
+
+<a
+  href={href}
+  class:list={[
+    'card-base card-hover block p-7 cursor-pointer h-full flex flex-col',
+    accentClass,
+  ]}
+>
+  {labelText && (
+    <div class="text-[10px] tracking-eyebrow uppercase text-cyan-700 font-medium mb-3">
+      {labelText}
+    </div>
+  )}
+
+  <h3 class="font-serif text-2xl text-navy-900 mb-3 leading-tight">{title}</h3>
+  <p class="text-[13.5px] text-slate-600 leading-relaxed mb-4 flex-1">{description}</p>
+
+  {features && features.length > 0 && (
+    <ul class="pt-4 border-t border-slate-100 flex flex-col gap-2 mb-4">
+      {features.map((item) => (
+        <li class="text-[12px] text-slate-600 pl-4 relative leading-relaxed">
+          <span class="absolute left-0 text-cyan-500">✓</span>
+          {item}
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <div class="flex items-center justify-between mt-auto">
+    {startingPrice && (
+      <div class="text-[11.5px] text-slate-500">
+        From <span class="text-navy-900 font-medium">{startingPrice}</span>
+      </div>
+    )}
+    <div class="text-[12.5px] text-cyan-500 font-medium">Learn more →</div>
+  </div>
+</a>

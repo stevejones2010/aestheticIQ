@@ -1,0 +1,350 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+import SectionHeader from '@components/SectionHeader.astro';
+import PricingTier from '@components/PricingTier.astro';
+import RelatedLinks from '@components/RelatedLinks.astro';
+import BarChart from '@components/BarChart.astro';
+
+// =====================================================
+// HERO STATS
+// =====================================================
+const heroStats = [
+  { num: 'Weekly', label: 'Refresh cadence' },
+  { num: '100+', label: 'Brands tracked' },
+  { num: '28', label: 'Treatment categories' },
+];
+
+// =====================================================
+// "WHAT WE TRACK" - six intelligence streams
+// =====================================================
+const streams = [
+  {
+    num: 1,
+    title: 'Brand-share visibility',
+    desc: 'How prominently your brand appears on clinic websites, Instagram feeds, and booking platforms, vs. every competitor in your category.',
+  },
+  {
+    num: 2,
+    title: 'Category movement',
+    desc: 'Treatment-category adoption over time. Catches emerging categories (GLP-1, exosomes, polynucleotides) weeks before syndicated sources.',
+  },
+  {
+    num: 3,
+    title: 'Pricing intelligence',
+    desc: 'Median pricing by treatment, region, and clinic tier. Monitors price compression, premium-tier emergence, and chain-vs-independent pricing gaps.',
+  },
+  {
+    num: 4,
+    title: 'Treatment-mix benchmarks',
+    desc: 'What is in the average clinic treatment menu by segment. Reveals white-space for brand line extensions and category launches.',
+  },
+  {
+    num: 5,
+    title: 'Geographic penetration',
+    desc: 'Regional clinic density, chain footprint, and brand-coverage gaps, for territory planning, expansion, and market sizing.',
+  },
+  {
+    num: 6,
+    title: 'Competitor activity',
+    desc: 'When competitor brands run promotions, expand clinic partnerships, or shift price position, surfaced via clinic-website and social signals.',
+  },
+];
+
+// =====================================================
+// DASHBOARD VISUAL - brand share chart
+// =====================================================
+const brandShareItems = [
+  { label: 'Botox', value: 42, valueLabel: '42%', highlight: true },
+  { label: 'Azzalure', value: 28, valueLabel: '28%' },
+  { label: 'Bocouture', value: 17, valueLabel: '17%' },
+  { label: 'Dysport', value: 9, valueLabel: '9%' },
+];
+
+const categoryItems = [
+  { label: 'GLP-1', value: 175, valueLabel: '+175%', highlight: true },
+  { label: 'Polynucleotides', value: 120, valueLabel: '+120%' },
+  { label: 'Exosomes', value: 85, valueLabel: '+85%' },
+];
+
+// =====================================================
+// DELIVERY - three formats
+// =====================================================
+const deliveryCards = [
+  {
+    icon: '⌘',
+    title: 'Live Dashboards',
+    body: 'Web-based dashboards with your category filters pre-set. Continuously refreshed. Export-ready for board decks and quarterly reviews.',
+    bullets: [
+      'Brand share · category · region',
+      'PDF and PPT exports',
+      'Custom category views',
+    ],
+  },
+  {
+    icon: 'R',
+    title: 'Quarterly Reports',
+    body: 'Structured quarterly intelligence reports summarising category movement, brand share, and emerging signals. Delivered as PDF for your team to circulate.',
+    bullets: [
+      'Written summary + data',
+      '3-5 key insights surfaced',
+      'Briefing call included',
+    ],
+  },
+  {
+    icon: '{ }',
+    title: 'API / Data Feed',
+    body: 'Raw data delivered via API for your own analytics stack. Build dashboards in Tableau, Power BI, or Looker against continuously updated data.',
+    bullets: [
+      'REST / JSON',
+      'Historical time series',
+      'Bring-your-own-BI ready',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Market Intelligence"
+  description="Continuous market intelligence purpose-built for UK aesthetics. Brand-share tracking, category trend analysis, treatment-mix benchmarks, and pricing intelligence refreshed continuously from 15,000+ clinics."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Solutions', href: '/solutions/' },
+      { label: 'Market Intelligence' },
+    ]}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 1 - HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="SOLUTION · MARKET INTELLIGENCE"
+    title='Continuous market intelligence, <em>purpose-built for UK aesthetics.</em>'
+    subtitle="Brand-share tracking, category trend analysis, treatment-mix benchmarks, and pricing intelligence, refreshed continuously from 15,000+ clinics. No more waiting for quarterly syndicated studies or commissioning ad-hoc tracking waves."
+    primaryCta={{ label: 'Book a demo →', href: '/contact/' }}
+    secondaryCta={{ label: 'See a sample report', href: '/contact/' }}
+    stats={heroStats}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 - WHAT WE TRACK                             */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1fr_1.1fr] gap-14 items-start">
+        {/* Left: copy + 6 streams */}
+        <div>
+          <div class="eyebrow mb-4">WHAT WE TRACK</div>
+          <h2 class="display-title mb-5">Six intelligence streams. Continuously refreshed.</h2>
+          <p class="text-lg text-slate-600 leading-relaxed mb-8">
+            Market Intelligence is delivered as a dashboard, a quarterly report, and as raw
+            data into your analytics stack, whichever suits your team. The underlying
+            intelligence is continuously refreshed from the AestheticIQ dataset, so the
+            insight you see today reflects what is actually happening in clinics this week.
+          </p>
+
+          <div class="flex flex-col gap-3">
+            {streams.map((stream) => (
+              <div class="flex gap-4 p-4 bg-slate-50 border border-slate-200 rounded-card">
+                <div class="font-serif text-2xl text-cyan-500 leading-none flex-shrink-0">
+                  {stream.num}
+                </div>
+                <div>
+                  <div class="text-[13px] font-medium text-navy-900 mb-1">{stream.title}</div>
+                  <div class="text-[12px] text-slate-600 leading-relaxed">{stream.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: dashboard visual */}
+        <div class="lg:sticky lg:top-20">
+          <div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+            {/* Header */}
+            <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+              <div class="text-[13px] font-medium text-navy-900">Market Intelligence · Q1 2026</div>
+              <div class="text-[10px] text-slate-400">Sample dashboard</div>
+            </div>
+
+            {/* Brand share chart */}
+            <div class="text-[11px] text-slate-500 tracking-[1.5px] uppercase mb-3">
+              Toxin brand share · London
+            </div>
+            <BarChart items={brandShareItems} scale={2} labelWidth="85px" valueWidth="42px" />
+
+            {/* Trend callout */}
+            <div class="text-[10.5px] text-cyan-500 p-2.5 bg-cyan-500/[0.08] rounded-md mt-3 mb-5 leading-relaxed">
+              ↑ Bocouture gained 3.2 pts vs. Q4. Growth concentrated in SE / NW postcodes.
+            </div>
+
+            {/* Category adoption chart */}
+            <div class="text-[11px] text-slate-500 tracking-[1.5px] uppercase mb-3">
+              Category adoption · UK
+            </div>
+            <BarChart items={categoryItems} scale={0.48} labelWidth="95px" valueWidth="50px" />
+
+            <div class="pt-3 mt-4 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+              Stylised example · live dashboard and quarterly reports
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 - WHERE MI FITS (positioning section)       */}
+  {/* ==================================================== */}
+  <section class="section-alt">
+    <div class="container-tight">
+      <SectionHeader
+        eyebrow="WHERE MARKET INTELLIGENCE FITS"
+        title="Replaces ad-hoc tracking studies. Complements syndicated panels."
+        subtitle="If you have commissioned Kantar, Mintel, or a brand-tracking wave study, you already understand the value: structured, validated intelligence on what is happening in your category. Market Intelligence is that, for UK aesthetics specifically, continuously refreshed, and at a fraction of the ad-hoc wave price."
+        centered
+      />
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 4 - DELIVERY (dark navy)                      */}
+  {/* ==================================================== */}
+  <section class="section-dark">
+    <div class="container-site relative z-10">
+      <SectionHeader
+        eyebrow="DELIVERY"
+        title="However your team consumes intelligence."
+        subtitle="Three formats, one underlying intelligence stream."
+        centered
+        light
+      />
+
+      <div class="grid md:grid-cols-3 gap-5">
+        {deliveryCards.map((card) => (
+          <div class="bg-white/[0.03] border border-white/10 rounded-card p-7">
+            <div class="w-10 h-10 rounded-lg bg-cyan-500/15 text-cyan-500 flex items-center justify-center text-base font-semibold mb-4">
+              {card.icon}
+            </div>
+            <h3 class="font-serif text-xl text-white mb-2">{card.title}</h3>
+            <p class="text-[13px] text-white/68 leading-relaxed mb-4">{card.body}</p>
+
+            <ul class="pt-4 border-t border-white/8 space-y-1.5">
+              {card.bullets.map((bullet) => (
+                <li class="text-[12px] text-white/75 pl-4 relative leading-relaxed">
+                  <span class="absolute left-0 text-cyan-500">→</span>
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 5 - PRICING                                   */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      <SectionHeader
+        eyebrow="PRICING"
+        title="Annual subscription. Category or brand-category scoped."
+        subtitle="Pricing scales with the breadth of your intelligence needs: a single category subscription is substantially cheaper than full-market access."
+        centered
+      />
+
+      <div class="grid md:grid-cols-3 gap-5">
+        <PricingTier
+          tier="TIER 01"
+          name="Category Brief"
+          price="£8,000"
+          priceRange="-£10,000"
+          period="One-off"
+          description="A single structured intelligence report on your category. Good first engagement before subscribing."
+          features={[
+            'One treatment category',
+            'Brand share + trends',
+            'Written report + data',
+            'Delivered in 2 weeks',
+          ]}
+        />
+
+        <PricingTier
+          tier="TIER 02"
+          name="Category Subscription"
+          price="£15,000"
+          priceRange="-£22,000"
+          period="Per year"
+          description="Continuous intelligence on one category. Live dashboard, quarterly reports, and briefing calls."
+          features={[
+            'One category, full coverage',
+            'Live dashboard',
+            'Quarterly written reports',
+            'Named analyst',
+            'Briefing calls each quarter',
+          ]}
+          featured={true}
+        />
+
+        <PricingTier
+          tier="TIER 03"
+          name="Full Portfolio"
+          price="£35,000"
+          priceRange="+"
+          period="Per year"
+          description="All your categories, with dashboard access, quarterly reports, API feed, and direct analyst support."
+          features={[
+            'All categories in your portfolio',
+            'Full dashboard suite',
+            'API / data feed',
+            'Ad-hoc research requests',
+            'Priority analyst access',
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 6 - FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          GET STARTED
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          See your category, before you subscribe.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          Every demo includes a sample intelligence view of your actual category, not a
+          sandbox. 20-minute call, real data.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Book a demo →</a>
+          <a href="/contact/" class="btn-secondary-light">Download sample report</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedLinks
+    label="OTHER SOLUTIONS"
+    links={[
+      { label: 'Reference Data', href: '/solutions/reference-data/' },
+      { label: 'Marketing Services', href: '/solutions/marketing-services/' },
+      { label: 'Consultancy', href: '/solutions/consultancy/' },
+      { label: 'Compliance & PV', href: '/solutions/compliance-pv/' },
+    ]}
+  />
+</BaseLayout>

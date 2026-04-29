@@ -1,0 +1,125 @@
+---
+/**
+ * AccountRecord — Veeva-style key-value account display.
+ *
+ * Used for: Pharma (Veeva clinic record), Reference Data (sample record),
+ * Devices (lead account profile), Beauty (account view).
+ *
+ * Each record has:
+ *   - Header with clinic name + ID/sync label
+ *   - One or more groups of fields, each with a cyan group label
+ *   - Each field: key on left, value on right, optional chip badge
+ *   - Footer note (italic stylised-example text)
+ *
+ * Example usage:
+ *   <AccountRecord
+ *     name="The Bloom Clinic"
+ *     reference="AIQ-487291"
+ *     groups={[
+ *       {
+ *         label: 'IDENTITY',
+ *         fields: [
+ *           { key: 'Trading name', value: 'The Bloom Clinic Ltd' },
+ *           { key: 'Companies House', value: '12384756' },
+ *         ]
+ *       },
+ *       {
+ *         label: 'TREATMENTS',
+ *         fields: [
+ *           { key: 'Toxin', value: 'Azzalure', chip: { label: 'Web signal', tone: 'info' } },
+ *         ]
+ *       }
+ *     ]}
+ *     footer="Stylised example · 50+ fields shown in full export"
+ *   />
+ */
+
+export interface RecordField {
+  key: string;
+  value: string;
+  chip?: {
+    label: string;
+    tone: 'good' | 'info' | 'warn' | 'absent';
+  };
+}
+
+export interface RecordGroup {
+  label: string;
+  fields: RecordField[];
+}
+
+export interface Props {
+  name: string;
+  reference?: string;        // e.g. "AIQ-487291" or "Veeva sync"
+  groups: RecordGroup[];
+  footer?: string;           // italic note at the bottom
+  keyWidth?: string;         // CSS width for key column (default 105px)
+}
+
+const {
+  name,
+  reference,
+  groups,
+  footer = 'Stylised example',
+  keyWidth = '105px',
+} = Astro.props;
+
+// Inline chip styles to bypass Tailwind JIT issues
+const chipStyles: Record<string, { bg: string; color: string }> = {
+  good: { bg: '#dcfce7', color: '#15803d' },
+  info: { bg: 'rgba(0,180,216,0.1)', color: '#0284a8' },
+  warn: { bg: '#fef9c3', color: '#854d0e' },
+  absent: { bg: '#fee2e2', color: '#b91c1c' },
+};
+---
+
+<div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+  {/* Header: clinic name + reference */}
+  <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+    <div class="font-serif text-[1.2rem] text-navy-900 leading-none">{name}</div>
+    {reference && (
+      <div class="text-[10px] text-slate-400 font-mono">{reference}</div>
+    )}
+  </div>
+
+  {/* Field groups */}
+  {groups.map((group) => (
+    <div class="mb-4 last:mb-0">
+      {/* Cyan group label — important detail from original wireframe */}
+      <div
+        class="font-medium mb-2"
+        style="font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: #00b4d8;"
+      >
+        {group.label}
+      </div>
+
+      {/* Field rows */}
+      {group.fields.map((field) => (
+        <div
+          class="grid gap-2.5 items-center py-1.5 text-[11.5px]"
+          style={`grid-template-columns: ${keyWidth} 1fr;`}
+        >
+          <div class="text-slate-500">{field.key}</div>
+          <div class="text-navy-900 font-medium flex items-center flex-wrap gap-1">
+            <span>{field.value}</span>
+            {field.chip && (
+              <span
+                class="inline-block font-medium"
+                style={`font-size: 10px; padding: 2px 7px; border-radius: 100px; background: ${chipStyles[field.chip.tone].bg}; color: ${chipStyles[field.chip.tone].color};`}
+              >
+                {field.chip.label}
+              </span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  ))}
+
+  {/* Footer */}
+  {footer && (
+    <div class="pt-3 mt-2 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+      {footer}
+    </div>
+  )}
+</div>

@@ -1,0 +1,248 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+
+// =====================================================
+// WORKFLOW GROUPS - Target / Track / Verify
+// =====================================================
+const workflowGroups = [
+  {
+    verb: 'Target',
+    sub: 'Find the right clinics, the right accounts, the right markets.',
+    cols: 2,
+    solutions: [
+      {
+        label: 'SOLUTION · TARGET',
+        title: 'Reference Data',
+        desc: 'The foundational clinic database. 15,000+ UK records, 50+ fields, delivered via CRM, API, or CSV. The substrate every other solution is built on.',
+        features: ['CRM-ready', 'API access', 'Monthly refresh', '50+ fields'],
+        from: '£5k',
+        unit: 'one-off',
+        buyer: 'Commercial, BD, field sales ops',
+        href: '/solutions/reference-data/',
+      },
+      {
+        label: 'SOLUTION · TARGET',
+        title: 'Marketing Services',
+        desc: 'Targeted audience segments, managed direct mail, digital audience-building, and regulatory mailers, powered by the clinic dataset and delivered end-to-end.',
+        features: ['Direct mail', 'Digital audiences', 'Campaign management', 'Safety mailers'],
+        from: '£5k',
+        unit: 'per campaign',
+        buyer: 'Marketing, brand, category',
+        href: '/solutions/marketing-services/',
+      },
+    ],
+  },
+  {
+    verb: 'Track',
+    sub: 'Monitor how the market moves. Spot change before competitors do.',
+    cols: 2,
+    solutions: [
+      {
+        label: 'SOLUTION · TRACK',
+        title: 'Market Intelligence',
+        desc: 'Brand-share tracking, category trend reports, treatment-mix analysis, pricing intelligence, and white-space mapping, delivered as continuously refreshed dashboards or quarterly reports.',
+        features: ['Brand visibility', 'Category trends', 'Pricing signals', 'Quarterly reports'],
+        from: '£12k',
+        unit: 'per year',
+        buyer: 'Strategy, brand, category, M&A',
+        href: '/solutions/market-intelligence/',
+      },
+      {
+        label: 'SOLUTION · TRACK & STRATEGIC',
+        title: 'Consultancy',
+        desc: 'Salesforce sizing, territory alignment, market opportunity assessment, launch strategy, M&A screening: project-based engagements powered by the dataset and delivered by an experienced team.',
+        features: ['Territory alignment', 'SFE sizing', 'Launch strategy', 'M&A screening'],
+        from: '£25k',
+        unit: 'per project',
+        buyer: 'Commercial leadership, BD, investors',
+        href: '/solutions/consultancy/',
+      },
+    ],
+  },
+  {
+    verb: 'Verify',
+    sub: 'Stay compliant. Protect your brand. Meet your obligations.',
+    cols: 1,
+    solutions: [
+      {
+        label: 'SOLUTION · VERIFY',
+        title: 'Compliance & Pharmacovigilance Monitoring',
+        desc: 'Continuous surveillance across your customer base: GMC/NMC verification, off-label promotion detection, CAP-code scanning, social-media adverse-event monitoring, and 2027 licensing-regime readiness. Structured for MAH obligations under Human Medicines Regulations 2012 Part 11.',
+        features: ['Prescriber verification', 'Off-label detection', 'AE monitoring', 'CAP-code scanning', 'Licensing tier reporting'],
+        from: '£25k',
+        unit: 'per year',
+        buyer: 'Medical affairs, PV, regulatory, brand protection',
+        href: '/solutions/compliance-pv/',
+      },
+    ],
+  },
+];
+
+// =====================================================
+// ENGAGEMENT LADDER - 3 steps
+// =====================================================
+const ladderSteps = [
+  {
+    num: '1',
+    title: 'Targeting list or campaign',
+    body: 'One focused segment or mailer. Proves data fit for a specific commercial question before annual commitment.',
+    price: 'From £5k',
+  },
+  {
+    num: '2',
+    title: 'Annual subscription',
+    body: 'Reference Data or Market Intelligence for your full category: continuous coverage, quarterly reports.',
+    price: 'From £12k/yr',
+  },
+  {
+    num: '3',
+    title: 'Strategic partnership',
+    body: 'Full platform access including Compliance and PV monitoring. Named analyst support and custom research.',
+    price: 'From £25k/yr',
+  },
+];
+---
+
+<BaseLayout
+  title="Solutions"
+  description="Five solutions, one platform, three workflows. AestheticIQ's solutions are focused expressions of the same clinic intelligence platform, designed to sit inside your existing workflow."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Solutions' },
+    ]}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 1 - HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="SOLUTIONS"
+    title="Five solutions. <em>One platform.</em> Three workflows."
+    subtitle="AestheticIQ's solutions are not separate products. They are focused expressions of the same platform, designed to sit inside your existing workflow."
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 - SOLUTIONS GROUPED BY WORKFLOW             */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      {workflowGroups.map((group) => (
+        <div class="mb-14 last:mb-0">
+          {/* Workflow label */}
+          <div class="mb-6">
+            <div class="font-serif text-3xl text-cyan-500 leading-none mb-2">{group.verb}</div>
+            <div class="text-[14px] text-slate-500">{group.sub}</div>
+          </div>
+
+          {/* Solution cards */}
+          <div class:list={[
+            'grid gap-5',
+            group.cols === 2 ? 'md:grid-cols-2' : 'md:grid-cols-1 max-w-[680px]',
+          ]}>
+            {group.solutions.map((sol) => (
+              <a
+                href={sol.href}
+                class="card-base card-hover block cursor-pointer h-full flex flex-col"
+              >
+                {/* Card body */}
+                <div class="p-7 flex-1">
+                  <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-3">
+                    {sol.label}
+                  </div>
+                  <h3 class="font-serif text-xl text-navy-900 mb-3 leading-tight">{sol.title}</h3>
+                  <p class="text-[13px] text-slate-600 leading-relaxed mb-4">{sol.desc}</p>
+
+                  <div class="flex flex-wrap gap-1.5">
+                    {sol.features.map((f) => (
+                      <span
+                        class="text-[10px] px-3 py-1 rounded-pill border font-medium"
+                        style="background: rgba(0,180,216,0.08); color: #0284a8; border-color: rgba(0,180,216,0.25);"
+                      >
+                        {f}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Card meta */}
+                <div class="px-7 py-4 border-t border-slate-100 flex gap-8">
+                  <div>
+                    <div class="text-[9px] uppercase tracking-wider text-slate-400 font-medium mb-1">FROM</div>
+                    <div class="text-[14px] font-serif text-cyan-500 leading-none">
+                      {sol.from}<span class="text-[11px] text-slate-400 font-sans ml-1">{sol.unit}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="text-[9px] uppercase tracking-wider text-slate-400 font-medium mb-1">TYPICAL BUYER</div>
+                    <div class="text-[12px] text-slate-500">{sol.buyer}</div>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 - ENGAGEMENT LADDER                         */}
+  {/* ==================================================== */}
+  <section class="section-alt">
+    <div class="container-site">
+      <div class="max-w-[900px] mx-auto">
+        <div class="text-center mb-10">
+          <div class="eyebrow mb-4">HOW ENGAGEMENTS GROW</div>
+          <h2 class="display-title mb-5">Start focused. Expand once we've proven fit.</h2>
+          <p class="text-lg text-slate-600 leading-relaxed">
+            Most customer relationships start with a single project and grow into full platform
+            access. You choose the pace.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5">
+          {ladderSteps.map((step) => (
+            <div class="bg-white border border-slate-200 rounded-card p-7 text-center">
+              <div class="font-serif text-4xl text-cyan-500 leading-none mb-3">{step.num}</div>
+              <h4 class="text-[14px] font-medium text-navy-900 mb-2">{step.title}</h4>
+              <p class="text-[12.5px] text-slate-600 leading-relaxed mb-4">{step.body}</p>
+              <div class="text-[13px] font-serif text-cyan-500 font-medium">{step.price}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 4 - FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          GET STARTED
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          Start with one focused question.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          Every engagement begins with a tailored demo: your category, your territory,
+          your buyer questions. 20 minutes, real data, no sales pressure.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Book a demo →</a>
+          <a href="/platform/" class="btn-secondary-light">Explore the platform</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

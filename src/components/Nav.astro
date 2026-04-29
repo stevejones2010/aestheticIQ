@@ -1,0 +1,60 @@
+---
+export interface Props {
+  currentSection?: 'solutions' | 'industries' | 'platform' | 'insights' | 'about' | 'contact';
+}
+
+const { currentSection } = Astro.props;
+const pathname = Astro.url.pathname;
+
+// Determine active section from pathname if not explicitly set
+function isActive(section: string): boolean {
+  if (currentSection) return currentSection === section;
+  if (section === 'solutions' && pathname.startsWith('/solutions')) return true;
+  if (section === 'industries' && pathname.startsWith('/industries')) return true;
+  if (section === 'platform' && pathname === '/platform/') return true;
+  if (section === 'insights' && pathname.startsWith('/insights')) return true;
+  if (section === 'about' && pathname === '/about/') return true;
+  if (section === 'contact' && pathname === '/contact/') return true;
+  return false;
+}
+
+const navItems = [
+  { label: 'Solutions', href: '/solutions/', section: 'solutions', hasDropdown: true },
+  { label: 'Industries', href: '/industries/', section: 'industries', hasDropdown: true },
+  { label: 'Platform', href: '/platform/', section: 'platform', hasDropdown: false },
+  { label: 'Insights', href: '/insights/', section: 'insights', hasDropdown: false },
+  { label: 'About', href: '/about/', section: 'about', hasDropdown: false },
+];
+---
+
+<nav class="bg-navy-900 text-white sticky top-0 z-50 border-b border-white/5">
+  <div class="flex justify-between items-center px-8 py-[18px] max-w-[1400px] mx-auto">
+    <a href="/" class="font-serif text-[1.35rem] tracking-tighter">
+      Aesthetic<span class="text-cyan-500">IQ</span>
+    </a>
+
+    <div class="hidden md:flex gap-9">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class:list={[
+            'text-[13px] py-1.5 transition-colors duration-150 hover:text-cyan-500',
+            isActive(item.section) ? 'text-cyan-500' : 'text-white/75',
+          ]}
+        >
+          {item.label}
+          {item.hasDropdown && (
+            <span class="text-[8px] ml-1.5 text-white/40">▾</span>
+          )}
+        </a>
+      ))}
+    </div>
+
+    <a
+      href="/contact/"
+      class="bg-cyan-500 hover:bg-cyan-600 text-white px-[18px] py-2 rounded-pill text-[12.5px] font-medium transition-colors duration-150"
+    >
+      Book a demo
+    </a>
+  </div>
+</nav>

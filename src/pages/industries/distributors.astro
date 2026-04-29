@@ -1,0 +1,334 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+import RoleSection from '@components/RoleSection.astro';
+import RelatedLinks from '@components/RelatedLinks.astro';
+import RecordList from '@components/RecordList.astro';
+import BarChart from '@components/BarChart.astro';
+
+// =====================================================
+// DOMAIN-FLUENCY CARDS - section 2
+// =====================================================
+const domainCards = [
+  {
+    label: 'REGULATORY TERMS',
+    title: 'Pharmacy regulation',
+    body: '<strong>GPhC</strong> Registered Pharmacy obligations, POM supply rules, <strong>prescriber verification</strong>, regulatory audit-ready records.',
+  },
+  {
+    label: 'COMMERCIAL TERMS',
+    title: 'Account operations',
+    body: 'Territory coverage, lapsed account recovery, <strong>new-clinic acquisition</strong>, cross-sell into non-POM ranges, credit & onboarding.',
+  },
+  {
+    label: 'MARKET TERMS',
+    title: 'Category intelligence',
+    body: 'Brand-switch signals, category trend tracking, <strong>competitor distributor visibility</strong>, pricing position intelligence.',
+  },
+];
+
+// =====================================================
+// DATA STACK ROWS - section 3
+// =====================================================
+const stackRows = [
+  {
+    type: 'generalist',
+    letter: 'E',
+    name: 'ERP / Order system',
+    sub: 'Current customers: orders, fulfilment, credit',
+  },
+  {
+    type: 'generalist',
+    letter: 'C',
+    name: 'CRM',
+    sub: 'Account management and pipeline for known clinics',
+  },
+  {
+    type: 'specialist',
+    letter: 'A',
+    name: 'AestheticIQ, market layer',
+    sub: 'Every UK clinic · prescriber status · treatment profile · new openings',
+  },
+];
+---
+
+<BaseLayout
+  title="Distributors & Specialist Pharmacies"
+  description="New-clinic discovery, prescriber verification, and category intelligence for specialist pharmaceutical distributors and pharmacies serving the UK aesthetic market."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Industries', href: '/industries/' },
+      { label: 'Distributors & Specialist Pharmacies' },
+    ]}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 1 - HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="FOR DISTRIBUTORS & SPECIALIST PHARMACIES"
+    title="First to the new clinic wins the account. <em>Second is just noise.</em>"
+    subtitle="Every month dozens of new aesthetic clinics open across the UK. Whichever distributor reaches them first typically wins the account for years. AestheticIQ surfaces new clinics within days of opening, with prescriber verification, treatment profile, and contact details ready for your account managers."
+    primaryCta={{ label: 'Book a demo →', href: '/contact/' }}
+    secondaryCta={{ label: 'See a sample dataset', href: '/contact/' }}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 - DOMAIN FLUENCY PROOF                      */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-tight">
+      <div class="eyebrow mb-4">WE SPEAK YOUR LANGUAGE</div>
+      <h2 class="font-serif text-3xl md:text-4xl text-navy-900 leading-tight tracking-tighter mb-12">
+        Specialist pharmacies and distributors sit at a <em class="text-cyan-500 not-italic">regulatory intersection</em>.
+        You need market intelligence that's also compliance intelligence, because supplying POMs to clinics
+        without a valid prescriber is not an administrative error.
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-5">
+        {domainCards.map((card) => (
+          <div class="bg-slate-50 border border-slate-200 rounded-card p-6">
+            <div class="text-[10px] tracking-eyebrow uppercase text-slate-500 font-medium mb-2.5">
+              {card.label}
+            </div>
+            <h4 class="text-[13px] text-navy-900 font-medium mb-2">{card.title}</h4>
+            <p class="text-[12px] text-slate-600 leading-relaxed" set:html={card.body} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 - STACK POSITIONING                         */}
+  {/* ==================================================== */}
+  <section class="section-alt border-b border-slate-200">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-14 items-center">
+        <div>
+          <div class="eyebrow mb-4">WHERE WE FIT</div>
+          <h2 class="display-title mb-5">Complementary intelligence, not a replacement for your transactional data.</h2>
+          <p class="text-lg text-slate-600 leading-relaxed mb-4">
+            Your ERP tells you everything about your current customers. AestheticIQ tells you everything
+            about the market: the clinics that aren't yet customers, the prescribers at each one, the
+            category trends that will shape demand. Together: complete visibility into your transactional
+            base <em>and</em> the full addressable market.
+          </p>
+          <p class="text-lg text-slate-600 leading-relaxed">
+            Integration via standard CSV imports, API, or your CRM of choice.
+          </p>
+        </div>
+
+        {/* Stack visual */}
+        <div class="bg-white border border-slate-200 rounded-card p-6 shadow-card-strong">
+          <div class="text-[11px] uppercase tracking-eyebrow text-slate-500 font-medium mb-4">
+            A typical UK distributor data stack
+          </div>
+
+          {stackRows.map((row) => (
+            <div
+              class:list={[
+                'flex items-center gap-3 px-4 py-3.5 rounded-lg mb-2',
+                row.type === 'specialist'
+                  ? 'bg-cyan-500/[0.06] border border-cyan-500/30'
+                  : 'bg-slate-100 border border-slate-200',
+              ]}
+            >
+              <div
+                class:list={[
+                  'w-8 h-8 rounded-lg flex items-center justify-center text-sm font-semibold flex-shrink-0',
+                  row.type === 'specialist'
+                    ? 'bg-cyan-500 text-white'
+                    : 'bg-slate-300 text-slate-600',
+                ]}
+              >
+                {row.letter}
+              </div>
+              <div class="flex-1">
+                <div class="text-[13px] font-medium text-navy-900 mb-0.5">{row.name}</div>
+                <div class="text-[11px] text-slate-500 leading-snug">{row.sub}</div>
+              </div>
+            </div>
+          ))}
+
+          <div class="text-[11.5px] text-slate-500 text-center mt-4 italic leading-relaxed">
+            Your ERP knows your customers. AestheticIQ knows the whole market.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 4 - ROLES INTRO                               */}
+  {/* ==================================================== */}
+  <section class="pt-16 pb-6">
+    <div class="container-tight text-center">
+      <div class="eyebrow mb-4">HOW TEAMS USE IT</div>
+      <h2 class="display-title mb-5">Three teams. Three use cases.</h2>
+      <p class="text-lg text-slate-600 leading-relaxed">
+        Account operations, compliance, and category teams, each with different questions, same dataset.
+      </p>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* ROLE 01 - ACCOUNT OPERATIONS                          */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Role 01 · Account Operations"
+    title="For account managers, new-business reps, and territory teams."
+    description="Your account managers are competing on speed. When a new clinic opens, the first account manager through the door typically wins the relationship for years. AestheticIQ surfaces every new UK aesthetic clinic within days of opening, already qualified with prescriber status, treatment profile, and Companies House details, so your team can reach out before competitors notice."
+    questions={[
+      'Which new aesthetic clinics have opened in my territory this month?',
+      'Which lapsed accounts look newly active based on web signals?',
+      'Which non-customer clinics in our territory are large enough to justify onboarding?',
+      'Which accounts have added a new prescriber, potentially opening capacity for more POMs?',
+      'Where are the largest underserved clinic clusters across the UK?',
+    ]}
+    outcome='<strong>First-mover advantage on new clinic accounts.</strong> Proactive identification of lapsed accounts returning to activity.'
+  >
+    <div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+        <div class="text-xs font-medium text-navy-900">New clinics · last 30 days</div>
+        <div class="text-[10px] text-slate-400">18 in territory</div>
+      </div>
+
+      <RecordList
+        items={[
+          { severity: 'good', icon: '★', title: 'The Bloom Clinic · London E14', sub: 'Opened 14 days ago · GMC prescriber on staff · 4 treatment categories', time: '14d' },
+          { severity: 'good', icon: '★', title: 'Fazara Aesthetics · London E1', sub: 'Opened 22 days ago · NMC prescriber · injectables + RF', time: '22d' },
+          { severity: 'warn', icon: '!', title: 'AC House of Aesthetics · Leeds', sub: 'Opened 9 days ago · no prescriber detected · verify before supply', time: '9d' },
+          { severity: 'good', icon: '★', title: 'Moda Donna Beauty Clinic · Liverpool', sub: 'Opened 27 days ago · GMC prescriber · Companies House verified', time: '27d' },
+        ]}
+      />
+
+      <div class="mt-4 pt-3 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+        Stylised example · continuous discovery pipeline
+      </div>
+    </div>
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* ROLE 02 - COMPLIANCE & SUPERVISION                    */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Role 02 · Compliance & Supervision"
+    title="For responsible pharmacists, supervisors, and compliance leads."
+    description="As a GPhC Registered Pharmacy supplying prescription-only medicines, your obligation to verify prescribers is continuous, not a one-time onboarding check. AestheticIQ cross-references your customer base against GMC, NMC, GDC, and GPhC registers on an ongoing basis, flagging prescriber departures, retirements, and status changes before they become a supply-chain compliance issue."
+    questions={[
+      'Which of our customer clinics have no verified prescriber on record this month?',
+      "Which customers' lead prescriber has had a recent status change on the GMC/NMC register?",
+      'Which clinics we supply are at risk under the 2027 licensing regime?',
+      'Show me the audit trail for prescriber verification across our top 50 accounts.',
+    ]}
+    outcome='<strong>GPhC-audit-ready records of continuous prescriber verification.</strong> Eliminates the manual quarterly check that most pharmacies still run in spreadsheets.'
+    reverse={true}
+    alt={true}
+  >
+    <div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+        <div class="text-xs font-medium text-navy-900">Prescriber compliance · customer base</div>
+        <div class="text-[10px] text-slate-400">March audit</div>
+      </div>
+
+      <RecordList
+        items={[
+          { severity: 'good', icon: '✓', title: 'The Bloom Clinic', sub: 'Dr J. Chen · GMC 7123456 · Active prescriber · Verified Mar 2026' },
+          { severity: 'good', icon: '✓', title: 'Skinoza Clinic', sub: 'Dr S. Ramanujan · GMC 7891023 · Active prescriber · Verified Mar 2026' },
+          { severity: 'warn', icon: '!', title: 'Nova Aesthetic Clinic', sub: 'Lead practitioner left · no current prescriber on record · supply paused' },
+          { severity: 'warn', icon: '!', title: 'InnovaSkin', sub: 'NMC prescriber retired Jan 2026 · re-verification required' },
+        ]}
+      />
+
+      <div class="mt-4 pt-3 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+        Stylised example · continuous GMC/NMC cross-reference
+      </div>
+    </div>
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* ROLE 03 - CATEGORY & COMMERCIAL                       */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Role 03 · Category & Commercial"
+    title="For category managers, buying, and commercial strategy."
+    description="Distributors live on shifts in category demand. When a new brand starts gaining traction in clinics, when a category like GLP-1 emerges, when pricing tightens: those are the signals that drive buying decisions and margin strategy. AestheticIQ provides continuous visibility into category movement across the UK clinic market."
+    questions={[
+      'Which brands are gaining share in our top categories this quarter?',
+      'How fast is GLP-1 adoption spreading across our customer base vs. non-customer clinics?',
+      'Where is a competitor distributor visibly stocking clinics we don\'t?',
+      'Which categories show pricing compression, suggesting margin pressure ahead?',
+    ]}
+    outcome="Evidence-based buying and range decisions. Early warning on competitor distributor moves."
+  >
+    <div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+        <div class="text-xs font-medium text-navy-900">Category momentum · Q1 2026</div>
+        <div class="text-[10px] text-slate-400">% of UK clinics offering</div>
+      </div>
+
+      <BarChart
+        items={[
+          { label: 'Injectables', value: 78, valueLabel: '78%', highlight: true },
+          { label: 'Skin boosters', value: 52, valueLabel: '52%' },
+          { label: 'GLP-1', value: 22, valueLabel: '22%' },
+          { label: 'Polynucleotides', value: 18, valueLabel: '18%' },
+          { label: 'Exosomes', value: 9, valueLabel: '9%' },
+        ]}
+        scale={1}
+        labelWidth="105px"
+      />
+
+      <div class="mt-4 pt-3 border-t border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+        GLP-1 up 14pp vs. Q3 2025. Exosomes showing early traction in London premium clinics.
+      </div>
+
+      <div class="mt-3 pt-3 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+        Stylised example · continuous category tracking
+      </div>
+    </div>
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* SECTION 5 - FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          GET STARTED
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          Show us your territory. We'll show you the market.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          20-minute demo including new-clinic discovery for your region and prescriber-verification
+          sample across a selection of your customer accounts.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Book a demo →</a>
+          <a href="/contact/" class="btn-secondary-light">Download sample dataset</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedLinks
+    label="OTHER INDUSTRIES WE SERVE"
+    links={[
+      { label: 'Pharma & Injectables', href: '/industries/pharma/' },
+      { label: 'Medical Devices', href: '/industries/medical-devices/' },
+      { label: 'Beauty & Skincare', href: '/industries/beauty-skincare/' },
+      { label: 'Training Providers', href: '/industries/training/' },
+      { label: 'Investors', href: '/industries/investors/' },
+    ]}
+  />
+</BaseLayout>

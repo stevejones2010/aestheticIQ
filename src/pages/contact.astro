@@ -1,0 +1,325 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+import SectionHeader from '@components/SectionHeader.astro';
+
+// =====================================================
+// CONTACT ROUTES — 4 cards
+// =====================================================
+const contactRoutes = [
+  {
+    icon: '↗',
+    title: 'Sales and demos',
+    desc: 'Book a 20-minute tailored demo for your category, territory, or investment thesis. No commitment.',
+    linkText: 'Book a demo',
+    href: '#demo',
+  },
+  {
+    icon: '@',
+    title: 'General enquiries',
+    desc: 'Partnerships, research collaboration, media: everything that is not a sales conversation.',
+    linkText: 'hello@aestheticiq.co.uk',
+    href: 'mailto:hello@aestheticiq.co.uk',
+  },
+  {
+    icon: '★',
+    title: 'Clinic enquiries',
+    desc: 'Running an aesthetic clinic? Our free benchmarking tool ClinicScore is for you, not AestheticIQ.',
+    linkText: 'Visit clinicscore.co.uk',
+    href: 'https://clinicscore.co.uk',
+  },
+  {
+    icon: '§',
+    title: 'Procurement and security',
+    desc: 'Vendor onboarding, DPA templates, SOC / security review, and NDA requests.',
+    linkText: 'procurement@aestheticiq.co.uk',
+    href: 'mailto:procurement@aestheticiq.co.uk',
+  },
+];
+
+// =====================================================
+// DEMO FORM — bullet points
+// =====================================================
+const demoPoints = [
+  '20 minutes, at a time that suits',
+  'Real data from your UK geography or category',
+  'Sample dataset provided after the call',
+  'Held over video, UK business hours',
+];
+
+// =====================================================
+// ROLE OPTIONS — select dropdown
+// =====================================================
+const roleOptions = [
+  'Commercial / sales',
+  'Marketing / brand',
+  'Medical affairs',
+  'Pharmacovigilance / regulatory',
+  'Investment / corporate finance',
+  'Other',
+];
+
+// =====================================================
+// COMPANY DETAILS — registration + data protection
+// =====================================================
+const registrationRows = [
+  { key: 'Legal name', value: 'AestheticIQ Ltd' },
+  { key: 'Country', value: 'England and Wales' },
+  { key: 'Company no.', value: '[Companies House no.]', mono: true },
+  { key: 'VAT', value: '[VAT no.]', mono: true },
+  { key: 'Registered office', value: '[Registered address]' },
+];
+
+const dataProtectionRows = [
+  { key: 'ICO registration', value: '[ICO reference]', mono: true },
+  { key: 'Data controller', value: 'AestheticIQ Ltd' },
+  { key: 'DPO contact', value: 'dpo@aestheticiq.co.uk' },
+  { key: 'DPA available', value: 'Under NDA on request' },
+  { key: 'Security review', value: 'Available to enterprise customers' },
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with AestheticIQ. Book a demo, send a general enquiry, or find company details for procurement and legal."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Contact' },
+    ]}
+  />
+
+  {/* ====================================================
+      SECTION 1 — HERO
+      ==================================================== */}
+  <Hero
+    eyebrow="CONTACT"
+    title="Get in touch."
+    subtitle="The fastest route is usually a demo, but we have dedicated channels for press, partnerships, clinic enquiries, and procurement. Pick the one that fits."
+  />
+
+  {/* ====================================================
+      SECTION 2 — CONTACT ROUTES + DEMO FORM
+      ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+
+      {/* Four contact route cards — single row at desktop */}
+      <div class="contact-grid gap-5 mb-14">
+        {contactRoutes.map((route) => (
+          <a
+            href={route.href}
+            class="card-base card-hover block cursor-pointer h-full flex flex-col"
+          >
+            <div class="p-7 flex-1 flex flex-col">
+              <div
+                class="w-[42px] h-[42px] rounded-[10px] flex items-center justify-center text-base font-semibold mb-4"
+                style="background: rgba(0,180,216,0.08); color: #00b4d8;"
+              >
+                {route.icon}
+              </div>
+              <h3 class="font-serif text-lg text-navy-900 mb-2">{route.title}</h3>
+              <p class="text-[12.5px] text-slate-600 leading-relaxed mb-4 flex-1">{route.desc}</p>
+              <span class="text-[12.5px] text-cyan-500 font-medium">
+                {route.linkText} <span class="ml-1">→</span>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      {/* Demo request form block */}
+      <div id="demo" class="bg-navy-900 text-white rounded-[18px] p-10 relative overflow-hidden">
+        <div
+          class="absolute -top-20 -right-16 w-[280px] h-[280px] rounded-full"
+          style="background: rgba(0,180,216,0.06);"
+        />
+        <div class="demo-form-grid relative z-10 gap-12 items-start">
+
+          {/* Left: intro */}
+          <div>
+            <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+              BOOK A DEMO
+            </div>
+            <h3 class="font-serif text-2xl leading-tight tracking-tighter mb-3">
+              Tell us about your market, and we'll show you the data.
+            </h3>
+            <p class="text-[13.5px] text-white/70 leading-relaxed mb-5">
+              Every demo is tailored to your actual category, territory, or commercial question. No generic sandbox, no slide decks: just what our platform sees for your use case.
+            </p>
+            <ul class="space-y-2">
+              {demoPoints.map((point) => (
+                <li class="text-[12.5px] text-white/80 leading-relaxed pl-5 relative">
+                  <span class="absolute left-0 text-cyan-500">→</span>
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Right: form fields */}
+          <div class="space-y-4">
+            <div>
+              <label class="block text-[10.5px] uppercase tracking-wider text-white/55 font-medium mb-2">
+                Your name
+              </label>
+              <input
+                type="text"
+                placeholder="Jane Smith"
+                class="w-full rounded-[10px] px-4 py-3 text-[13px] text-white font-sans placeholder:text-white/35"
+                style="background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.15);"
+              />
+            </div>
+            <div>
+              <label class="block text-[10.5px] uppercase tracking-wider text-white/55 font-medium mb-2">
+                Work email
+              </label>
+              <input
+                type="email"
+                placeholder="jane@example-company.com"
+                class="w-full rounded-[10px] px-4 py-3 text-[13px] text-white font-sans placeholder:text-white/35"
+                style="background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.15);"
+              />
+            </div>
+            <div>
+              <label class="block text-[10.5px] uppercase tracking-wider text-white/55 font-medium mb-2">
+                Company
+              </label>
+              <input
+                type="text"
+                placeholder="Example Pharmaceuticals Ltd"
+                class="w-full rounded-[10px] px-4 py-3 text-[13px] text-white font-sans placeholder:text-white/35"
+                style="background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.15);"
+              />
+            </div>
+            <div>
+              <label class="block text-[10.5px] uppercase tracking-wider text-white/55 font-medium mb-2">
+                Your role
+              </label>
+              <select
+                class="w-full rounded-[10px] px-4 py-3 text-[13px] text-white font-sans appearance-none"
+                style="background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.15); background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(255,255,255,0.5)' stroke-width='1' fill='none'/%3E%3C/svg%3E&quot;); background-repeat: no-repeat; background-position: right 14px center;"
+              >
+                {roleOptions.map((role) => (
+                  <option>{role}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10.5px] uppercase tracking-wider text-white/55 font-medium mb-2">
+                What are you hoping to see?
+              </label>
+              <textarea
+                placeholder="e.g. 'We're launching a new dermal filler in the UK and want to see coverage of London clinics offering injectables.'"
+                rows="3"
+                class="w-full rounded-[10px] px-4 py-3 text-[13px] text-white font-sans placeholder:text-white/35 resize-y"
+                style="background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.15);"
+              />
+            </div>
+            <button
+              type="button"
+              class="btn-primary mt-2"
+            >
+              Request demo
+            </button>
+            <p class="text-[11px] text-white/40 leading-relaxed mt-3">
+              We typically respond within one working day. No marketing follow-up without consent.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ====================================================
+      SECTION 3 — COMPANY DETAILS
+      ==================================================== */}
+  <section class="section-alt">
+    <div class="container-tight">
+      <SectionHeader
+        eyebrow="COMPANY DETAILS"
+        title="For procurement, legal, and press."
+        subtitle="UK limited company, VAT-registered. Additional details available for vendor onboarding."
+      />
+
+      <div class="bg-white border border-slate-200 rounded-card p-8 grid md:grid-cols-2 gap-12">
+        {/* Registration column */}
+        <div>
+          <div class="text-[10px] tracking-eyebrow uppercase text-slate-400 font-medium mb-5">
+            REGISTRATION
+          </div>
+          {registrationRows.map((row, i) => (
+            <div
+              class:list={[
+                'grid grid-cols-[135px_1fr] gap-3 py-3 text-[13px] items-start',
+                i < registrationRows.length - 1 ? 'border-b border-slate-100' : '',
+              ]}
+            >
+              <div class="text-[11.5px] uppercase tracking-wider text-slate-400">{row.key}</div>
+              <div class:list={[
+                'text-navy-900 leading-relaxed',
+                row.mono ? 'font-mono text-[12.5px]' : '',
+              ]}>
+                {row.value}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Data protection column */}
+        <div>
+          <div class="text-[10px] tracking-eyebrow uppercase text-slate-400 font-medium mb-5">
+            DATA PROTECTION
+          </div>
+          {dataProtectionRows.map((row, i) => (
+            <div
+              class:list={[
+                'grid grid-cols-[135px_1fr] gap-3 py-3 text-[13px] items-start',
+                i < dataProtectionRows.length - 1 ? 'border-b border-slate-100' : '',
+              ]}
+            >
+              <div class="text-[11.5px] uppercase tracking-wider text-slate-400">{row.key}</div>
+              <div class:list={[
+                'text-navy-900 leading-relaxed',
+                row.mono ? 'font-mono text-[12.5px]' : '',
+              ]}>
+                {row.value}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Contact route cards: 4-col on desktop, 2-col tablet, 1-col mobile */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px) {
+    .contact-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 900px) {
+    .contact-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* Demo form: 1fr 1.1fr on desktop, stacked on mobile */
+  .demo-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 768px) {
+    .demo-form-grid {
+      grid-template-columns: 1fr 1.1fr;
+    }
+  }
+</style>

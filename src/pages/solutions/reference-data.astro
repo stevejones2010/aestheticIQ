@@ -1,0 +1,485 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+import SectionHeader from '@components/SectionHeader.astro';
+import PricingTier from '@components/PricingTier.astro';
+import FAQCard from '@components/FAQCard.astro';
+import RelatedLinks from '@components/RelatedLinks.astro';
+
+// =====================================================
+// HERO STATS
+// =====================================================
+const heroStats = [
+  { num: '15,000+', label: 'Clinic records' },
+  { num: '50+', label: 'Fields per record' },
+  { num: 'Daily', label: 'Refresh cadence' },
+  { num: '100%', label: 'UK coverage' },
+];
+
+// =====================================================
+// "WHAT'S IN A RECORD" — six categories
+// =====================================================
+const recordCategories = [
+  {
+    num: 1,
+    title: 'Identity',
+    fields: 'Clinic name, trading name, chain affiliation, Companies House number, registered address.',
+  },
+  {
+    num: 2,
+    title: 'Location',
+    fields: 'Full address, postcode, region, latitude/longitude, premises type, urban/rural classification.',
+  },
+  {
+    num: 3,
+    title: 'Contact & digital presence',
+    fields: 'Phone, email, website, Instagram, Facebook, TikTok, Google Business Profile, booking platform URLs.',
+  },
+  {
+    num: 4,
+    title: 'Treatments & brands',
+    fields: '28-category treatment taxonomy (CAT-01 to CAT-28), specific products detected, brand signals from web and social.',
+  },
+  {
+    num: 5,
+    title: 'Practitioners',
+    fields: 'Names, regulatory body (GMC/NMC/GDC/GPhC), prescriber status, accreditation (Save Face, JCCP), publicly declared specialty.',
+  },
+  {
+    num: 6,
+    title: 'Commercial signals',
+    fields: 'Estimated pricing, review volume & rating, years trading, Companies House turnover & staff count, chain vs independent.',
+  },
+];
+
+// =====================================================
+// SAMPLE RECORD — visual on the right side of the section
+// =====================================================
+const recordVisual = {
+  clinicName: 'The Bloom Clinic',
+  clinicId: 'AIQ-487291',
+  groups: [
+    {
+      label: 'IDENTITY',
+      fields: [
+        { key: 'Trading name', value: 'The Bloom Clinic Ltd' },
+        { key: 'Companies House', value: '12384756' },
+        { key: 'Chain', value: 'Independent' },
+      ],
+    },
+    {
+      label: 'LOCATION',
+      fields: [
+        { key: 'Postcode', value: 'E14 9TS' },
+        { key: 'Region', value: 'London · East' },
+        { key: 'Premises type', value: 'Commercial · Ground floor' },
+      ],
+    },
+    {
+      label: 'TREATMENTS & BRANDS',
+      fields: [
+        { key: 'Categories', value: '6 of 28' },
+        { key: 'Injectables', value: 'Yes', chip: { label: 'Verified', tone: 'good' } },
+        { key: 'Toxin brand', value: 'Azzalure', chip: { label: 'Web signal', tone: 'info' } },
+        { key: 'Filler brand', value: 'Teosyal', chip: { label: 'Social signal', tone: 'info' } },
+      ],
+    },
+    {
+      label: 'PRACTITIONERS',
+      fields: [
+        { key: 'Count', value: '2' },
+        { key: 'Lead', value: 'Dr J. Chen · GMC 7123456' },
+        { key: 'Prescriber', value: 'Yes', chip: { label: 'Verified', tone: 'good' } },
+      ],
+    },
+    {
+      label: 'COMPLIANCE',
+      fields: [
+        { key: 'Save Face', value: 'Not held', chip: { label: 'Absent', tone: 'warn' } },
+        { key: 'Licensing tier', value: 'Amber · action by Q3 2026', chip: { label: 'Pending', tone: 'warn' } },
+      ],
+    },
+  ],
+};
+
+// Chip colour styles — inline to avoid Tailwind JIT issues
+const chipStyles: Record<string, { bg: string; color: string }> = {
+  good: { bg: '#dcfce7', color: '#15803d' },
+  info: { bg: '#dbeafe', color: '#1e40af' },
+  warn: { bg: '#fef3c7', color: '#92400e' },
+};
+
+// =====================================================
+// SOURCES — used in "How it's built" section
+// =====================================================
+const sources = [
+  'Multiple live web trackers',
+  'Clinic-verified primary research',
+  'Public credential registers',
+  'Companies House',
+  'Booking platform signals',
+  'Social media monitoring',
+];
+
+// =====================================================
+// DELIVERY — three formats
+// =====================================================
+const deliveryCards = [
+  {
+    icon: '⇄',
+    title: 'CRM Sync',
+    body: 'Native integration with Veeva CRM, Salesforce, and HubSpot. Records flow into your account objects with your field mapping, refreshed daily so your dataset stays live.',
+    bullets: [
+      'Full Veeva implementation support',
+      'Salesforce via managed package',
+      'Daily refresh as standard',
+      'Custom field mapping included',
+      'One-time setup fee applies',
+    ],
+  },
+  {
+    icon: '{ }',
+    title: 'API Access',
+    body: 'REST endpoints with filters, pagination, and webhooks. Build custom tooling, dashboards, or direct queries into your own data warehouse.',
+    bullets: [
+      'REST / JSON',
+      'Record-level & segment-level queries',
+      'Change-detection webhooks',
+      'Bearer token authentication',
+      'Usage analytics included',
+    ],
+  },
+  {
+    icon: '↓',
+    title: 'Structured Exports',
+    body: 'CSV and Excel exports of bespoke audience segments, filtered by geography, treatment, brand, practitioner, or compliance attribute.',
+    bullets: [
+      'Delivered within 48 hours',
+      'Custom filter combinations',
+      'Pre-formatted for Veeva import',
+      'Field-level source lineage',
+      'Available as a one-off purchase',
+    ],
+  },
+];
+
+// =====================================================
+// FAQ — six procurement questions
+// =====================================================
+const faqs = [
+  {
+    q: 'How often is the dataset refreshed?',
+    a: 'The dataset is updated daily, so your reference records are always live. Continuous discovery and change monitoring run against every clinic record 24/7, with verified updates pushed to API and CRM integrations on a daily cycle. Weekly and monthly refresh cadences are available for customers who prefer batch delivery.',
+  },
+  {
+    q: 'What is your UK coverage?',
+    a: '15,000+ clinic records representing near-complete coverage of active UK aesthetic clinics, from Save Face accredited providers to unregulated independents. Continuous discovery means new clinics typically appear within 30 days of opening.',
+  },
+  {
+    q: 'How accurate is practitioner-level data?',
+    a: 'Practitioner records are cross-referenced against GMC, NMC, GDC, and GPhC registers. Registration numbers are verified at monthly refresh. Accuracy targets: 98% for identity fields, 95% for credential status.',
+  },
+  {
+    q: 'How does AestheticIQ handle GDPR?',
+    a: 'All data is B2B professional information: clinic names, registered addresses, practitioner professional credentials. No consumer data, no personal health data. Processing is on a legitimate interest basis under UK GDPR, with full DPA available for enterprise customers.',
+  },
+  {
+    q: 'Do you offer Veeva integration?',
+    a: 'Yes. Full Veeva CRM integration with field mapping, account-record creation, and change synchronisation. Implementation typically 4–6 weeks with our team and your Veeva admin.',
+  },
+  {
+    q: 'Can I see the data before committing?',
+    a: "Yes — every demo includes a sample dataset for your territory, your category, or your customer base. We'll also share anonymised performance benchmarks from other customer engagements under NDA.",
+  },
+];
+---
+
+<BaseLayout
+  title="Reference Data"
+  description="The reference dataset for the UK aesthetic channel. 15,000+ UK aesthetic clinics, 50+ fields per record, delivered into your CRM, via API, or as structured exports."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Solutions', href: '/solutions/' },
+      { label: 'Reference Data' },
+    ]}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 1 · HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="SOLUTION · REFERENCE DATA"
+    title="The reference dataset for the UK aesthetic channel."
+    subtitle="15,000+ UK aesthetic clinics. 50+ fields per record. Delivered into your CRM, via API, or as structured exports, with full source lineage, continuous refresh, and aesthetic-native depth no generalist vendor can match."
+    primaryCta={{ label: 'Book a demo →', href: '/contact/' }}
+    secondaryCta={{ label: 'Download sample dataset', href: '/contact/' }}
+    stats={heroStats}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 · WHAT'S IN A RECORD                        */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1fr_1.1fr] gap-14 items-start">
+        {/* Left: copy + 6 categories */}
+        <div>
+          <div class="eyebrow mb-4">WHAT'S IN A RECORD</div>
+          <h2 class="display-title mb-5">50+ fields, across six domains.</h2>
+          <p class="text-lg text-slate-600 leading-relaxed mb-8">
+            Every AestheticIQ record is a single row in your CRM, and a complete commercial,
+            clinical, and regulatory view of one clinic. Fields are continuously validated,
+            cross-referenced, and marked with full source lineage.
+          </p>
+
+          <div class="flex flex-col gap-3">
+            {recordCategories.map((cat) => (
+              <div class="flex gap-4 p-4 bg-slate-50 border border-slate-200 rounded-card">
+                <div class="font-serif text-2xl text-cyan-500 leading-none flex-shrink-0">
+                  {cat.num}
+                </div>
+                <div>
+                  <div class="text-[13px] font-medium text-navy-900 mb-1">{cat.title}</div>
+                  <div class="text-[12px] text-slate-600 leading-relaxed">{cat.fields}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: sample record visual */}
+        <div class="lg:sticky lg:top-20">
+          <div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+            {/* Header */}
+            <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+              <div class="text-[13px] font-medium text-navy-900">{recordVisual.clinicName}</div>
+              <div class="text-[10px] text-slate-400 font-mono">{recordVisual.clinicId}</div>
+            </div>
+
+            {/* Field groups */}
+            {recordVisual.groups.map((group) => (
+              <div class="mb-4 last:mb-0">
+                <div class="text-[9.5px] tracking-eyebrow uppercase text-slate-500 font-medium mb-2">
+                  {group.label}
+                </div>
+                {group.fields.map((field) => (
+                  <div class="grid grid-cols-[110px_1fr] gap-3 py-1.5 text-[11.5px] border-b border-slate-100 last:border-b-0">
+                    <div class="text-slate-500">{field.key}</div>
+                    <div class="text-navy-900 flex items-center gap-2 flex-wrap">
+                      {field.value}
+                      {field.chip && (
+                        <span
+                          class="inline-block text-[9px] px-2 py-0.5 rounded-full font-medium"
+                          style={`background: ${chipStyles[field.chip.tone].bg}; color: ${chipStyles[field.chip.tone].color};`}
+                        >
+                          {field.chip.label}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+
+            <div class="pt-3 mt-3 border-t border-slate-200 text-[10px] text-slate-400 text-center">
+              Stylised example · 50+ fields shown in full export
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 · HOW IT'S BUILT                            */}
+  {/* ==================================================== */}
+  <section class="section-alt">
+    <div class="container-tight">
+      <SectionHeader
+        eyebrow="HOW IT'S BUILT"
+        title="Every field assembled from multiple sources. Every change logged."
+        subtitle="Records are built from dozens of live trackers, augmented with public records, and verified directly by clinic owners. Every field carries source lineage and a last-validated timestamp, so your team can audit, challenge, and trust the data."
+        centered
+      />
+
+      <div class="flex flex-wrap gap-2 justify-center max-w-[680px] mx-auto mt-8">
+        {sources.map((source) => (
+          <span class="px-4 py-2 bg-white border border-slate-200 rounded-pill text-[12px] text-slate-700">
+            {source}
+          </span>
+        ))}
+      </div>
+
+      <p class="text-center mt-8 text-[13px] text-slate-500 italic">
+        Specific source methodology available under NDA during procurement review.
+      </p>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 4 · DELIVERY                                  */}
+  {/* ==================================================== */}
+  <section class="section-dark">
+    <div class="container-site relative z-10">
+      <SectionHeader
+        eyebrow="DELIVERY"
+        title="Delivered into your existing workflow."
+        subtitle="Three delivery formats, one dataset. Use whichever suits your team's infrastructure."
+        centered
+        light
+      />
+
+      <div class="grid md:grid-cols-3 gap-5">
+        {deliveryCards.map((card) => (
+          <div class="bg-white/[0.03] border border-white/10 rounded-card p-7">
+            <div class="w-10 h-10 rounded-lg bg-cyan-500/15 text-cyan-500 flex items-center justify-center text-base font-semibold mb-4">
+              {card.icon}
+            </div>
+            <h3 class="font-serif text-xl text-white mb-2">{card.title}</h3>
+            <p class="text-[13px] text-white/68 leading-relaxed mb-4">{card.body}</p>
+
+            <ul class="pt-4 border-t border-white/8 space-y-1.5">
+              {card.bullets.map((bullet) => (
+                <li class="text-[12px] text-white/75 pl-4 relative leading-relaxed">
+                  <span class="absolute left-0 text-cyan-500">→</span>
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 5 · PRICING                                   */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      <SectionHeader
+        eyebrow="PRICING"
+        title="Start focused. Scale when ready."
+        subtitle="Most customers start with a one-off list or segment. Annual subscriptions follow once we've proven fit with a real commercial outcome."
+        centered
+      />
+
+      <div class="grid md:grid-cols-3 gap-5">
+        <PricingTier
+          tier="TIER 01"
+          name="Targeting List"
+          price="£5,000"
+          priceRange="–£8,000"
+          period="One-off project"
+          description="A single bespoke segment. Ideal first engagement: proves data quality on a specific territory or product focus."
+          features={[
+            '500–2,000 prioritised records',
+            '50+ fields per record',
+            'Pre-formatted CSV or Veeva import',
+            '2-week delivery',
+            'Source lineage included',
+          ]}
+        />
+
+        <PricingTier
+          tier="TIER 02"
+          name="Commercial Subscription"
+          price="£12,000"
+          priceRange="–£18,000"
+          period="Per year"
+          description="Full UK coverage in your category. Quarterly refreshes, brand visibility tracking, and competitor share included."
+          features={[
+            'Full UK coverage in your category',
+            'Quarterly refresh + on-demand segments',
+            'CRM sync or API access',
+            'Quarterly market reports',
+            'Named account manager',
+          ]}
+          featured={true}
+        />
+
+        <PricingTier
+          tier="TIER 03"
+          name="Strategic Partnership"
+          price="£25,000"
+          priceRange="–£40,000"
+          period="Per year"
+          description="Live API + CRM integration plus the full Compliance & PV monitoring layer. For category leaders."
+          features={[
+            'Live API + CRM integration',
+            'Monthly refresh + change webhooks',
+            'PV & compliance monitoring',
+            'Named analyst support',
+            'Custom research add-ons',
+          ]}
+        />
+      </div>
+
+      <p class="text-center mt-8 text-[13px] text-slate-500">
+        Pricing varies based on scope, category, and integration complexity. Each engagement
+        quoted individually.
+      </p>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 6 · FAQ                                       */}
+  {/* ==================================================== */}
+  <section class="section-alt">
+    <div class="container-site">
+      <SectionHeader
+        eyebrow="PROCUREMENT FAQ"
+        title="The questions procurement teams ask first."
+        subtitle="Everything else: detailed methodology, security review, commercial terms, covered during procurement under NDA."
+        centered
+      />
+
+      <div class="grid md:grid-cols-2 gap-4 max-w-[1000px] mx-auto">
+        {faqs.map((faq) => (
+          <FAQCard question={faq.q} answer={faq.a} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 7 · FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          GET STARTED
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          Show us your territory. We'll show you the data.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          Every demo is tailored. Bring your category, your product, or your customer base, and
+          we'll show you exactly what Reference Data covers.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Book a demo →</a>
+          <a href="/contact/" class="btn-secondary-light">Download sample dataset</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedLinks
+    label="OTHER SOLUTIONS"
+    links={[
+      { label: 'Marketing Services', href: '/solutions/marketing-services/' },
+      { label: 'Market Intelligence', href: '/solutions/market-intelligence/' },
+      { label: 'Consultancy', href: '/solutions/consultancy/' },
+      { label: 'Compliance & PV', href: '/solutions/compliance-pv/' },
+    ]}
+  />
+</BaseLayout>

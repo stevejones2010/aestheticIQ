@@ -1,0 +1,80 @@
+---
+export interface Props {
+  eyebrow: string;
+  title: string;        // can include <em> tags for cyan accent
+  subtitle?: string;
+  variant?: 'default' | 'utility'; // default = full-size; utility = lighter for Contact, Legal
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  stats?: { num: string; label: string }[];
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  variant = 'default',
+  primaryCta,
+  secondaryCta,
+  stats,
+} = Astro.props;
+
+const heroPadding = variant === 'utility' ? 'py-16' : 'pt-24 pb-20';
+const titleSize = variant === 'utility' ? 'text-5xl' : 'text-6xl';
+---
+
+<section class:list={['hero-bg', heroPadding]}>
+  <div class="container-site relative z-10">
+    <div class="max-w-[900px]">
+      <div class="eyebrow-light mb-6">{eyebrow}</div>
+      <h1
+        class:list={['font-serif leading-[1.08] tracking-tighter mb-6', titleSize]}
+        set:html={title}
+      />
+
+      {subtitle && (
+        <p class="text-[17px] text-white/75 max-w-[680px] leading-relaxed mb-8">
+          {subtitle}
+        </p>
+      )}
+
+      {(primaryCta || secondaryCta) && (
+        <div class="flex gap-3 flex-wrap">
+          {primaryCta && (
+            <a href={primaryCta.href} class="btn-primary">
+              {primaryCta.label}
+            </a>
+          )}
+          {secondaryCta && (
+            <a href={secondaryCta.href} class="btn-secondary-light">
+              {secondaryCta.label}
+            </a>
+          )}
+        </div>
+      )}
+
+      {stats && stats.length > 0 && (
+        <div class="flex gap-10 mt-8 flex-wrap">
+          {stats.map((stat) => (
+            <div>
+              <div class="font-serif text-[1.75rem] text-cyan-500 leading-none">
+                {stat.num}
+              </div>
+              <div class="text-[11px] text-white/55 uppercase tracking-eyebrow mt-1">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* The em tag inside hero titles becomes the cyan highlight */
+  :global(h1 em) {
+    color: #00b4d8;
+    font-style: normal;
+  }
+</style>

@@ -1,0 +1,99 @@
+---
+/**
+ * PersonCard — practitioner / KOL / audience list with avatars and tags.
+ *
+ * Used for: Training (target audience), Pharma (KOL/MSL targets), 
+ * Beauty (brand ambassadors), any "list of people with relevant context" display.
+ *
+ * Each row has:
+ *   - Avatar circle with initials (cyan gradient)
+ *   - Name (bold)
+ *   - Meta line (registration number · clinic)
+ *   - Optional tag (yellow-amber pill, e.g. "Licence renewal Q4 2026")
+ *
+ * Example usage:
+ *   <PersonCard
+ *     header="Target audience · Level 7 Injectables"
+ *     subheader="1,247 practitioners"
+ *     people={[
+ *       { initials: 'JC', name: 'Dr J. Chen', meta: 'GMC 7123456 · The Bloom Clinic · 3yr exp', tag: 'Licence renewal Q4 2026' },
+ *       { initials: 'SR', name: 'Dr S. Ramanujan', meta: 'GMC 7891023 · Skinoza Clinic', tag: 'Amber-tier impacted' },
+ *     ]}
+ *     footer="Stylised example · audience pull via API or CSV"
+ *   />
+ */
+
+export interface Person {
+  initials: string;
+  name: string;
+  meta?: string;
+  tag?: string;
+  tagTone?: 'amber' | 'cyan' | 'green'; // default 'amber'
+}
+
+export interface Props {
+  header: string;
+  subheader?: string;
+  people: Person[];
+  footer?: string;
+}
+
+const { header, subheader, people, footer } = Astro.props;
+
+// Tag tone styles - inline to bypass Tailwind JIT
+const tagStyles: Record<string, { bg: string; color: string }> = {
+  amber: { bg: '#fef9c3', color: '#854d0e' },
+  cyan: { bg: 'rgba(0,180,216,0.1)', color: '#0284a8' },
+  green: { bg: '#dcfce7', color: '#15803d' },
+};
+---
+
+<div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+  {/* Header */}
+  <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+    <div class="text-[12px] font-medium text-navy-900">{header}</div>
+    {subheader && (
+      <div class="text-[10px] text-slate-400">{subheader}</div>
+    )}
+  </div>
+
+  {/* People */}
+  {people.map((p, idx) => {
+    const tagStyle = tagStyles[p.tagTone || 'amber'];
+    return (
+      <div
+        class="flex gap-3 items-start py-3"
+        style={idx < people.length - 1 ? 'border-bottom: 0.5px solid #f1f5f9;' : ''}
+      >
+        {/* Avatar with cyan gradient */}
+        <div
+          class="font-medium flex items-center justify-center text-white flex-shrink-0"
+          style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #00b4d8, #0284a8); font-size: 11px;"
+        >
+          {p.initials}
+        </div>
+        <div class="flex-1">
+          <div class="text-[12.5px] font-medium text-navy-900 leading-snug">{p.name}</div>
+          {p.meta && (
+            <div class="text-[10.5px] text-slate-500 leading-snug">{p.meta}</div>
+          )}
+          {p.tag && (
+            <span
+              class="inline-block font-medium mt-1"
+              style={`font-size: 9px; padding: 2px 7px; border-radius: 100px; background: ${tagStyle.bg}; color: ${tagStyle.color};`}
+            >
+              {p.tag}
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  })}
+
+  {/* Footer */}
+  {footer && (
+    <div class="pt-3 mt-2 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+      {footer}
+    </div>
+  )}
+</div>

@@ -1,0 +1,425 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+import SectionHeader from '@components/SectionHeader.astro';
+import RecordList from '@components/RecordList.astro';
+import PricingTier from '@components/PricingTier.astro';
+import FAQCard from '@components/FAQCard.astro';
+import RelatedLinks from '@components/RelatedLinks.astro';
+
+// =====================================================
+// HERO STATS
+// =====================================================
+const heroStats = [
+  { num: 'Continuous', label: 'Monitoring cadence' },
+  { num: 'GMC/NMC', label: 'Register cross-ref' },
+  { num: 'AI-classified', label: 'Human-reviewed' },
+];
+
+// =====================================================
+// "WHAT WE MONITOR" - five surveillance streams
+// =====================================================
+const streams = [
+  {
+    num: 1,
+    title: 'Prescriber verification',
+    desc: 'Continuous cross-reference against GMC, NMC, GDC, and GPhC registers. Flags prescriber status changes, retirements, or removals at customer clinics.',
+  },
+  {
+    num: 2,
+    title: 'Off-label promotion detection',
+    desc: 'Clinic websites and social media scanned for claims that promote your product for unapproved indications. Flagged by severity for PMCPA review.',
+  },
+  {
+    num: 3,
+    title: 'CAP Code and advertising compliance',
+    desc: 'Clinic advertising monitored for breaches of CAP Code rules for prescription-only medicines: before/after imagery, pricing mentions, influencer content.',
+  },
+  {
+    num: 4,
+    title: 'Adverse-event surveillance',
+    desc: 'Patient-reported complications on Instagram, TikTok, Trustpilot, Google Reviews. AI-classified by product, severity, and reportability under your PV SOPs.',
+  },
+  {
+    num: 5,
+    title: 'Licensing regime readiness',
+    desc: 'Tracks which customer clinics will require premises licences under the 2027 amber / green tier framework. Regional rollout status updated monthly.',
+  },
+];
+
+// =====================================================
+// PV ALERTS VISUAL
+// =====================================================
+const pvAlerts = [
+  { severity: 'high' as const, icon: '!', title: 'Possible AE reported on Instagram', sub: 'Toxin migration · clinic confirmed using [brand] · YCS reportable', time: '2d' },
+  { severity: 'warn' as const, icon: '!', title: 'Off-label claim detected', sub: '"Masseter injection for TMJ relief" on clinic website', time: '4d' },
+  { severity: 'warn' as const, icon: '!', title: 'CAP Code concern · TikTok', sub: 'Before/after + brand mention · pricing disclosure missing', time: '1w' },
+  { severity: 'info' as const, icon: 'i', title: 'Prescriber left customer clinic', sub: 'Nova Aesthetic Clinic · no current prescriber on record', time: '2w' },
+  { severity: 'info' as const, icon: 'i', title: 'Save Face lapsed', sub: 'Customer clinic · not renewed since Q4 2025', time: '3w' },
+];
+
+// =====================================================
+// REGULATORY FRAMEWORK
+// =====================================================
+const regulations = [
+  {
+    code: 'HMR 2012 · Part 11',
+    title: 'MAH pharmacovigilance obligations',
+    desc: 'Supports your obligation to collect, assess, and report adverse drug reactions across the channel where your product is used.',
+  },
+  {
+    code: 'HMR 2012 · Reg 214',
+    title: 'Prescription-only medicine supply',
+    desc: 'Prescriber verification evidence to support PGD/supply-chain due diligence, especially relevant for distributor and pharmacy customers.',
+  },
+  {
+    code: 'CAP Code  ·  (POMs)      ',
+    title: 'Advertising standards for POMs',
+    desc: 'Monitoring for breaches of rules prohibiting advertising of prescription-only medicines to the public.',
+  },
+  {
+    code: 'PMCPA · ABPI Code'    ,
+    title: 'ABPI Code of Practice',
+    desc: 'Surfaces conduct that would warrant self-reporting under the Code: off-label claims, inducements, unapproved promotional tactics.',
+  },
+  {
+    code: 'HCA 2022 · S.180',
+    title: 'Non-surgical cosmetic licensing regime',
+    desc: 'Tracks customer readiness for the incoming amber/green tier licensing framework, including premises licence requirements by local authority.',
+  },
+];
+
+// =====================================================
+// DELIVERY - three modes
+// =====================================================
+const deliveryCards = [
+  {
+    icon: '◉',
+    title: 'Secure Dashboard',
+    body: 'Web-based alert dashboard with role-based access for your PV and medical-affairs team. Exportable audit trail for regulatory inspections.',
+    bullets: [
+      'Real-time alert feed',
+      'Severity classification',
+      'Case-by-case notes',
+      'Inspection-ready export',
+    ],
+  },
+  {
+    icon: '@',
+    title: 'Email and SOP Integration',
+    body: 'High-severity alerts land in a dedicated mailbox aligned with your intake SOPs. Medium-severity summarised weekly. Low-severity monthly.',
+    bullets: [
+      'SOP-aligned triage',
+      'Dedicated alerts mailbox',
+      'Weekly / monthly digests',
+    ],
+  },
+  {
+    icon: '{ }',
+    title: 'Argus / Veeva Vault Feed',
+    body: 'API integration into your existing PV case management system. Alerts flow into Argus or Veeva Vault as draft cases for your team to triage.',
+    bullets: [
+      'Argus Safety integration',
+      'Veeva Vault Safety feed',
+      'Custom PV system connectors',
+    ],
+  },
+];
+
+// =====================================================
+// FAQ - six regulatory questions
+// =====================================================
+const faqs = [
+  {
+    q: 'Does AestheticIQ replace our in-house PV system?',
+    a: 'No. We are a surveillance and signal-detection layer that feeds alerts into your existing PV case-management system (Argus, Veeva Vault, or custom). Your PV team retains case ownership, triage, and regulatory reporting.',
+  },
+  {
+    q: 'How are alerts classified and human-reviewed?',
+    a: 'Alerts are AI-classified for severity and reportability, then human-reviewed by a trained analyst before landing in your dashboard. No raw social media content is routed directly to your team.',
+  },
+  {
+    q: 'Is the service inspection-ready?',
+    a: 'Yes. Audit trail, source lineage, and human-review logs are maintained for every alert. Full documentation available for MHRA inspection support and internal PV audit.',
+  },
+  {
+    q: 'How does this handle GDPR and patient data?',
+    a: 'We do not collect or store patient data. Surveillance is limited to publicly-posted content from clinic websites and public social media profiles. No consumer data processing; full DPA available.',
+  },
+  {
+    q: 'What is your SLA for high-severity alerts?',
+    a: 'High-severity alerts are dispatched within 24 hours of detection, with human-review completed. Portfolio and Enterprise tiers include same-day SLA for product-specific safety flags.',
+  },
+  {
+    q: 'Can you support MHRA inspections?',
+    a: 'Yes. Customers on Portfolio or Enterprise tiers receive dedicated inspection support including evidence packs, audit-trail exports, and direct analyst availability during inspection periods.',
+  },
+];
+---
+
+<BaseLayout
+  title="Compliance & PV"
+  description="Continuous compliance and pharmacovigilance monitoring across 15,000 UK aesthetic clinics. Prescriber verification, off-label detection, CAP Code monitoring, adverse-event surveillance, and licensing readiness."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Solutions', href: '/solutions/' },
+      { label: 'Compliance & PV' },
+    ]}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 1 - HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="SOLUTION · COMPLIANCE & PHARMACOVIGILANCE"
+    title='Your MAH obligations extend into aesthetics. <em>The data stack didn&apos;t.</em> Now it does.'
+    subtitle="Continuous surveillance of prescriber credentials, off-label promotion, CAP Code breaches, and social-media adverse events across 15,000 UK aesthetic clinics. Purpose-built for MAH obligations under the Human Medicines Regulations 2012 Part 11 and the incoming 2027 licensing regime."
+    primaryCta={{ label: 'Book a demo →', href: '/contact/' }}
+    secondaryCta={{ label: 'See a compliance sample', href: '/contact/' }}
+    stats={heroStats}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 - WHAT WE MONITOR                           */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1fr_1.1fr] gap-14 items-start">
+        {/* Left: copy + 5 surveillance streams */}
+        <div>
+          <div class="eyebrow mb-4">WHAT WE MONITOR</div>
+          <h2 class="display-title mb-5">Five surveillance streams. Continuously active.</h2>
+          <p class="text-lg text-slate-600 leading-relaxed mb-8">
+            Compliance and PV monitoring runs continuously across your full customer base,
+            and the wider market where your product is being used. Every alert is
+            AI-classified by severity, then human-reviewed before landing in your PV
+            team's inbox. No false-positive fatigue, no missed signals.
+          </p>
+
+          <div class="flex flex-col gap-3">
+            {streams.map((stream) => (
+              <div class="flex gap-4 p-4 bg-slate-50 border border-slate-200 rounded-card">
+                <div class="font-serif text-2xl text-cyan-500 leading-none flex-shrink-0">
+                  {stream.num}
+                </div>
+                <div>
+                  <div class="text-[13px] font-medium text-navy-900 mb-1">{stream.title}</div>
+                  <div class="text-[12px] text-slate-600 leading-relaxed">{stream.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: PV alerts visual */}
+        <div class="lg:sticky lg:top-20">
+          <div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+              <div class="text-[13px] font-medium text-navy-900">PV alerts · March 2026</div>
+              <div class="text-[10px] text-slate-400">12 total · 3 high</div>
+            </div>
+
+            <RecordList items={pvAlerts} />
+
+            <div class="pt-3 mt-3 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+              Stylised example · delivered via secure dashboard
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 - REGULATORY FRAMEWORK                      */}
+  {/* ==================================================== */}
+  <section class="section-alt">
+    <div class="container-site">
+      <SectionHeader
+        eyebrow="REGULATORY FRAMEWORK"
+        title="Designed around the obligations your team already manages."
+        subtitle="Compliance and PV monitoring is structured to support your existing regulatory obligations, not invent new ones. We speak the same language as your PV SOPs, legal counsel, and PMCPA liaison."
+        centered
+      />
+
+      <div class="bg-white border border-slate-200 rounded-card p-6 max-w-[900px] mx-auto">
+        {regulations.map((row) => (
+          <div class="flex gap-3 py-3 border-b border-slate-100 last:border-b-0 items-start">
+            <span
+              class="text-[10.5px] px-2 py-1 rounded font-mono whitespace-nowrap flex-shrink-0 mt-0.5"
+              style="color: #0284a8; background: rgba(0,180,216,0.08);"
+            >
+              {row.code}
+            </span>
+            <div class="flex-1">
+              <div class="text-[13px] font-medium text-navy-900 mb-1">{row.title}</div>
+              <div class="text-[11.5px] text-slate-500 leading-relaxed">{row.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 4 - DELIVERY (dark navy)                      */}
+  {/* ==================================================== */}
+  <section class="section-dark">
+    <div class="container-site relative z-10">
+      <SectionHeader
+        eyebrow="DELIVERY"
+        title="Delivered into your PV workflow."
+        subtitle="Three delivery modes, one surveillance layer. Every alert is human-reviewed before it reaches you."
+        centered
+        light
+      />
+
+      <div class="grid md:grid-cols-3 gap-5">
+        {deliveryCards.map((card) => (
+          <div class="bg-white/[0.03] border border-white/10 rounded-card p-7">
+            <div class="w-10 h-10 rounded-lg bg-cyan-500/15 text-cyan-500 flex items-center justify-center text-base font-semibold mb-4">
+              {card.icon}
+            </div>
+            <h3 class="font-serif text-xl text-white mb-2">{card.title}</h3>
+            <p class="text-[13px] text-white/68 leading-relaxed mb-4">{card.body}</p>
+
+            <ul class="pt-4 border-t border-white/8 space-y-1.5">
+              {card.bullets.map((bullet) => (
+                <li class="text-[12px] text-white/75 pl-4 relative leading-relaxed">
+                  <span class="absolute left-0 text-cyan-500">→</span>
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 5 - PRICING                                   */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      <SectionHeader
+        eyebrow="PRICING"
+        title="Annual subscription. Scaled to your product portfolio."
+        subtitle="Pricing scales with the number of products monitored and the depth of surveillance required."
+        centered
+      />
+
+      <div class="grid md:grid-cols-3 gap-5">
+        <PricingTier
+          tier="TIER 01"
+          name="Single Product"
+          price="£25,000"
+          priceRange="-£35,000"
+          period="Per year"
+          description="Continuous monitoring for one product across your UK customer base. Ideal for specialist injectables and single-SKU portfolios."
+          features={[
+            'One product monitored',
+            'Full alert classification',
+            'Secure dashboard access',
+            'Monthly PV summary',
+          ]}
+        />
+
+        <PricingTier
+          tier="TIER 02"
+          name="Portfolio Monitoring"
+          price="£45,000"
+          priceRange="-£70,000"
+          period="Per year"
+          description="Multiple products, full compliance surveillance suite, and integration into your existing PV case-management system."
+          features={[
+            'Up to 5 products',
+            'Full compliance streams',
+            'Argus / Vault integration',
+            'Named PV analyst',
+            'Quarterly PV committee briefing',
+          ]}
+          featured={true}
+        />
+
+        <PricingTier
+          tier="TIER 03"
+          name="Enterprise PV"
+          price="£90,000"
+          priceRange="+"
+          period="Per year"
+          description="Full portfolio coverage, deeper surveillance, and on-demand PV research. For MAHs with broad aesthetic portfolios."
+          features={[
+            'Unlimited portfolio',
+            'Priority human-review SLA',
+            'Ad-hoc PV research requests',
+            'Regulatory inspection support',
+            'Direct PV-team access',
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 6 - REGULATORY FAQ                            */}
+  {/* ==================================================== */}
+  <section class="section-alt">
+    <div class="container-site">
+      <SectionHeader
+        eyebrow="REGULATORY FAQ"
+        title="The questions your regulatory team will ask first."
+        subtitle="Full technical documentation, data-protection impact assessment, PV SOPs, information security review, available under NDA for procurement."
+        centered
+      />
+
+      <div class="grid md:grid-cols-2 gap-4 max-w-[1000px] mx-auto">
+        {faqs.map((faq) => (
+          <FAQCard question={faq.q} answer={faq.a} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 7 - FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          GET STARTED
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          Bring your PV team. We'll show them how it works.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          PV and regulatory buyers appreciate a technical walkthrough. We'll run one
+          directly with your team, covering integration, classification, audit trail,
+          and regulatory fit.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Book a technical demo →</a>
+          <a href="/contact/" class="btn-secondary-light">Request sample pack</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedLinks
+    label="OTHER SOLUTIONS"
+    links={[
+      { label: 'Reference Data', href: '/solutions/reference-data/' },
+      { label: 'Market Intelligence', href: '/solutions/market-intelligence/' },
+      { label: 'Marketing Services', href: '/solutions/marketing-services/' },
+      { label: 'Consultancy', href: '/solutions/consultancy/' },
+    ]}
+  />
+</BaseLayout>

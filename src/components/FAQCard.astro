@@ -1,0 +1,15 @@
+---
+export interface Props {
+  question: string;
+  answer: string;  // can include HTML
+}
+
+const { question, answer } = Astro.props;
+---
+
+<div class="bg-white border border-slate-200 rounded-card p-6">
+  <div class="text-sm font-medium text-navy-900 mb-2 leading-snug">
+    {question}
+  </div>
+  <div class="text-[13px] text-slate-600 leading-relaxed" set:html={answer} />
+</div>

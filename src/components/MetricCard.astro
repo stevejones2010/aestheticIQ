@@ -1,0 +1,58 @@
+---
+export interface Props {
+  value: string;        // "15,000" or "+175%"
+  suffix?: string;      // "+" or "★" for after the value
+  label: string;        // "Clinic records"
+  description?: string; // optional second line
+  variant?: 'default' | 'dark' | 'subtle'; // background / styling
+  trend?: 'up' | 'down' | 'warn' | 'good'; // optional trend indicator
+}
+
+const {
+  value,
+  suffix,
+  label,
+  description,
+  variant = 'default',
+  trend,
+} = Astro.props;
+
+const variants = {
+  default: 'bg-slate-50 border-slate-200',
+  dark: 'bg-white/[0.03] border-white/10 text-white',
+  subtle: 'bg-white border-slate-200',
+};
+
+const trendColors = {
+  up: 'text-green-700',
+  good: 'text-green-700',
+  down: 'text-red-700',
+  warn: 'text-amber-700',
+};
+
+const cardClass = variants[variant];
+const labelColor = variant === 'dark' ? 'text-white/65' : 'text-slate-500';
+const descColor = variant === 'dark' ? 'text-white/55' : 'text-slate-500';
+---
+
+<div class:list={['rounded-card border p-5 transition-all', cardClass]}>
+  <div class:list={['text-[10px] uppercase tracking-eyebrow font-medium mb-1.5', labelColor]}>
+    {label}
+  </div>
+  <div class="font-serif text-[1.75rem] leading-none">
+    <span class:list={[
+      variant === 'dark' ? 'text-cyan-500' : 'text-navy-900',
+      trend && trendColors[trend],
+    ]}>
+      {value}
+    </span>
+    {suffix && (
+      <span class="text-base font-sans text-slate-500">{suffix}</span>
+    )}
+  </div>
+  {description && (
+    <div class:list={['text-[11px] mt-1.5 leading-relaxed', descColor]}>
+      {description}
+    </div>
+  )}
+</div>

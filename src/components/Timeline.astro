@@ -1,0 +1,85 @@
+---
+/**
+ * Timeline — numbered step cycle for sales cycles, engagement processes,
+ * customer journeys.
+ *
+ * Used for: Devices (capital sales cycle), Consultancy (engagement timeline),
+ * any "Day 0 → Day 180" or "Week 1 → Week 8" progression.
+ *
+ * Each step has:
+ *   - Cyan circle with the step number (serif font)
+ *   - Title (medium weight)
+ *   - Sub-text (smaller, slate)
+ *   - Optional time/marker on the right (cyan, bold)
+ *
+ * Example usage:
+ *   <Timeline
+ *     header="Sales cycle · Tracked account"
+ *     subheader="The Bloom Clinic"
+ *     steps={[
+ *       { num: 1, title: 'Qualified by AestheticIQ', sub: 'IPL + 4 categories', time: 'Day 0' },
+ *       { num: 2, title: 'First KAM contact', sub: 'Warm outreach', time: 'Day 14' },
+ *     ]}
+ *     footer="Stylised example · typical 6-month cycle"
+ *   />
+ */
+
+export interface TimelineStep {
+  num: number | string;     // step number or marker
+  title: string;
+  sub?: string;
+  time?: string;            // e.g. "Day 0", "Wk 1–2"
+}
+
+export interface Props {
+  header: string;
+  subheader?: string;
+  steps: TimelineStep[];
+  footer?: string;
+}
+
+const { header, subheader, steps, footer } = Astro.props;
+---
+
+<div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+  {/* Header */}
+  <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+    <div class="text-[12px] font-medium text-navy-900">{header}</div>
+    {subheader && (
+      <div class="text-[10px] text-slate-400">{subheader}</div>
+    )}
+  </div>
+
+  {/* Steps */}
+  {steps.map((step, idx) => (
+    <div
+      class="flex gap-3 items-start py-3"
+      style={idx < steps.length - 1 ? 'border-bottom: 0.5px solid #f1f5f9;' : ''}
+    >
+      <div
+        class="font-serif flex items-center justify-center font-semibold flex-shrink-0"
+        style="width: 22px; height: 22px; border-radius: 50%; background: #00b4d8; color: #fff; font-size: 11px;"
+      >
+        {step.num}
+      </div>
+      <div class="flex-1">
+        <div class="text-[12.5px] text-navy-900 font-medium leading-snug">{step.title}</div>
+        {step.sub && (
+          <div class="text-[10.5px] text-slate-500 leading-relaxed mt-0.5">{step.sub}</div>
+        )}
+      </div>
+      {step.time && (
+        <div class="text-[10.5px] text-cyan-500 font-medium whitespace-nowrap mt-0.5">
+          {step.time}
+        </div>
+      )}
+    </div>
+  ))}
+
+  {/* Footer */}
+  {footer && (
+    <div class="pt-3 mt-2 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+      {footer}
+    </div>
+  )}
+</div>

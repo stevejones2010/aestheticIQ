@@ -1,0 +1,330 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+import RoleSection from '@components/RoleSection.astro';
+import RelatedLinks from '@components/RelatedLinks.astro';
+import PersonCard from '@components/PersonCard.astro';
+import RegionGrid from '@components/RegionGrid.astro';
+import BarChart from '@components/BarChart.astro';
+
+// =====================================================
+// DOMAIN-FLUENCY CARDS - section 2
+// =====================================================
+const domainCards = [
+  {
+    label: 'ENROLMENT TERMS',
+    title: 'Enrolment & audience',
+    body: 'Practitioner cohort targeting, <strong>Level 7</strong> audiences, pre-qualification leads, conversion funnel for course marketing.',
+  },
+  {
+    label: 'CLINICAL TERMS',
+    title: 'Qualifications & credentials',
+    body: '<strong>GMC/NMC/GDC</strong> verification, Save Face / JCCP pathways, prescriber upgrade routes, CPD-accredited certifications.',
+  },
+  {
+    label: 'REGULATORY TERMS',
+    title: 'Licensing regime',
+    body: 'Amber / green tier practitioner mapping, premises-licence readiness, <strong>RQ</strong> training pipeline, regional rollout tracking.',
+  },
+];
+
+// =====================================================
+// DATA STACK ROWS - section 3
+// =====================================================
+const stackRows = [
+  {
+    type: 'generalist',
+    letter: 'M',
+    name: 'Marketing automation',
+    sub: 'Website visitors, email lists, social followers',
+  },
+  {
+    type: 'generalist',
+    letter: 'C',
+    name: 'Course CRM',
+    sub: 'Active and past students',
+  },
+  {
+    type: 'specialist',
+    letter: 'A',
+    name: 'AestheticIQ, audience layer',
+    sub: '25,000 UK practitioners · credentials · clinic affiliation · regional distribution',
+  },
+];
+---
+
+<BaseLayout
+  title="Training Providers"
+  description="Practitioner audience intelligence, regional demand mapping, and curriculum planning for aesthetic training providers preparing for the 2027 UK licensing regime."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Industries', href: '/industries/' },
+      { label: 'Training Providers' },
+    ]}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 1 - HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="FOR TRAINING PROVIDERS"
+    title="The 2027 licensing regime will create <em>the biggest training demand in the sector's history.</em> Know where it's coming from first."
+    subtitle="Every UK aesthetic practitioner is about to face new licensing requirements. Training providers who know which practitioners need training, when, and where will dominate the next three years. AestheticIQ is the platform that shows you."
+    primaryCta={{ label: 'Book a demo →', href: '/contact/' }}
+    secondaryCta={{ label: 'See a sample dataset', href: '/contact/' }}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 - DOMAIN FLUENCY PROOF                      */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-tight">
+      <div class="eyebrow mb-4">WE SPEAK YOUR LANGUAGE</div>
+      <h2 class="font-serif text-3xl md:text-4xl text-navy-900 leading-tight tracking-tighter mb-12">
+        Training providers compete on <em class="text-cyan-500 not-italic">being the place everyone goes</em>.
+        Reputation, accreditation, and audience reach drive enrolments, and audience intelligence is what
+        sets the top providers apart.
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-5">
+        {domainCards.map((card) => (
+          <div class="bg-slate-50 border border-slate-200 rounded-card p-6">
+            <div class="text-[10px] tracking-eyebrow uppercase text-slate-500 font-medium mb-2.5">
+              {card.label}
+            </div>
+            <h4 class="text-[13px] text-navy-900 font-medium mb-2">{card.title}</h4>
+            <p class="text-[12px] text-slate-600 leading-relaxed" set:html={card.body} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 - STACK POSITIONING                         */}
+  {/* ==================================================== */}
+  <section class="section-alt border-b border-slate-200">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-14 items-center">
+        <div>
+          <div class="eyebrow mb-4">WHERE WE FIT</div>
+          <h2 class="display-title mb-5">The audience intelligence your marketing platform doesn't have.</h2>
+          <p class="text-lg text-slate-600 leading-relaxed mb-4">
+            Your marketing automation knows who visited your website. Your CRM tracks your course
+            bookings. Neither tells you about the <strong class="text-navy-900 font-medium">25,000 UK
+            practitioners who should be your audience</strong>, only a fraction of whom have ever engaged
+            with you directly.
+          </p>
+          <p class="text-lg text-slate-600 leading-relaxed">
+            AestheticIQ provides the practitioner-level intelligence that sits underneath, so your
+            audience targeting is built on the full UK practitioner population, not just your lead database.
+          </p>
+        </div>
+
+        {/* Stack visual */}
+        <div class="bg-white border border-slate-200 rounded-card p-6 shadow-card-strong">
+          <div class="text-[11px] uppercase tracking-eyebrow text-slate-500 font-medium mb-4">
+            A typical training-provider data stack
+          </div>
+
+          {stackRows.map((row) => (
+            <div
+              class:list={[
+                'flex items-center gap-3 px-4 py-3.5 rounded-lg mb-2',
+                row.type === 'specialist'
+                  ? 'bg-cyan-500/[0.06] border border-cyan-500/30'
+                  : 'bg-slate-100 border border-slate-200',
+              ]}
+            >
+              <div
+                class:list={[
+                  'w-8 h-8 rounded-lg flex items-center justify-center text-sm font-semibold flex-shrink-0',
+                  row.type === 'specialist'
+                    ? 'bg-cyan-500 text-white'
+                    : 'bg-slate-300 text-slate-600',
+                ]}
+              >
+                {row.letter}
+              </div>
+              <div class="flex-1">
+                <div class="text-[13px] font-medium text-navy-900 mb-0.5">{row.name}</div>
+                <div class="text-[11px] text-slate-500 leading-snug">{row.sub}</div>
+              </div>
+            </div>
+          ))}
+
+          <div class="text-[11.5px] text-slate-500 text-center mt-4 italic leading-relaxed">
+            Your CRM knows who's engaged. AestheticIQ knows who <em>should</em> be.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 4 - ROLES INTRO                               */}
+  {/* ==================================================== */}
+  <section class="pt-16 pb-6">
+    <div class="container-tight text-center">
+      <div class="eyebrow mb-4">HOW TEAMS USE IT</div>
+      <h2 class="display-title mb-5">Three teams. Three use cases.</h2>
+      <p class="text-lg text-slate-600 leading-relaxed">
+        Audience, BD, and operations, each with different questions, same dataset.
+      </p>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* ROLE 01 - MARKETING & AUDIENCE                        */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Role 01 · Marketing & Audience"
+    title="For marketing teams and audience development."
+    description="Course enrolments are won upstream, by being top-of-mind with the right practitioners before they enrol anywhere. AestheticIQ surfaces the full UK practitioner population by region, qualification, treatment focus, and licensing-tier status, so your campaigns reach practitioners who actually fit the course, not just those already in your database."
+    questions={[
+      'Which practitioners in our target region are approaching licence renewal dates?',
+      'Which nurses currently work at non-prescriber clinics, candidates for prescriber training?',
+      'Which clinics would be affected by amber-tier licensing, practitioner upgrade market?',
+      "Where are the regions with the most practitioners who haven't attended formal training?",
+      'Which social media-active practitioners fit our Level 7 audience profile?',
+    ]}
+    outcome='Audience targeting across the full UK practitioner population. <strong>Campaigns run against real qualifying criteria, not proxy demographics.</strong>'
+  >
+    <PersonCard
+      header="Target audience · Level 7 Injectables"
+      subheader="1,247 practitioners"
+      people={[
+        { initials: 'JC', name: 'Dr J. Chen', meta: 'GMC 7123456 · The Bloom Clinic · 3yr experience', tag: 'Licence renewal Q4 2026' },
+        { initials: 'SR', name: 'Dr S. Ramanujan', meta: 'GMC 7891023 · Skinoza Clinic · 5yr experience', tag: 'Amber-tier impacted' },
+        { initials: 'PO', name: "Ms P. O'Sullivan", meta: 'NMC 04-87342E · Moda Donna · Non-prescriber', tag: 'Prescriber upgrade candidate' },
+        { initials: 'DH', name: 'Dr D. Hemberg', meta: 'GMC 6234890 · Nova Aesthetic · 2yr experience', tag: 'Level 7 candidate' },
+      ]}
+      footer="Stylised example · audience pull via API or CSV"
+    />
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* ROLE 02 - BD & PARTNERSHIPS                           */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Role 02 · BD & Partnerships"
+    title="For business development and venue partnerships."
+    description="Where should you host next quarter's workshops? Which clinics should become satellite training sites? Where are the underserved regions? AestheticIQ provides the regional density and demand-signal intelligence that's typically missing from training-provider planning decisions."
+    questions={[
+      'Where should we host regional training workshops for maximum attendance?',
+      'Which established clinics fit our profile as a satellite training partner?',
+      'Which regions have the largest unserved practitioner populations?',
+      'Who are the UK practitioners with the clinical influence to become brand ambassadors?',
+    ]}
+    outcome='Evidence-based venue and partnership decisions. Replaces anecdotal "Manchester feels busy" with actual practitioner density data.'
+    reverse={true}
+    alt={true}
+  >
+    <div>
+      <RegionGrid
+        header="Training demand · UK regional map"
+        subheader="Licensing tier · impact"
+        cells={[
+          { name: 'London', value: '5,420', label: 'practitioners', heat: 'hot' },
+          { name: 'South East', value: '2,840', label: 'practitioners' },
+          { name: 'Midlands', value: '2,180', label: 'practitioners', heat: 'med' },
+          { name: 'NW England', value: '2,047', label: 'practitioners', heat: 'med' },
+          { name: 'Yorkshire', value: '1,340', label: 'practitioners' },
+          { name: 'Scotland', value: '1,180', label: 'practitioners' },
+          { name: 'SW England', value: 984, label: 'practitioners' },
+          { name: 'Wales', value: 682, label: 'practitioners' },
+          { name: 'NE England', value: 445, label: 'practitioners' },
+        ]}
+        footer="Stylised example · demand sizing by practitioner density"
+      />
+      <div class="mt-3 text-[11px] text-slate-500 leading-relaxed px-1">
+        Regional density suggests underserved opportunity in Yorkshire and Wales for course-venue expansion.
+      </div>
+    </div>
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* ROLE 03 - OPERATIONS & CURRICULUM                     */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Role 03 · Operations & Curriculum"
+    title="For operations, curriculum planning, and student tracking."
+    description="Course relevance comes from understanding what practitioners are actually doing in clinic. AestheticIQ surfaces trends in treatment adoption, emerging categories, and brand-level activity across the UK clinic market, so your curriculum stays aligned with what the profession actually practices, not what was relevant three years ago."
+    questions={[
+      'Which treatment categories are growing fastest in UK clinics this year?',
+      'What share of clinics now offer GLP-1, exosomes, polynucleotides?',
+      'Which practitioner qualifications are most undersupplied vs. market demand?',
+      'What post-graduation clinic placements are our students achieving?',
+    ]}
+    outcome="Curriculum decisions backed by actual market activity. Alumni placement tracking to close the loop on course outcomes."
+  >
+    <div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+        <div class="text-xs font-medium text-navy-900">Treatment category growth · UK</div>
+        <div class="text-[10px] text-slate-400">12-month change</div>
+      </div>
+
+      <BarChart
+        items={[
+          { label: 'GLP-1', value: 88, valueLabel: '+175%', highlight: true },
+          { label: 'Polynucleotides', value: 62, valueLabel: '+120%' },
+          { label: 'Exosomes', value: 44, valueLabel: '+85%' },
+          { label: 'Skin boosters', value: 32, valueLabel: '+32%' },
+          { label: 'HIFU', value: 14, valueLabel: '+8%' },
+        ]}
+        scale={1}
+        labelWidth="105px"
+      />
+
+      <div class="mt-4 pt-3 border-t border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+        GLP-1 and polynucleotides are signalling strong curriculum-demand opportunities for 2026.
+      </div>
+
+      <div class="mt-3 pt-3 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+        Stylised example · treatment adoption tracking
+      </div>
+    </div>
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* SECTION 5 - FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          GET STARTED
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          Show us your course portfolio. We'll show you the audience.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          20-minute demo built around your specific courses and regions: audience sizing,
+          licensing-tier mapping, and regional density.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Book a demo →</a>
+          <a href="/contact/" class="btn-secondary-light">Download sample dataset</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedLinks
+    label="OTHER INDUSTRIES WE SERVE"
+    links={[
+      { label: 'Pharma & Injectables', href: '/industries/pharma/' },
+      { label: 'Medical Devices', href: '/industries/medical-devices/' },
+      { label: 'Beauty & Skincare', href: '/industries/beauty-skincare/' },
+      { label: 'Distributors', href: '/industries/distributors/' },
+      { label: 'Investors', href: '/industries/investors/' },
+    ]}
+  />
+</BaseLayout>

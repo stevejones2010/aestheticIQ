@@ -1,0 +1,282 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+import SectionHeader from '@components/SectionHeader.astro';
+import Timeline from '@components/Timeline.astro';
+import PricingTier from '@components/PricingTier.astro';
+import RelatedLinks from '@components/RelatedLinks.astro';
+
+// =====================================================
+// HERO STATS
+// =====================================================
+const heroStats = [
+  { num: '4-12 wks', label: 'Typical engagement' },
+  { num: 'UK-native', label: 'Aesthetic specialism' },
+];
+
+// =====================================================
+// "ENGAGEMENTS WE RUN" - six project types
+// =====================================================
+const engagementTypes = [
+  {
+    num: 1,
+    title: 'Territory alignment and SFE',
+    desc: 'Salesforce sizing, territory design, and call-plan optimisation for field teams in aesthetics. Evidence-based addressable-market analysis by postcode.',
+  },
+  {
+    num: 2,
+    title: 'Market opportunity assessment',
+    desc: 'Bottom-up market sizing, white-space mapping, and growth-runway analysis for new product launches or category entries.',
+  },
+  {
+    num: 3,
+    title: 'Launch strategy',
+    desc: 'Target account identification, launch phasing, KOL mapping, and commercial readiness for pharma, device, or skincare launches.',
+  },
+  {
+    num: 4,
+    title: 'M&A screening and CDD support',
+    desc: 'Acquisition target screening, buy-and-build mapping, and commercial due diligence support for PE and corporate buyers.',
+  },
+  {
+    num: 5,
+    title: 'Competitive landscape analysis',
+    desc: 'Brand positioning, competitive share dynamics, and category leadership assessment, deeper than any off-the-shelf report.',
+  },
+  {
+    num: 6,
+    title: 'KOL identification and mapping',
+    desc: 'UK aesthetic practitioner influence mapping for medical affairs, training, and brand-ambassador programmes.',
+  },
+];
+
+// =====================================================
+// ENGAGEMENT TIMELINE VISUAL
+// =====================================================
+const timelineSteps = [
+  { num: 1, title: 'Kickoff and data scoping', sub: 'Define geography, product scope, segmentation axes', time: 'Wk 1' },
+  { num: 2, title: 'Addressable-market build', sub: 'Clinic inventory · segmentation · account scoring', time: 'Wk 2-3' },
+  { num: 3, title: 'Territory modelling', sub: 'Workload balancing · drive-time modelling · options', time: 'Wk 4-5' },
+  { num: 4, title: 'Review and refinement', sub: 'Client review · sensitivity analysis · final recommendations', time: 'Wk 6-7' },
+  { num: 5, title: 'Delivery and handover', sub: 'Final report · CRM-ready territory files · Q&A session', time: 'Wk 8' },
+];
+
+// =====================================================
+// OUR APPROACH - three principles
+// =====================================================
+const principles = [
+  {
+    num: '1',
+    title: 'Grounded in data',
+    body: 'Every conclusion traceable to the underlying clinic data. No black-box consulting recommendations.',
+  },
+  {
+    num: '2',
+    title: 'UK aesthetic-native',
+    body: 'Deep category expertise: treatment taxonomy, practitioner routes, regulatory framework. Not borrowed from adjacent specialties.',
+  },
+  {
+    num: '3',
+    title: 'Named-lead accountability',
+    body: 'Senior lead on every project, named at proposal stage. No junior-team-with-a-partner handoff.',
+  },
+];
+---
+
+<BaseLayout
+  title="Consultancy"
+  description="Commercial decisions backed by the UK's deepest aesthetic clinic dataset. Territory design, salesforce sizing, market opportunity assessment, launch strategy, and M&A screening."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Solutions', href: '/solutions/' },
+      { label: 'Consultancy' },
+    ]}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 1 - HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="SOLUTION · CONSULTANCY"
+    title='Commercial decisions, <em>backed by the UK&apos;s deepest aesthetic clinic dataset.</em>'
+    subtitle="Territory design, salesforce sizing, market opportunity assessment, launch strategy, M&A screening. The same consulting questions IQVIA and ZS answer for broader healthcare, now answered specifically for UK aesthetics, with data depth no generalist can match."
+    primaryCta={{ label: 'Scope a project →', href: '/contact/' }}
+    secondaryCta={{ label: 'See past engagements', href: '/contact/' }}
+    stats={heroStats}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 - ENGAGEMENTS WE RUN                        */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1fr_1.1fr] gap-14 items-start">
+        {/* Left: copy + 6 engagement types */}
+        <div>
+          <div class="eyebrow mb-4">ENGAGEMENTS WE RUN</div>
+          <h2 class="display-title mb-5">Six types of project. One rigorous methodology.</h2>
+          <p class="text-lg text-slate-600 leading-relaxed mb-8">
+            Each engagement is bespoke, scoped against your specific commercial question,
+            priced transparently, and delivered by a named lead with direct accountability.
+            Every project draws on the AestheticIQ dataset as its evidence base, which is
+            what distinguishes our work from generalist consultants who start from zero on
+            each engagement.
+          </p>
+
+          <div class="flex flex-col gap-3">
+            {engagementTypes.map((type) => (
+              <div class="flex gap-4 p-4 bg-slate-50 border border-slate-200 rounded-card">
+                <div class="font-serif text-2xl text-cyan-500 leading-none flex-shrink-0">
+                  {type.num}
+                </div>
+                <div>
+                  <div class="text-[13px] font-medium text-navy-900 mb-1">{type.title}</div>
+                  <div class="text-[12px] text-slate-600 leading-relaxed">{type.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: engagement timeline */}
+        <div class="lg:sticky lg:top-20">
+          <Timeline
+            header="Engagement timeline · Territory alignment"
+            subheader="Typical 8-week project"
+            steps={timelineSteps}
+            footer="Stylised example · scope and timeline vary per engagement"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 - OUR APPROACH                              */}
+  {/* ==================================================== */}
+  <section class="section-alt">
+    <div class="container-site">
+      <SectionHeader
+        eyebrow="OUR APPROACH"
+        title="Rigorous, evidence-based, and unapologetically specific to UK aesthetics."
+        subtitle="We do not run generalist healthcare engagements. Every project we take on sits squarely within our core domain, which means faster ramp, sharper insight, and defensible conclusions. Our clients include pharma commercial teams, device manufacturers, professional skincare brands, and PE investors in the sector."
+        centered
+      />
+
+      <div class="grid md:grid-cols-3 gap-5 max-w-[1000px] mx-auto">
+        {principles.map((p) => (
+          <div class="bg-white border border-slate-200 rounded-card p-7">
+            <div class="font-serif text-4xl text-cyan-500 leading-none mb-3">{p.num}</div>
+            <h4 class="text-[13px] font-medium text-navy-900 mb-2">{p.title}</h4>
+            <p class="text-[12.5px] text-slate-600 leading-relaxed">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 4 - PRICING (project-based)                   */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      <SectionHeader
+        eyebrow="HOW ENGAGEMENTS SCOPE"
+        title="Pricing is per project. Scoped transparently up front."
+        subtitle="Every engagement is scoped before commitment, not the surprise-at-invoice model of some consultancies. Three typical project sizes:"
+        centered
+      />
+
+      <div class="grid md:grid-cols-3 gap-5">
+        <PricingTier
+          tier="PROJECT 01"
+          name="Focused Analysis"
+          price="£25,000"
+          priceRange="-£40,000"
+          period="3-5 week engagement"
+          description="A single question answered thoroughly. E.g. regional market sizing for one product, one territory-alignment study, one KOL map."
+          features={[
+            'Single-topic focus',
+            'Named lead consultant',
+            'Written report + data',
+            'Internal brief-back included',
+          ]}
+        />
+
+        <PricingTier
+          tier="PROJECT 02"
+          name="Full Engagement"
+          price="£60,000"
+          priceRange="-£100,000"
+          period="6-10 week engagement"
+          description="Multi-faceted commercial question. E.g. launch strategy, full salesforce sizing, M&A target screening and CDD support."
+          features={[
+            'Multi-stream workstreams',
+            'Senior lead + analyst team',
+            'Steering committee model',
+            'Executive presentation',
+            'Post-project support period',
+          ]}
+          featured={true}
+        />
+
+        <PricingTier
+          tier="PROJECT 03"
+          name="Strategic Programme"
+          price="£120,000"
+          priceRange="+"
+          period="12+ week engagement"
+          description="Major strategic decision support. E.g. commercial transformation programme, full launch excellence programme, multi-country expansion."
+          features={[
+            'Programme-level scope',
+            'Partner-level sponsorship',
+            'Cross-functional workstreams',
+            'Board-level reporting',
+            'Implementation support',
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 5 - FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          GET STARTED
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          Bring us your commercial question.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          We'll scope it, price it, and tell you honestly whether it's work we can deliver
+          well. Initial scoping conversations are always free.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Scope a project →</a>
+          <a href="/contact/" class="btn-secondary-light">Book a demo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedLinks
+    label="OTHER SOLUTIONS"
+    links={[
+      { label: 'Reference Data', href: '/solutions/reference-data/' },
+      { label: 'Market Intelligence', href: '/solutions/market-intelligence/' },
+      { label: 'Marketing Services', href: '/solutions/marketing-services/' },
+      { label: 'Compliance & PV', href: '/solutions/compliance-pv/' },
+    ]}
+  />
+</BaseLayout>

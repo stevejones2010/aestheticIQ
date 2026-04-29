@@ -1,0 +1,26 @@
+---
+export interface Props {
+  label?: string;        // default "OTHER INDUSTRIES WE SERVE"
+  links: { label: string; href: string }[];
+}
+
+const { label = 'OTHER INDUSTRIES WE SERVE', links } = Astro.props;
+---
+
+<section class="py-10 bg-slate-50 border-t border-slate-200">
+  <div class="container-site">
+    <div class="text-center text-[10px] tracking-eyebrow uppercase text-slate-500 font-medium mb-4">
+      {label}
+    </div>
+    <div class="flex gap-2 justify-center flex-wrap">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class="px-4 py-1.5 bg-white border border-slate-200 rounded-pill text-[12.5px] text-slate-600 hover:border-cyan-500 hover:text-cyan-500 transition-colors"
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

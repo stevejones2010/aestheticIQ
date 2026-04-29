@@ -1,0 +1,74 @@
+---
+/**
+ * RecordList — reusable feed/list pattern for visuals showing rows with
+ * an icon, title, sub-text, and optional time/status indicator.
+ *
+ * Used for: PV alerts, new clinic feeds, M&A target lists, account lists,
+ * compliance checks, practitioner audiences.
+ *
+ * Each row supports:
+ *   - severity colour theme (info / warn / high / good)
+ *   - timestamp on the right
+ *   - icon character (✓, !, +, ★, etc.)
+ *
+ * Example usage:
+ *   <RecordList
+ *     items={[
+ *       { severity: 'high', icon: '!', title: 'AE on Instagram', sub: 'Toxin migration · YCS reportable', time: '2d' },
+ *       { severity: 'info', icon: 'i', title: 'Prescriber left clinic', sub: 'Nova Aesthetic · no current prescriber', time: '2w' },
+ *     ]}
+ *   />
+ */
+
+export interface RecordItem {
+  severity?: 'info' | 'good' | 'warn' | 'high'; // default 'info'
+  icon: string;
+  title: string;
+  sub?: string;
+  time?: string;
+}
+
+export interface Props {
+  items: RecordItem[];
+}
+
+const { items } = Astro.props;
+
+// Inline style maps for severity (avoids Tailwind JIT issues with conditional bg/border)
+const severityStyles: Record<string, { bg: string; border: string; iconBg: string; iconColor: string }> = {
+  info: { bg: '#f0f9ff', border: '#bae6fd', iconBg: '#38bdf8', iconColor: '#fff' },
+  good: { bg: '#f0fdf4', border: '#bbf7d0', iconBg: '#22c55e', iconColor: '#fff' },
+  warn: { bg: '#fefce8', border: '#fde68a', iconBg: '#facc15', iconColor: '#422006' },
+  high: { bg: '#fff7ed', border: '#fed7aa', iconBg: '#fb923c', iconColor: '#fff' },
+};
+---
+
+<div class="space-y-2">
+  {items.map((item) => {
+    const sev = severityStyles[item.severity || 'info'];
+    return (
+      <div
+        class="flex gap-3 items-start p-3 rounded-lg border"
+        style={`background: ${sev.bg}; border-color: ${sev.border};`}
+      >
+        <div
+          class="w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-semibold flex-shrink-0"
+          style={`background: ${sev.iconBg}; color: ${sev.iconColor};`}
+        >
+          {item.icon}
+        </div>
+        <div class="flex-1 text-[11.5px]">
+          <div class="text-navy-900 font-medium leading-snug">{item.title}</div>
+          {item.sub && (
+            <div class="text-slate-500 text-[10.5px] leading-relaxed">{item.sub}</div>
+          )}
+        </div>
+        {item.time && (
+          <div class="text-[10px] text-slate-400 flex-shrink-0 whitespace-nowrap">
+            {item.time}
+          </div>
+        )}
+      </div>
+    );
+  })}
+</div>

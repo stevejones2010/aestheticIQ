@@ -1,0 +1,505 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/Hero.astro';
+import SectionHeader from '@components/SectionHeader.astro';
+import ScoredList from '@components/ScoredList.astro';
+import BarChart from '@components/BarChart.astro';
+
+// =====================================================
+// TARGET WORKFLOW - questions
+// =====================================================
+const targetQuestions = [
+  "Which clinics in my territory currently use a competitor's toxin brand?",
+  'Where are the white-space opportunities in the South East for our new dermal filler?',
+  "Which clinics haven't been contacted by my team this year, by rep territory?",
+  'Which clinics are good-fit accounts for premium injectables: high-end postcode, GMC prescriber, 3+ treatment categories?',
+  'Which new clinics have opened in the last 90 days that we should reach out to?',
+  "Show me every clinic in Greater Manchester that offers injectables but doesn't yet stock professional skincare.",
+];
+
+// =====================================================
+// TARGET VISUAL - scored list
+// =====================================================
+const targetRows = [
+  { name: 'The Bloom Clinic', details: 'London E14 · Skin Clinic', score: 'A+', scoreTone: 'green' as const },
+  { name: 'Moda Donna Beauty Clinic', details: 'London E14 · Medspa', score: 'A', scoreTone: 'green' as const },
+  { name: 'Skinoza Clinic Greenwich', details: 'London SE10 · Skin Clinic', score: 'A', scoreTone: 'green' as const },
+  { name: 'Nova Aesthetic Clinic', details: 'London E1 · Medspa', score: 'B+', scoreTone: 'amber' as const },
+  { name: 'InnovaSkin', details: 'London E14 · Skin Clinic', score: 'B', scoreTone: 'amber' as const },
+  { name: 'Fazara Aesthetics', details: 'London E14 · Skin Clinic', score: 'C' },
+];
+
+// =====================================================
+// TRACK WORKFLOW - questions
+// =====================================================
+const trackQuestions = [
+  "What's the market share of each toxin brand in London vs. Manchester right now?",
+  'How fast is GLP-1 adoption spreading across UK aesthetic clinics?',
+  'Which clinics currently mention my brand on their website or social media?',
+  "What's the median price for Profhilo 2ml by region, and how has it moved this quarter?",
+  'Which of our known accounts have dropped our brand from their website in the last 60 days?',
+  'Which new treatment categories are gaining traction in our strongest-performing region?',
+  'How does our brand visibility compare to competitors across chain clinics vs. independents?',
+];
+
+// =====================================================
+// TRACK VISUAL - bar chart data
+// =====================================================
+const trackBars = [
+  { label: 'Botox', value: 42, valueLabel: '42%', highlight: true },
+  { label: 'Azzalure', value: 28, valueLabel: '28%' },
+  { label: 'Bocouture', value: 17, valueLabel: '17%' },
+  { label: 'Dysport', value: 9, valueLabel: '9%' },
+  { label: 'Not specified', value: 4, valueLabel: '4%' },
+];
+
+// =====================================================
+// VERIFY WORKFLOW - questions
+// =====================================================
+const verifyQuestions = [
+  'Which practitioners at clinics using our product are GMC-registered prescribers?',
+  'Which clinics will need a premises licence under the 2027 amber-tier regime?',
+  'Are any clinics promoting our product for off-label indications on their website?',
+  'Which clinics in our customer base have had an adverse-event mention on social media this month?',
+  'Which of our distributor accounts are supplying clinics without a valid prescriber on record?',
+  'Show me all clinics that have lost Save Face or JCCP accreditation in the last 12 months.',
+];
+
+// =====================================================
+// VERIFY VISUAL - compliance checks
+// =====================================================
+const complianceChecks = [
+  { status: 'ok', icon: '✓', title: 'Lead practitioner GMC-verified', sub: 'Dr J. Chen · GMC 7123456 · Prescriber', badge: 'Verified', badgeTone: 'ok' },
+  { status: 'ok', icon: '✓', title: 'Website and contact details', sub: 'Validated across 3 sources', badge: 'Active', badgeTone: 'ok' },
+  { status: 'warn', icon: '!', title: 'Licensing regime readiness', sub: 'Amber tier · premises licence required Q3 2026', badge: 'Action', badgeTone: 'warn' },
+  { status: 'miss', icon: '✕', title: 'Save Face accreditation', sub: 'Not currently held', badge: 'Absent', badgeTone: 'miss' },
+  { status: 'ok', icon: '✓', title: 'Ad compliance scan', sub: 'No CAP-code breaches detected · last 30 days', badge: 'Clean', badgeTone: 'ok' },
+];
+
+// Inline styles for compliance badges (avoids Tailwind JIT issues)
+const badgeStyles: Record<string, { bg: string; color: string }> = {
+  ok: { bg: '#dcfce7', color: '#15803d' },
+  warn: { bg: '#fef9c3', color: '#854d0e' },
+  miss: { bg: '#fee2e2', color: '#b91c1c' },
+};
+
+const checkIconStyles: Record<string, { bg: string; color: string }> = {
+  ok: { bg: '#dcfce7', color: '#15803d' },
+  warn: { bg: '#fef9c3', color: '#854d0e' },
+  miss: { bg: '#fee2e2', color: '#b91c1c' },
+};
+
+// =====================================================
+// DELIVERY - four cards
+// =====================================================
+const deliveryCards = [
+  { icon: '⇄', title: 'CRM Sync', body: 'Native integration with Veeva CRM, Salesforce, and HubSpot. Records refresh monthly.' },
+  { icon: '{ }', title: 'API Access', body: 'REST endpoints, filters, and webhooks for real-time change notifications.' },
+  { icon: '↓', title: 'CSV and Excel', body: 'Exports on demand. Bespoke segments delivered ready-for-analysis.' },
+  { icon: '⌘', title: 'Briefed Reports', body: 'Custom intelligence packages built by our team for board- or launch-readiness.' },
+];
+
+// =====================================================
+// CAPABILITY GRID - six blocks
+// =====================================================
+const capabilityBlocks = [
+  {
+    label: 'COMMERCIAL & SALES',
+    heading: 'If you run field sales, key accounts, or territory planning',
+    items: [
+      'Which clinics in my territory use competitor products?',
+      'Which accounts should my reps prioritise this quarter?',
+      'Which new clinics have opened in the last 90 days?',
+      'Where is our whitespace, by region, treatment, practitioner type?',
+      'Which accounts have lapsed from our brand this year?',
+      'How many GMC-prescriber clinics exist in each rep territory?',
+    ],
+  },
+  {
+    label: 'MARKETING & BRAND',
+    heading: 'If you run marketing, brand, or category management',
+    items: [
+      "What's our brand's visibility on clinic websites vs. competitors?",
+      'How does our mention frequency rank across social platforms?',
+      'Which clinics are active promoters of our competitor?',
+      'What segment should our next campaign target?',
+      'Which clinics mention specific product features in their own copy?',
+      'Which treatment categories are gaining or losing share?',
+    ],
+  },
+  {
+    label: 'MARKET INTELLIGENCE & STRATEGY',
+    heading: 'If you run market sizing, forecasting, or category strategy',
+    items: [
+      "What's the total UK market size by treatment category?",
+      'How is GLP-1 or any new category diffusing across the market?',
+      "What's the median clinic pricing for our category, by region?",
+      "Which chains are consolidating? Who's being acquired?",
+      'What share of market is held by independents vs. chains?',
+      'Which emerging treatment categories should we watch?',
+    ],
+  },
+  {
+    label: 'MEDICAL, REGULATORY & PV',
+    heading: 'If you handle medical affairs, pharmacovigilance, or compliance',
+    items: [
+      'Which practitioners at clinics using our product are GMC/NMC-verified?',
+      'Which clinics need a premises licence under the 2027 regime?',
+      'Are any clinics promoting our product off-label?',
+      'Which clinics have had an adverse-event mention this month?',
+      'Which distributor customers have no prescriber on record?',
+      'Which clinics hold Save Face or JCCP accreditation?',
+    ],
+  },
+  {
+    label: 'INVESTMENT & CORPORATE FINANCE',
+    heading: 'If you invest in or finance aesthetic businesses',
+    items: [
+      'Which UK regions have the most fragmented clinic ownership?',
+      "What's a target clinic's treatment mix and revenue profile?",
+      'Which chains are attractive buy-and-build candidates?',
+      "What's the typical EBITDA profile of a clinic at this scale?",
+      'Which portfolio clinics are outperforming local peers?',
+      'Where should a new chain locate its next 10 sites?',
+    ],
+  },
+  {
+    label: 'TRAINING & EDUCATION',
+    heading: 'If you provide aesthetic training or education',
+    items: [
+      'Which new clinics have opened with practitioners who may need training?',
+      'Which practitioners are approaching licence renewal dates?',
+      'Which clinics have no accredited practitioners on record?',
+      'What are the underserved regions for our course locations?',
+      'Which clinics have practitioners working at the edge of their qualifications?',
+      'What treatment categories are growing fastest in our recruitment catchment?',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Platform"
+  description="Every commercial, regulatory, and investment decision in UK aesthetics starts with a question. AestheticIQ is the platform built to answer them, with proprietary clinic data, AI-powered enrichment, and continuous monitoring."
+>
+
+  {/* ==================================================== */}
+  {/* SECTION 1 - HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="THE PLATFORM"
+    title='Which clinic? <em>Which practitioner?</em> Which brand? Which territory?'
+    subtitle="Every commercial, regulatory, and investment decision in UK aesthetics starts with a question. AestheticIQ is the platform built to answer them, with proprietary clinic data, AI-powered enrichment, and continuous monitoring."
+    primaryCta={{ label: 'Book a demo →', href: '/contact/' }}
+    secondaryCta={{ label: 'See a sample output', href: '/contact/' }}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 - WORKFLOW ANCHOR NAV                       */}
+  {/* ==================================================== */}
+  <div class="bg-white border-b border-slate-200 py-4 sticky top-[58px] z-40">
+    <div class="container-site flex justify-center gap-0">
+      <a href="#target" class="flex items-center gap-2 px-6 py-2 text-[12.5px] font-medium text-slate-500 border-b-2 border-transparent hover:text-navy-900 transition-colors">
+        <span class="font-serif text-lg text-cyan-500 leading-none">Target</span>
+        Find the right clinics
+      </a>
+      <a href="#track" class="flex items-center gap-2 px-6 py-2 text-[12.5px] font-medium text-slate-500 border-b-2 border-transparent hover:text-navy-900 transition-colors">
+        <span class="font-serif text-lg text-cyan-500 leading-none">Track</span>
+        Monitor the market
+      </a>
+      <a href="#verify" class="flex items-center gap-2 px-6 py-2 text-[12.5px] font-medium text-slate-500 border-b-2 border-transparent hover:text-navy-900 transition-colors">
+        <span class="font-serif text-lg text-cyan-500 leading-none">Verify</span>
+        Stay compliant
+      </a>
+    </div>
+  </div>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 - TARGET WORKFLOW                           */}
+  {/* ==================================================== */}
+  <section id="target" class="py-24 border-b border-slate-100">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1fr_1.1fr] gap-16 items-start">
+        <div>
+          <div class="font-serif text-6xl text-cyan-500 leading-none mb-5 tracking-tight">Target</div>
+          <div class="eyebrow mb-4">WORKFLOW 01</div>
+          <h2 class="display-title mb-5">Find the right clinics. Skip the ones that don't matter.</h2>
+          <p class="text-base text-slate-600 leading-relaxed mb-8">
+            Segment the UK aesthetic market by geography, treatment offering, practitioner
+            qualification, brand affiliation, prescriber status, and commercial maturity. Ship
+            prioritised target lists straight into your CRM, so your sales team starts every
+            week with the right accounts in front of them.
+          </p>
+
+          <div class="mb-6">
+            <div class="text-[10px] tracking-eyebrow uppercase text-slate-500 font-medium mb-3">ANSWERS QUESTIONS LIKE</div>
+            <div class="flex flex-col gap-2">
+              {targetQuestions.map((q, i) => (
+                <div class="flex gap-3 items-start p-3 bg-slate-50 border border-slate-200 rounded-lg text-[13.5px] text-navy-900 leading-relaxed">
+                  <span class="font-serif text-base text-cyan-500 leading-none flex-shrink-0 mt-0.5">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span>{q}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-slate-200 text-[12.5px] text-slate-500 leading-relaxed">
+            <strong class="block text-[11px] uppercase tracking-wider text-navy-900 font-medium mb-1">TYPICAL USE CASE</strong>
+            A UK National Sales Manager at an injectables pharma company uses Target to build
+            quarterly call plans. Their 8-person field team receives prioritised account lists
+            monthly, each with 40+ attributes, saving roughly 6 hours of manual research per
+            rep per week.
+          </div>
+        </div>
+
+        {/* Target visual: scored list */}
+        <div class="lg:sticky lg:top-36">
+          <div>
+            <div class="flex flex-wrap gap-1.5 mb-3">
+              <span class="text-[10px] px-3 py-1 rounded-pill border font-medium" style="background: rgba(0,180,216,0.08); color: #0284a8; border-color: rgba(0,180,216,0.25);">Injectables ✓</span>
+              <span class="text-[10px] px-3 py-1 rounded-pill border font-medium" style="background: rgba(0,180,216,0.08); color: #0284a8; border-color: rgba(0,180,216,0.25);">GMC prescriber ✓</span>
+              <span class="text-[10px] px-3 py-1 rounded-pill border font-medium" style="background: rgba(0,180,216,0.08); color: #0284a8; border-color: rgba(0,180,216,0.25);">Not contacted 90d</span>
+            </div>
+            <ScoredList
+              header="South East · High-priority clinics"
+              subheader="247 results"
+              rows={targetRows}
+              footer="Stylised example · delivered via CRM sync, CSV, or API"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 4 - TRACK WORKFLOW                            */}
+  {/* ==================================================== */}
+  <section id="track" class="py-24 bg-slate-50 border-b border-slate-100">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-16 items-start">
+        {/* Track visual: dark bar chart card */}
+        <div class="lg:sticky lg:top-36">
+          <div class="rounded-card p-5 shadow-card-strong" style="background: #0a1929;">
+            <div class="flex justify-between items-center pb-3 mb-4" style="border-bottom: 0.5px solid rgba(255,255,255,0.1);">
+              <div class="text-[12px] font-medium text-white">Toxin brand visibility · London clinics</div>
+              <div class="text-[10px]" style="color: rgba(255,255,255,0.45);">Mar 2026</div>
+            </div>
+            <BarChart items={trackBars} scale={2} labelWidth="90px" valueWidth="42px" />
+            <div class="p-2.5 rounded-md mt-3 mb-2 text-[10.5px] leading-relaxed" style="background: rgba(0,180,216,0.08); border: 0.5px solid rgba(0,180,216,0.2); color: #00b4d8;">
+              ↑ Bocouture gained 3.2 points vs. previous quarter in London. Growth concentrated in SE and NW postcodes.
+            </div>
+            <div class="pt-3 mt-2 flex justify-between text-[10px]" style="border-top: 0.5px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4);">
+              <span>458 clinics monitored</span>
+              <span>Web + social signals</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="font-serif text-6xl text-cyan-500 leading-none mb-5 tracking-tight">Track</div>
+          <div class="eyebrow mb-4">WORKFLOW 02</div>
+          <h2 class="display-title mb-5">Monitor the market in motion. Spot movement before competitors do.</h2>
+          <p class="text-base text-slate-600 leading-relaxed mb-8">
+            Continuous tracking of pricing, treatment mix, brand adoption, and category trends
+            across 15,000 clinics. Observe market share shift in near-real-time from website
+            content, social signals, and clinic-verified data: no quarterly lag, no guesswork.
+          </p>
+
+          <div class="mb-6">
+            <div class="text-[10px] tracking-eyebrow uppercase text-slate-500 font-medium mb-3">ANSWERS QUESTIONS LIKE</div>
+            <div class="flex flex-col gap-2">
+              {trackQuestions.map((q, i) => (
+                <div class="flex gap-3 items-start p-3 bg-white border border-slate-200 rounded-lg text-[13.5px] text-navy-900 leading-relaxed">
+                  <span class="font-serif text-base text-cyan-500 leading-none flex-shrink-0 mt-0.5">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span>{q}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-slate-200 text-[12.5px] text-slate-500 leading-relaxed">
+            <strong class="block text-[11px] uppercase tracking-wider text-navy-900 font-medium mb-1">TYPICAL USE CASE</strong>
+            A Commercial Analyst at a dermal filler manufacturer uses Track to monitor monthly
+            brand-share movement across 12 UK regions. The data feeds directly into quarterly
+            business reviews, replacing the old process of commissioning ad-hoc market research
+            at considerable cost per study.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 5 - VERIFY WORKFLOW                           */}
+  {/* ==================================================== */}
+  <section id="verify" class="py-24 border-b border-slate-100">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1fr_1.1fr] gap-16 items-start">
+        <div>
+          <div class="font-serif text-6xl text-cyan-500 leading-none mb-5 tracking-tight">Verify</div>
+          <div class="eyebrow mb-4">WORKFLOW 03</div>
+          <h2 class="display-title mb-5">Stay compliant. Protect your product. Meet your obligations.</h2>
+          <p class="text-base text-slate-600 leading-relaxed mb-8">
+            Cross-reference practitioner credentials against GMC, NMC, and GDC registers.
+            Surface compliance signals. Monitor for off-label promotion and CAP-code breaches.
+            Stay ahead of the 2027 licensing regime, with a continuous record of where your
+            product is being administered, and by whom.
+          </p>
+
+          <div class="mb-6">
+            <div class="text-[10px] tracking-eyebrow uppercase text-slate-500 font-medium mb-3">ANSWERS QUESTIONS LIKE</div>
+            <div class="flex flex-col gap-2">
+              {verifyQuestions.map((q, i) => (
+                <div class="flex gap-3 items-start p-3 bg-slate-50 border border-slate-200 rounded-lg text-[13.5px] text-navy-900 leading-relaxed">
+                  <span class="font-serif text-base text-cyan-500 leading-none flex-shrink-0 mt-0.5">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span>{q}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-slate-200 text-[12.5px] text-slate-500 leading-relaxed">
+            <strong class="block text-[11px] uppercase tracking-wider text-navy-900 font-medium mb-1">TYPICAL USE CASE</strong>
+            A Pharmacovigilance Lead at a botulinum toxin manufacturer uses Verify to generate
+            monthly compliance reports: prescriber verification, off-label detection, and
+            social-media adverse-event scanning across their full customer base. Replaces manual
+            research and protects MAH obligations under Human Medicines Regulations 2012.
+          </div>
+        </div>
+
+        {/* Verify visual: compliance record */}
+        <div class="lg:sticky lg:top-36">
+          <div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+            <div class="mb-4">
+              <div class="font-serif text-lg text-navy-900 mb-1">The Bloom Clinic</div>
+              <div class="text-[11px] text-slate-400">London E14 · Compliance record · Apr 2026</div>
+            </div>
+
+            {complianceChecks.map((check) => (
+              <div class="flex items-start gap-3 py-3" style="border-bottom: 0.5px solid #f1f5f9;">
+                <div
+                  class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-medium flex-shrink-0 mt-0.5"
+                  style={`background: ${checkIconStyles[check.status].bg}; color: ${checkIconStyles[check.status].color};`}
+                >
+                  {check.icon}
+                </div>
+                <div class="flex-1 text-[12px]">
+                  <div class="text-navy-900 font-medium mb-0.5">{check.title}</div>
+                  <div class="text-[10.5px] text-slate-500 leading-relaxed">{check.sub}</div>
+                </div>
+                <span
+                  class="text-[9px] px-2 py-0.5 rounded-pill font-medium whitespace-nowrap"
+                  style={`background: ${badgeStyles[check.badgeTone].bg}; color: ${badgeStyles[check.badgeTone].color};`}
+                >
+                  {check.badge}
+                </span>
+              </div>
+            ))}
+
+            <div class="pt-3 mt-2 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+              Stylised example · 15,000 clinics monitored continuously
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 6 - DELIVERY (dark navy)                      */}
+  {/* ==================================================== */}
+  <section class="section-dark">
+    <div class="container-site relative z-10">
+      <SectionHeader
+        eyebrow="DELIVERY"
+        title="However your team works."
+        subtitle="AestheticIQ delivers into your existing workflow, not a new tool to learn, not a new dashboard to log into."
+        centered
+        light
+      />
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {deliveryCards.map((card) => (
+          <div class="bg-white/[0.03] border border-white/10 rounded-card p-6">
+            <div class="w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-500 flex items-center justify-center text-sm font-semibold mb-3">
+              {card.icon}
+            </div>
+            <h4 class="text-[13px] font-medium text-white mb-2">{card.title}</h4>
+            <p class="text-[12px] text-white/60 leading-relaxed">{card.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 7 - CAPABILITY GRID                           */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      <div class="max-w-[720px] mb-12">
+        <div class="eyebrow mb-4">THE FULL CAPABILITY</div>
+        <h2 class="display-title mb-5">Every question, organised by the job you're doing.</h2>
+        <p class="text-base text-slate-600 leading-relaxed">
+          Not every user asks every question. Find the block that matches your role,
+          and the questions AestheticIQ was built to answer for you.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        {capabilityBlocks.map((block) => (
+          <div class="bg-slate-50 border border-slate-200 rounded-card p-7">
+            <div class="text-[10px] tracking-[1.5px] uppercase text-cyan-500 font-medium mb-2">
+              {block.label}
+            </div>
+            <h3 class="font-serif text-xl text-navy-900 mb-4 leading-tight">{block.heading}</h3>
+            <ul class="flex flex-col gap-2">
+              {block.items.map((item) => (
+                <li class="text-[13px] text-navy-900 leading-relaxed pl-5 relative">
+                  <span class="absolute left-0 top-0 text-cyan-500 font-medium">→</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 8 - FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          GET STARTED
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          Bring us your hardest question. We'll show you the answer.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          The most useful demos are the ones where you pick the question. Tell us your
+          category, your territory, or your market. We'll show you exactly what AestheticIQ
+          sees, with your data, in 20 minutes.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Book a demo →</a>
+          <a href="/contact/" class="btn-secondary-light">Download sample dataset</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,332 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+import SectionHeader from '@components/SectionHeader.astro';
+import PricingTier from '@components/PricingTier.astro';
+import RelatedLinks from '@components/RelatedLinks.astro';
+
+// =====================================================
+// HERO STATS
+// =====================================================
+const heroStats = [
+  { num: '15,000+', label: 'Addressable clinics' },
+  { num: '3-4 wks', label: 'Typical campaign delivery' },
+  { num: 'End-to-end', label: 'Design to dispatch' },
+];
+
+// =====================================================
+// "WHAT WE OFFER" - four campaign types
+// =====================================================
+const campaignTypes = [
+  {
+    num: 1,
+    title: 'Targeted direct mail',
+    desc: 'Physical mail to clinic owners or practitioners. Launch announcements, educational packs, event invites. Print, pack, and dispatch handled via our mailhouse partners.',
+  },
+  {
+    num: 2,
+    title: 'Digital audience campaigns',
+    desc: 'Custom audiences built for LinkedIn, Meta, and Google Ads. Match-rate typically 70-85% on LinkedIn due to the depth of our practitioner data.',
+  },
+  {
+    num: 3,
+    title: 'Safety and regulatory mailers',
+    desc: 'Prescribing information updates, safety communications, regulatory notices. Designed and dispatched with full audit trail for your regulatory team.',
+  },
+  {
+    num: 4,
+    title: 'Bespoke audience lists',
+    desc: 'One-off audience exports for campaigns you will run in-house. Delivered as CSV or directly into your marketing platform.',
+  },
+];
+
+// =====================================================
+// CAMPAIGN BRIEF VISUAL - sample deliverable
+// =====================================================
+const campaignMetrics = [
+  { value: '847', label: 'Clinics' },
+  { value: '£11k', label: 'Campaign cost' },
+  { value: '3 wks', label: 'Delivery' },
+];
+
+// =====================================================
+// DELIVERY - three pillars
+// =====================================================
+const deliveryCards = [
+  {
+    icon: 'A',
+    title: 'Audience Selection',
+    body: 'Bespoke audience built against any combination of geography, treatment, brand, practitioner, or compliance attribute from the AestheticIQ dataset.',
+    bullets: [
+      'Segment briefed in days',
+      'Counts provided free of charge',
+      'Address and email verified',
+    ],
+  },
+  {
+    icon: 'P',
+    title: 'Print and Dispatch',
+    body: 'Print partners across the UK for high-quality direct mail, sample fulfilment, and tracked delivery. Regulatory mailer compliance supported.',
+    bullets: [
+      'UK and international fulfilment',
+      'Audit trail for regulatory mailers',
+      'Postage optimisation built in',
+    ],
+  },
+  {
+    icon: 'D',
+    title: 'Digital Activation',
+    body: 'Custom audiences loaded directly into LinkedIn, Meta, and Google. Pixel tracking, conversion reporting, and attribution support included.',
+    bullets: [
+      'LinkedIn Matched Audiences',
+      'Meta Custom Audiences',
+      'Reporting via weekly dashboard',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Marketing Services"
+  description="Targeted campaigns into the UK clinic channel, planned, built, and delivered end-to-end. Direct mail, digital audiences, safety mailers, and bespoke audience lists built on the AestheticIQ clinic dataset."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Solutions', href: '/solutions/' },
+      { label: 'Marketing Services' },
+    ]}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 1 - HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="SOLUTION · MARKETING SERVICES"
+    title='Targeted campaigns into the UK clinic channel, <em>planned, built, and delivered end-to-end.</em>'
+    subtitle="Direct mail, digital audiences, safety mailers, and brand-promotion campaigns that reach the right clinics, the right practitioners, and the right decision-makers. Built on the AestheticIQ clinic dataset and executed by our marketing team."
+    primaryCta={{ label: 'Scope a campaign →', href: '/contact/' }}
+    secondaryCta={{ label: 'See a sample audience', href: '/contact/' }}
+    stats={heroStats}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 - WHAT WE OFFER                             */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1fr_1.1fr] gap-14 items-start">
+        {/* Left: copy + 4 campaign types */}
+        <div>
+          <div class="eyebrow mb-4">WHAT WE OFFER</div>
+          <h2 class="display-title mb-5">Four campaign types, one methodology.</h2>
+          <p class="text-lg text-slate-600 leading-relaxed mb-8">
+            Every campaign starts with audience selection from the AestheticIQ dataset, so
+            you're reaching real, validated clinics with accurate decision-maker contact
+            details, not scrape-quality mailing lists. End-to-end delivery means one partner
+            for audience, creative, fulfilment, and reporting.
+          </p>
+
+          <div class="flex flex-col gap-3">
+            {campaignTypes.map((type) => (
+              <div class="flex gap-4 p-4 bg-slate-50 border border-slate-200 rounded-card">
+                <div class="font-serif text-2xl text-cyan-500 leading-none flex-shrink-0">
+                  {type.num}
+                </div>
+                <div>
+                  <div class="text-[13px] font-medium text-navy-900 mb-1">{type.title}</div>
+                  <div class="text-[12px] text-slate-600 leading-relaxed">{type.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: sample campaign brief visual */}
+        <div class="lg:sticky lg:top-20">
+          <div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+            {/* Header */}
+            <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+              <div class="text-[13px] font-medium text-navy-900">Campaign brief · Direct mail</div>
+              <div class="text-[10px] text-slate-400">Sample deliverable</div>
+            </div>
+
+            {/* Campaign hero */}
+            <div class="p-4 bg-slate-50 rounded-lg mb-4 text-center">
+              <div class="text-[10px] tracking-[1.5px] text-slate-400 mb-1 uppercase">
+                PHARMA · INJECTABLES LAUNCH
+              </div>
+              <div class="font-serif text-xl text-navy-900 mb-1 leading-tight">
+                Introducing [Product X] to London's premier aesthetic clinics
+              </div>
+              <div class="text-[11px] text-slate-500">
+                Educational pack + sample + booking link for webinar
+              </div>
+            </div>
+
+            {/* Audience */}
+            <div class="text-[11px] text-slate-500 tracking-[1.5px] uppercase mb-2">Audience</div>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg mb-4">
+              <div class="text-[11px] text-navy-900">
+                London skin clinics · GMC prescriber · 3+ treatment categories · not currently using your brand
+              </div>
+            </div>
+
+            {/* Metrics */}
+            <div class="grid grid-cols-3 gap-2 mb-2">
+              {campaignMetrics.map((metric) => (
+                <div class="bg-slate-50 rounded-lg p-3 text-center">
+                  <div class="font-serif text-xl text-cyan-500 leading-none">{metric.value}</div>
+                  <div class="text-[9px] text-slate-400 uppercase tracking-wide mt-1">{metric.label}</div>
+                </div>
+              ))}
+            </div>
+
+            <div class="pt-3 mt-3 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+              Stylised example · scoped, approved, dispatched by our team
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 - DELIVERY (dark navy)                      */}
+  {/* ==================================================== */}
+  <section class="section-dark">
+    <div class="container-site relative z-10">
+      <SectionHeader
+        eyebrow="DELIVERY"
+        title="End-to-end, so your team doesn't have to manage five vendors."
+        subtitle="Audience, creative guidance, print and dispatch, digital pixel placement, and reporting, all handled by our team."
+        centered
+        light
+      />
+
+      <div class="grid md:grid-cols-3 gap-5">
+        {deliveryCards.map((card) => (
+          <div class="bg-white/[0.03] border border-white/10 rounded-card p-7">
+            <div class="w-10 h-10 rounded-lg bg-cyan-500/15 text-cyan-500 flex items-center justify-center text-base font-semibold mb-4">
+              {card.icon}
+            </div>
+            <h3 class="font-serif text-xl text-white mb-2">{card.title}</h3>
+            <p class="text-[13px] text-white/68 leading-relaxed mb-4">{card.body}</p>
+
+            <ul class="pt-4 border-t border-white/8 space-y-1.5">
+              {card.bullets.map((bullet) => (
+                <li class="text-[12px] text-white/75 pl-4 relative leading-relaxed">
+                  <span class="absolute left-0 text-cyan-500">→</span>
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 4 - PRICING                                   */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      <SectionHeader
+        eyebrow="PRICING"
+        title="Per-campaign pricing. Annual programmes available."
+        subtitle="Most customers start with a single campaign. Annual marketing programmes (multiple campaigns across the year) bundled at preferential rates."
+        centered
+      />
+
+      <div class="grid md:grid-cols-3 gap-5">
+        <PricingTier
+          tier="TIER 01"
+          name="Bespoke Audience"
+          price="£5,000"
+          priceRange="-£6,000"
+          period="One-off"
+          description="A single audience segment, delivered as CSV or directly into your marketing platform. Ideal for campaigns you will run in-house."
+          features={[
+            '500-2,000 verified records',
+            'Full contact details where available',
+            'LinkedIn / Meta formatted',
+            'Delivered in 5 working days',
+          ]}
+        />
+
+        <PricingTier
+          tier="TIER 02"
+          name="Managed Campaign"
+          price="£10,000"
+          priceRange="-£15,000"
+          period="Per campaign"
+          description="Full campaign: audience, creative guidance, print, dispatch, and reporting. Delivered end-to-end over 3-4 weeks."
+          features={[
+            'Audience selection and briefing',
+            'Print, pack and dispatch',
+            'Digital pixel placement',
+            'Weekly progress updates',
+            'Post-campaign reporting',
+          ]}
+          featured={true}
+        />
+
+        <PricingTier
+          tier="TIER 03"
+          name="Annual Programme"
+          price="£40,000"
+          priceRange="+"
+          period="Per year"
+          description="Multiple campaigns across the year with bundled pricing and a named account lead. Best for category launches and sustained brand activity."
+          features={[
+            '4-6 campaigns per year',
+            'Named account manager',
+            'Annual campaign calendar planning',
+            'Priority audience refresh',
+            'Preferential per-campaign rate',
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 5 - FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          GET STARTED
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          Tell us about your next campaign.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          We'll scope the audience, costs, and timeline in a single call.
+          No commitment needed until you've seen the segment.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Scope a campaign →</a>
+          <a href="/contact/" class="btn-secondary-light">Book a demo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedLinks
+    label="OTHER SOLUTIONS"
+    links={[
+      { label: 'Reference Data', href: '/solutions/reference-data/' },
+      { label: 'Market Intelligence', href: '/solutions/market-intelligence/' },
+      { label: 'Consultancy', href: '/solutions/consultancy/' },
+      { label: 'Compliance & PV', href: '/solutions/compliance-pv/' },
+    ]}
+  />
+</BaseLayout>

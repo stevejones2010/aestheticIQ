@@ -1,0 +1,321 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+import RoleSection from '@components/RoleSection.astro';
+import RelatedLinks from '@components/RelatedLinks.astro';
+import ScoredList from '@components/ScoredList.astro';
+import BarChart from '@components/BarChart.astro';
+
+// =====================================================
+// DOMAIN-FLUENCY CARDS - section 2
+// =====================================================
+const domainCards = [
+  {
+    label: 'DEAL TERMS',
+    title: 'M&A & buy-and-build',
+    body: 'Target screening, <strong>buy-and-build</strong> mapping, chain consolidation tracking, add-on identification, revenue proxy modelling.',
+  },
+  {
+    label: 'MARKET TERMS',
+    title: 'Sector analysis',
+    body: 'Addressable market sizing, white-space identification, <strong>regional fragmentation</strong>, treatment-mix benchmarks, growth-category tracking.',
+  },
+  {
+    label: 'PORTFOLIO TERMS',
+    title: 'Portfolio monitoring',
+    body: 'Peer benchmarking, competitive density tracking, <strong>KPI proxies</strong>, post-deal performance monitoring, exit preparation intelligence.',
+  },
+];
+
+// =====================================================
+// DATA STACK ROWS - section 3
+// =====================================================
+const stackRows = [
+  {
+    type: 'generalist',
+    letter: 'F',
+    name: 'Financial databases',
+    sub: 'FAME, S&P Capital IQ: company-level financials',
+  },
+  {
+    type: 'generalist',
+    letter: 'C',
+    name: 'Commercial DD consultants',
+    sub: 'Bespoke market studies · typically £150–400k',
+  },
+  {
+    type: 'specialist',
+    letter: 'A',
+    name: 'AestheticIQ, sector layer',
+    sub: 'Every UK clinic · treatment mix · brand activity · continuous refresh',
+  },
+];
+---
+
+<BaseLayout
+  title="Investors & Corporate Finance"
+  description="Acquisition screening, market sizing, and portfolio monitoring for PE houses, CF boutiques, and corporate buyers investing in the UK aesthetic market."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Industries', href: '/industries/' },
+      { label: 'Investors & Corporate Finance' },
+    ]}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 1 - HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="FOR INVESTORS & CORPORATE FINANCE"
+    title="The UK aesthetics market is fragmented, fast-growing, and <em>opaque.</em>"
+    subtitle="15,000 clinics, most of them privately-held independents, with financial data scattered across Companies House, treatment information behind booking platforms, and almost no consolidated market reporting. AestheticIQ is the single source of truth for investors, CF boutiques, and corporate buyers looking at this space."
+    primaryCta={{ label: 'Book a demo →', href: '/contact/' }}
+    secondaryCta={{ label: 'See a sample dataset', href: '/contact/' }}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 - DOMAIN FLUENCY PROOF                      */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-tight">
+      <div class="eyebrow mb-4">WE SPEAK YOUR LANGUAGE</div>
+      <h2 class="font-serif text-3xl md:text-4xl text-navy-900 leading-tight tracking-tighter mb-12">
+        Sector analysis for UK aesthetics needs to combine <em class="text-cyan-500 not-italic">clinic-level
+        detail</em> (who, where, what treatments) with <em class="text-cyan-500 not-italic">market-structure
+        intelligence</em> (consolidation, white-space, chain dynamics). Most data sources provide one.
+        AestheticIQ provides both.
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-5">
+        {domainCards.map((card) => (
+          <div class="bg-slate-50 border border-slate-200 rounded-card p-6">
+            <div class="text-[10px] tracking-eyebrow uppercase text-slate-500 font-medium mb-2.5">
+              {card.label}
+            </div>
+            <h4 class="text-[13px] text-navy-900 font-medium mb-2">{card.title}</h4>
+            <p class="text-[12px] text-slate-600 leading-relaxed" set:html={card.body} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 - STACK POSITIONING                         */}
+  {/* ==================================================== */}
+  <section class="section-alt border-b border-slate-200">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-14 items-center">
+        <div>
+          <div class="eyebrow mb-4">WHERE WE FIT</div>
+          <h2 class="display-title mb-5">The sector data layer CDDs currently pay consultants to assemble.</h2>
+          <p class="text-lg text-slate-600 leading-relaxed mb-4">
+            Commercial Due Diligence on UK aesthetic investments typically means paying a specialist
+            consultancy £150–400k to assemble market intelligence from scratch. AestheticIQ provides the
+            underlying data layer those projects rely on: pre-built, validated, and continuously refreshed.
+          </p>
+          <p class="text-lg text-slate-600 leading-relaxed">
+            Delivered as bespoke project reports or continuous portfolio-monitoring dashboards.
+          </p>
+        </div>
+
+        {/* Stack visual */}
+        <div class="bg-white border border-slate-200 rounded-card p-6 shadow-card-strong">
+          <div class="text-[11px] uppercase tracking-eyebrow text-slate-500 font-medium mb-4">
+            A typical deal-team data stack
+          </div>
+
+          {stackRows.map((row) => (
+            <div
+              class:list={[
+                'flex items-center gap-3 px-4 py-3.5 rounded-lg mb-2',
+                row.type === 'specialist'
+                  ? 'bg-cyan-500/[0.06] border border-cyan-500/30'
+                  : 'bg-slate-100 border border-slate-200',
+              ]}
+            >
+              <div
+                class:list={[
+                  'w-8 h-8 rounded-lg flex items-center justify-center text-sm font-semibold flex-shrink-0',
+                  row.type === 'specialist'
+                    ? 'bg-cyan-500 text-white'
+                    : 'bg-slate-300 text-slate-600',
+                ]}
+              >
+                {row.letter}
+              </div>
+              <div class="flex-1">
+                <div class="text-[13px] font-medium text-navy-900 mb-0.5">{row.name}</div>
+                <div class="text-[11px] text-slate-500 leading-snug">{row.sub}</div>
+              </div>
+            </div>
+          ))}
+
+          <div class="text-[11.5px] text-slate-500 text-center mt-4 italic leading-relaxed">
+            Reduces CDD scope. Provides the data layer that used to take 6 weeks to assemble.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 4 - USE CASES INTRO                           */}
+  {/* ==================================================== */}
+  <section class="pt-16 pb-6">
+    <div class="container-tight text-center">
+      <div class="eyebrow mb-4">HOW TEAMS USE IT</div>
+      <h2 class="display-title mb-5">Three use cases. Three deal moments.</h2>
+      <p class="text-lg text-slate-600 leading-relaxed">
+        Pre-deal screening, in-deal diligence, and post-deal monitoring, each answered by the same
+        underlying dataset.
+      </p>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* USE CASE 01 - ACQUISITION SCREENING                   */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Use case 01 · Acquisition screening"
+    title="For M&A teams and buy-and-build strategies."
+    description="UK aesthetics is the kind of sector made for roll-up strategies: fragmented, fast-growing, with small independents ripe for consolidation. But identifying credible acquisition targets at clinic-group level requires data that sits across Companies House, treatment offerings, geographic coverage, and chain maturity. AestheticIQ assembles it."
+    questions={[
+      'Which UK aesthetic chains have 3–10 sites and revenue indicators suggesting >£5m turnover?',
+      'Which independent clinics would round out a buy-and-build platform in the South East?',
+      'Which PE-backed platforms have we not yet mapped?',
+      'Where is the most fragmented regional ownership, best roll-up opportunity?',
+    ]}
+    outcome='Structured acquisition target lists in weeks, not months. <strong>Replaces the consultant-assembled long list stage of every UK aesthetics deal.</strong>'
+  >
+    <ScoredList
+      header="Acquisition targets · SE platform"
+      subheader="Filter: 3–10 sites · £3–8m est."
+      rows={[
+        { name: 'Skinoza Group', details: '5 sites · London + SE · est. £6.2m · CH 11234567', score: 'A+', scoreLabel: 'Fit', scoreTone: 'cyan' },
+        { name: 'InnovaSkin Holdings', details: '4 sites · SE · est. £4.8m · CH 12345678', score: 'A', scoreLabel: 'Fit', scoreTone: 'cyan' },
+        { name: 'Moda Aesthetic Group', details: '6 sites · London + Home Counties · est. £7.4m · CH 13456789', score: 'A', scoreLabel: 'Fit', scoreTone: 'cyan' },
+        { name: 'Nova Aesthetic Clinics Ltd', details: '3 sites · London · est. £3.1m · CH 14567890', score: 'B+', scoreLabel: 'Fit', scoreTone: 'cyan' },
+        { name: 'Bloom Clinic Group', details: '4 sites · London · est. £4.2m · CH 15678901', score: 'B+', scoreLabel: 'Fit', scoreTone: 'cyan' },
+      ]}
+      footer="Stylised example · revenue estimates from Companies House + proxy modelling"
+    />
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* USE CASE 02 - MARKET SIZING & DD                      */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Use case 02 · Market sizing & DD"
+    title="For Commercial Due Diligence and market studies."
+    description="The UK aesthetics sector is crying out for rigorous market sizing, white-space mapping, and fragmentation analysis. Most existing studies rely on interview-based top-down estimates. AestheticIQ provides a bottom-up dataset built from clinic-level reality: the 15,000 clinics, their treatment offerings, their chain affiliations, their regional density."
+    questions={[
+      "What's the true TAM for injectables in the UK, by region?",
+      'How fragmented is the market by region, independent vs. chain share?',
+      'Which treatment categories are fastest-growing and with most runway?',
+      "What's the typical treatment mix and revenue profile of a target clinic at this scale?",
+    ]}
+    outcome='<strong>Bottom-up sector analysis that stands up in an IC pack.</strong> Replaces interview-driven market estimates with clinic-level data.'
+    reverse={true}
+    alt={true}
+  >
+    <div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+        <div class="text-xs font-medium text-navy-900">Regional fragmentation · Independent share</div>
+        <div class="text-[10px] text-slate-400">% clinics not in a chain</div>
+      </div>
+
+      <BarChart
+        items={[
+          { label: 'NE England', value: 94, valueLabel: '94%', highlight: true },
+          { label: 'Wales', value: 91, valueLabel: '91%' },
+          { label: 'Yorkshire', value: 86, valueLabel: '86%' },
+          { label: 'Midlands', value: 81, valueLabel: '81%' },
+          { label: 'NW England', value: 74, valueLabel: '74%' },
+          { label: 'London', value: 64, valueLabel: '64%' },
+        ]}
+        scale={1}
+        labelWidth="90px"
+      />
+
+      <div class="mt-4 pt-3 border-t border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+        Highest fragmentation in NE England and Wales. London already consolidating: chains now hold 36% share.
+      </div>
+
+      <div class="mt-3 pt-3 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+        Stylised example · UK fragmentation analysis
+      </div>
+    </div>
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* USE CASE 03 - PORTFOLIO MONITORING                    */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Use case 03 · Portfolio monitoring"
+    title="For portfolio operations and asset-management teams."
+    description="Post-deal, the question shifts from <em>did we buy right?</em> to <em>is it outperforming peers?</em> AestheticIQ provides continuous peer-benchmarking: how your portfolio clinics compare against local competitors on treatment breadth, brand visibility, pricing position, and review performance. Quarterly reporting for IC decks, early warning on underperformance, and data-driven exit prep."
+    questions={[
+      'How do our portfolio clinics rank against local peers on rating and review volume?',
+      'Which new competitor clinics have opened within 2 miles of our sites?',
+      "What's our portfolio's pricing position vs. category benchmarks?",
+      'Has our portfolio expanded treatment breadth vs. the category average?',
+    ]}
+    outcome="Evidence-based portfolio reporting. Exit-prep narrative built on continuous, defensible market comparisons."
+  >
+    <ScoredList
+      header="Portfolio benchmarking · Q1 2026"
+      subheader="5 portfolio sites"
+      rows={[
+        { name: 'Skinoza Clinic · Greenwich', details: 'Rating 4.9 vs. peer avg 4.6 · reviews +42%', score: '↑', scoreLabel: 'Over', scoreTone: 'green' },
+        { name: 'Skinoza Clinic · Shoreditch', details: 'Rating 4.7 vs. peer avg 4.6 · reviews +8%', score: '=', scoreLabel: 'At', scoreTone: 'cyan' },
+        { name: 'Skinoza Clinic · Chelsea', details: 'Rating 4.8 vs. peer avg 4.7 · treatments +2 cat', score: '↑', scoreLabel: 'Over', scoreTone: 'green' },
+        { name: 'Skinoza Clinic · Canary Wharf', details: 'Rating 4.5 vs. peer avg 4.7 · reviews −15%', score: '↓', scoreLabel: 'Under', scoreTone: 'amber' },
+        { name: "Skinoza Clinic · King's Cross", details: 'Rating 4.8 vs. peer avg 4.5 · pricing above', score: '↑', scoreLabel: 'Over', scoreTone: 'green' },
+      ]}
+      footer="Stylised example · continuous peer benchmarking"
+    />
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* SECTION 5 - FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          GET STARTED
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          Show us your thesis. We'll show you the data.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          Every investor engagement starts with your specific deal or sector question. 20-minute
+          conversation to show what AestheticIQ can surface for your thesis, no generic pitch.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Book a demo →</a>
+          <a href="/contact/" class="btn-secondary-light">Download sample dataset</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedLinks
+    label="OTHER INDUSTRIES WE SERVE"
+    links={[
+      { label: 'Pharma & Injectables', href: '/industries/pharma/' },
+      { label: 'Medical Devices', href: '/industries/medical-devices/' },
+      { label: 'Beauty & Skincare', href: '/industries/beauty-skincare/' },
+      { label: 'Distributors', href: '/industries/distributors/' },
+      { label: 'Training Providers', href: '/industries/training/' },
+    ]}
+  />
+</BaseLayout>

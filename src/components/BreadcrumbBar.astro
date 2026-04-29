@@ -1,0 +1,26 @@
+---
+export interface Props {
+  items: { label: string; href?: string }[]; // last item typically has no href
+}
+
+const { items } = Astro.props;
+---
+
+<div class="bg-slate-50 py-2.5 border-b border-slate-200">
+  <div class="container-site flex items-center text-[11.5px] text-slate-500 flex-wrap">
+    {items.map((item, i) => (
+      <>
+        {item.href ? (
+          <a href={item.href} class="text-slate-500 hover:text-cyan-500 transition-colors">
+            {item.label}
+          </a>
+        ) : (
+          <span class="text-navy-700 font-medium">{item.label}</span>
+        )}
+        {i < items.length - 1 && (
+          <span class="mx-2 text-slate-300">/</span>
+        )}
+      </>
+    ))}
+  </div>
+</div>

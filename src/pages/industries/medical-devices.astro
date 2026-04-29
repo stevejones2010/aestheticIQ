@@ -1,0 +1,320 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+import RoleSection from '@components/RoleSection.astro';
+import RelatedLinks from '@components/RelatedLinks.astro';
+import ScoredList from '@components/ScoredList.astro';
+import Timeline from '@components/Timeline.astro';
+import RegionGrid from '@components/RegionGrid.astro';
+
+// =====================================================
+// DOMAIN-FLUENCY CARDS - section 2
+// =====================================================
+const domainCards = [
+  {
+    label: 'SALES TERMS',
+    title: 'Capital sales & KAMs',
+    body: 'Key Account Management, <strong>POC</strong> placement, <strong>RFP</strong> tracking, finance-qualified leads, consumables attachment modelling.',
+  },
+  {
+    label: 'CLINICAL TERMS',
+    title: 'Clinical fit',
+    body: '<strong>Fitzpatrick</strong> skin-type coverage, treatment-indication mapping, clinical evidence requirements, training certifications.',
+  },
+  {
+    label: 'COMMERCIAL TERMS',
+    title: 'Finance & ROI',
+    body: 'Clinic <strong>footfall</strong> indicators, treatment-category maturity, competitor device signals, payback-period modelling inputs.',
+  },
+];
+
+// =====================================================
+// DATA STACK ROWS - section 3
+// =====================================================
+const stackRows = [
+  {
+    type: 'generalist',
+    letter: 'S',
+    name: 'Salesforce (or similar CRM)',
+    sub: 'Your active pipeline, quotes, and close dates',
+  },
+  {
+    type: 'generalist',
+    letter: 'L',
+    name: 'Lead-gen & trade shows',
+    sub: 'Clinics who raised their hand. The 5% of the market.',
+  },
+  {
+    type: 'specialist',
+    letter: 'A',
+    name: 'AestheticIQ, market layer',
+    sub: 'The other 13,000 UK clinics. Sized, segmented, demand-qualified.',
+  },
+];
+---
+
+<BaseLayout
+  title="Medical Devices"
+  description="Capital equipment sales targeting, clinical specialist engagement, and territory planning for laser, RF, HIFU, and energy-based device manufacturers in the UK aesthetic market."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Industries', href: '/industries/' },
+      { label: 'Medical Devices' },
+    ]}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 1 · HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="FOR MEDICAL DEVICES"
+    title="Capital equipment sales cycles are long. <em>Picking the wrong clinic wastes months.</em>"
+    subtitle="A £80k laser sale takes 6–12 months to close. Every demo, every site visit, every consumable follow-up is a bet on that clinic being the right one. AestheticIQ helps you make the bet with open eyes: treatment mix, practitioner staffing, existing equipment signals, and commercial maturity, across 15,000 UK clinics."
+    primaryCta={{ label: 'Book a demo →', href: '/contact/' }}
+    secondaryCta={{ label: 'See a sample dataset', href: '/contact/' }}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 · DOMAIN FLUENCY PROOF                      */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-tight">
+      <div class="eyebrow mb-4">WE SPEAK YOUR LANGUAGE</div>
+      <h2 class="font-serif text-3xl md:text-4xl text-navy-900 leading-tight tracking-tighter mb-12">
+        Aesthetic device sales are <em class="text-cyan-500 not-italic">capital purchases</em>, not reorders.
+        Every clinic in your pipeline needs the treatment demand, the patient volume, and the clinical
+        credibility to justify the investment. We help your KAMs qualify earlier.
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-5">
+        {domainCards.map((card) => (
+          <div class="bg-slate-50 border border-slate-200 rounded-card p-6">
+            <div class="text-[10px] tracking-eyebrow uppercase text-slate-500 font-medium mb-2.5">
+              {card.label}
+            </div>
+            <h4 class="text-[13px] text-navy-900 font-medium mb-2">{card.title}</h4>
+            <p class="text-[12px] text-slate-600 leading-relaxed" set:html={card.body} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 · STACK POSITIONING                         */}
+  {/* ==================================================== */}
+  <section class="section-alt border-b border-slate-200">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-14 items-center">
+        <div>
+          <div class="eyebrow mb-4">WHERE WE FIT</div>
+          <h2 class="display-title mb-5">The demand-side intelligence your CRM doesn't have.</h2>
+          <p class="text-lg text-slate-600 leading-relaxed mb-4">
+            Your Salesforce instance tracks <strong class="text-navy-900 font-medium">your pipeline</strong>:
+            opportunities, quotes, close dates. It doesn't tell you about the 13,000 UK clinics that
+            aren't in your pipeline yet. AestheticIQ is the market-side layer: which clinics are good-fit
+            for your device, sized by demand signals, segmented by maturity.
+          </p>
+          <p class="text-lg text-slate-600 leading-relaxed">
+            Same Salesforce integration, same account-record structure. Imports directly into your
+            existing pipeline process.
+          </p>
+        </div>
+
+        {/* Stack visual */}
+        <div class="bg-white border border-slate-200 rounded-card p-6 shadow-card-strong">
+          <div class="text-[11px] uppercase tracking-eyebrow text-slate-500 font-medium mb-4">
+            A typical UK device-sales data stack
+          </div>
+
+          {stackRows.map((row) => (
+            <div
+              class:list={[
+                'flex items-center gap-3 px-4 py-3.5 rounded-lg mb-2',
+                row.type === 'specialist'
+                  ? 'bg-cyan-500/[0.06] border border-cyan-500/30'
+                  : 'bg-slate-100 border border-slate-200',
+              ]}
+            >
+              <div
+                class:list={[
+                  'w-8 h-8 rounded-lg flex items-center justify-center text-sm font-semibold flex-shrink-0',
+                  row.type === 'specialist'
+                    ? 'bg-cyan-500 text-white'
+                    : 'bg-slate-300 text-slate-600',
+                ]}
+              >
+                {row.letter}
+              </div>
+              <div class="flex-1">
+                <div class="text-[13px] font-medium text-navy-900 mb-0.5">{row.name}</div>
+                <div class="text-[11px] text-slate-500 leading-snug">{row.sub}</div>
+              </div>
+            </div>
+          ))}
+
+          <div class="text-[11.5px] text-slate-500 text-center mt-4 italic leading-relaxed">
+            Sits upstream of your pipeline. Feeds qualified opportunities in.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 4 · ROLES INTRO                               */}
+  {/* ==================================================== */}
+  <section class="pt-16 pb-6">
+    <div class="container-tight text-center">
+      <div class="eyebrow mb-4">HOW TEAMS USE IT</div>
+      <h2 class="display-title mb-5">Three teams. Three use cases.</h2>
+      <p class="text-lg text-slate-600 leading-relaxed">
+        The specific commercial and clinical challenges in UK device sales, and how
+        AestheticIQ solves each.
+      </p>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* ROLE 01 · KEY ACCOUNT MANAGEMENT                      */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Role 01 · Key Account Management"
+    title="For KAMs, field sales engineers, and capital-equipment reps."
+    description="Your KAMs operate small territories with long sales cycles. Every site visit costs time, travel, and attention. AestheticIQ identifies clinics with the right treatment mix, patient volume signals, and existing equipment gaps to warrant the investment, so your team starts each quarter with qualified prospects, not cold lists."
+    questions={[
+      'Which clinics in my territory offer IPL but no advanced laser, candidate for upgrade?',
+      'Which multi-site chains have expanded in the last 12 months and may be re-equipping?',
+      'Which good-fit clinics have GMC prescribers and 3+ treatment categories already?',
+      'Which clinics mention competitor device brands, ripe for switch conversations at end of contract?',
+      'How should territory coverage change to match clinic-density patterns?',
+    ]}
+    outcome='Shifts the first conversation from &quot;are you a fit?&quot; to &quot;here&#39;s why we think you are.&quot; <strong>Reduces early-stage qualification time by 50–70%</strong> per opportunity.'
+  >
+    <div>
+      <div class="flex flex-wrap gap-1.5 mb-3">
+        <span class="text-[10px] px-3 py-1 rounded-pill border font-medium" style="background: rgba(0,180,216,0.08); color: #0284a8; border-color: rgba(0,180,216,0.25);">IPL only</span>
+        <span class="text-[10px] px-3 py-1 rounded-pill border font-medium" style="background: rgba(0,180,216,0.08); color: #0284a8; border-color: rgba(0,180,216,0.25);">3+ categories</span>
+        <span class="text-[10px] px-3 py-1 rounded-pill border font-medium" style="background: rgba(0,180,216,0.08); color: #0284a8; border-color: rgba(0,180,216,0.25);">GMC prescriber</span>
+      </div>
+      <ScoredList
+        header="Qualified Prospects · RF Device · NW Region"
+        subheader="47 clinics"
+        rows={[
+          { name: 'Skinoza Clinic', details: 'Manchester M3 · 3 sites', score: 'A+', scoreLabel: '4.9 ★', scoreTone: 'green' },
+          { name: 'Moda Donna Beauty', details: 'Liverpool L1 · Independent', score: 'A', scoreLabel: '4.8 ★', scoreTone: 'green' },
+          { name: 'InnovaSkin', details: 'Stockport · 2 sites', score: 'A', scoreLabel: '4.7 ★', scoreTone: 'green' },
+          { name: 'Nova Aesthetic Clinic', details: 'Preston · Independent', score: 'B+', scoreLabel: '4.6 ★', scoreTone: 'amber' },
+          { name: 'AC House of Aesthetics', details: 'Leeds · Independent', score: 'B+', scoreLabel: '4.5 ★', scoreTone: 'amber' },
+        ]}
+        footer="Stylised example · delivered via Salesforce sync"
+      />
+    </div>
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* ROLE 02 · CLINICAL SPECIALISTS                        */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Role 02 · Clinical Specialists"
+    title="For clinical specialists and training leads."
+    description="Capital equipment is sold on clinical outcomes, not spec sheets. Your clinical specialists need to identify the right practitioners to train, accredit, and build into reference sites. AestheticIQ maps the UK's practitioner population: by qualification, by treatment focus, by public clinical visibility, so your team builds reference-practitioner relationships where they matter most."
+    questions={[
+      'Which practitioners at our customer sites are active clinical trainers or speakers?',
+      'Who are the clinical influencers for RF treatments in the UK?',
+      'Which of our reference customers have the strongest public credentials for case study work?',
+      'Where should we host regional clinical workshops to maximise attendance?',
+    ]}
+    outcome="Prioritises clinical engagement around practitioners with real public influence. Supports reference-site development with credential-verified candidates."
+    reverse={true}
+    alt={true}
+  >
+    <Timeline
+      header="Sales cycle · Tracked account"
+      subheader="The Bloom Clinic"
+      steps={[
+        { num: 1, title: 'Qualified by AestheticIQ', sub: 'IPL + 4 treatment categories + GMC prescriber', time: 'Day 0' },
+        { num: 2, title: 'First KAM contact', sub: 'Warm outreach referencing their current category mix', time: 'Day 14' },
+        { num: 3, title: 'Clinical specialist demo', sub: 'POC booked · lead practitioner + owner attending', time: 'Day 45' },
+        { num: 4, title: 'Proposal & financing', sub: 'Tailored ROI against their treatment volume estimate', time: 'Day 90' },
+        { num: 5, title: 'Close + training schedule', sub: 'Lead prescriber certified via manufacturer training', time: 'Day 180' },
+      ]}
+      footer="Stylised example · typical cycle for a £50–80k capital device"
+    />
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* ROLE 03 · COMMERCIAL OPERATIONS                       */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Role 03 · Commercial Operations"
+    title="For commercial ops, territory planning, and forecasting."
+    description="Territory design for capital-equipment sales depends on understanding where demand lives: clinic density, treatment maturity, chain vs independent dynamics, and the competitive installed base. AestheticIQ gives your commercial ops team continuous visibility into market structure, replacing the quarterly territory reviews that relied on stale lead-gen data."
+    questions={[
+      "What's the true addressable clinic count in each UK region for our device category?",
+      'How should territories be sized for equal opportunity load across KAMs?',
+      'Which regions are underpenetrated relative to clinic density?',
+      'How has competitor device visibility shifted across the UK this quarter?',
+    ]}
+    outcome="Evidence-based territory alignment. Replaces guesswork with addressable-market data per postcode district."
+  >
+    <RegionGrid
+      header="Addressable clinics by region"
+      subheader="RF device category"
+      cells={[
+        { name: 'London', value: 612, label: 'clinics', heat: 'hot' },
+        { name: 'South East', value: 287, label: 'clinics' },
+        { name: 'NW England', value: 243, label: 'clinics' },
+        { name: 'Midlands', value: 198, label: 'clinics', heat: 'med' },
+        { name: 'Yorkshire', value: 147, label: 'clinics', heat: 'med' },
+        { name: 'Scotland', value: 134, label: 'clinics' },
+        { name: 'SW England', value: 112, label: 'clinics' },
+        { name: 'Wales', value: 78, label: 'clinics' },
+        { name: 'NE England', value: 54, label: 'clinics' },
+      ]}
+      footer="Stylised example · addressable = fit profile + GMC/NMC prescriber"
+    />
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* SECTION 5 · FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          GET STARTED
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          Show us your territory. We'll show you the qualified pipeline.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          Every demo uses real data: your device category, your target geography, your competitive
+          frame. 20 minutes to see what AestheticIQ surfaces.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Book a demo →</a>
+          <a href="/contact/" class="btn-secondary-light">Download sample dataset</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedLinks
+    label="OTHER INDUSTRIES WE SERVE"
+    links={[
+      { label: 'Pharma & Injectables', href: '/industries/pharma/' },
+      { label: 'Professional Beauty & Skincare', href: '/industries/beauty-skincare/' },
+      { label: 'Distributors', href: '/industries/distributors/' },
+      { label: 'Training Providers', href: '/industries/training/' },
+      { label: 'Investors', href: '/industries/investors/' },
+    ]}
+  />
+</BaseLayout>

@@ -1,0 +1,43 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  href: string;
+  buyer?: string; // small label e.g. "For Pharma"
+  highlights?: string[]; // 2-3 short bullet items
+  featured?: boolean;
+}
+
+const { title, description, href, buyer, highlights, featured = false } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    'card-base card-hover block p-7 cursor-pointer h-full flex flex-col',
+    featured && 'border-cyan-500/30 bg-gradient-to-br from-white to-cyan-500/[0.03]',
+  ]}
+>
+  {buyer && (
+    <div class="text-[10px] tracking-eyebrow uppercase text-cyan-700 font-medium mb-3">
+      {buyer}
+    </div>
+  )}
+  <h3 class="font-serif text-2xl text-navy-900 mb-3 leading-tight">{title}</h3>
+  <p class="text-[13.5px] text-slate-600 leading-relaxed mb-4">{description}</p>
+
+  {highlights && highlights.length > 0 && (
+    <ul class="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-2">
+      {highlights.map((item) => (
+        <li class="text-[12px] text-slate-600 pl-4 relative leading-relaxed">
+          <span class="absolute left-0 text-cyan-500">→</span>
+          {item}
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <div class="mt-4 text-[12.5px] text-cyan-500 font-medium">
+    Learn more →
+  </div>
+</a>

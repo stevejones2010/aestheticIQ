@@ -1,0 +1,67 @@
+---
+export interface Props {
+  tier: string;           // "TIER 01", "PROJECT 01" etc.
+  name: string;
+  price: string;          // "£5,000"
+  priceRange?: string;    // "–£6,000"
+  period: string;         // "Per year", "One-off", "Per campaign"
+  description: string;
+  features: string[];
+  featured?: boolean;
+  featuredLabel?: string; // default "Most popular"
+}
+
+const {
+  tier,
+  name,
+  price,
+  priceRange,
+  period,
+  description,
+  features,
+  featured = false,
+  featuredLabel = 'Most popular',
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    'relative bg-white rounded-card p-8 transition-all duration-200',
+    featured
+      ? 'border-2 border-cyan-500 bg-gradient-to-b from-white to-cyan-500/[0.03]'
+      : 'border border-slate-200',
+  ]}
+>
+  {featured && (
+    <div class="absolute -top-2.5 right-6 bg-cyan-500 text-white text-[10px] tracking-eyebrow uppercase px-2.5 py-1 rounded-pill font-medium">
+      {featuredLabel}
+    </div>
+  )}
+
+  <div class="text-[10px] tracking-eyebrow uppercase text-slate-500 font-medium mb-2">
+    {tier}
+  </div>
+
+  <h3 class="font-serif text-2xl text-navy-900 mb-2">{name}</h3>
+
+  <div class="mb-5 pb-5 border-b border-slate-200">
+    <div class="font-serif text-[1.45rem] text-cyan-500 leading-none">
+      {price}
+      {priceRange && (
+        <span class="text-base text-slate-500 font-sans">{priceRange}</span>
+      )}
+    </div>
+    <div class="text-xs text-slate-500 mt-1">{period}</div>
+  </div>
+
+  <p class="text-[13px] text-slate-600 leading-relaxed mb-5">{description}</p>
+
+  <ul class="flex flex-col gap-2">
+    {features.map((feature) => (
+      <li class="text-[12.5px] text-navy-700 pl-6 relative leading-relaxed">
+        <span class="absolute left-0 -top-px text-cyan-500 font-bold">✓</span>
+        {feature}
+      </li>
+    ))}
+  </ul>
+</div>

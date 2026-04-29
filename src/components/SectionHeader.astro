@@ -1,0 +1,39 @@
+---
+export interface Props {
+  eyebrow: string;
+  title: string; // can include <em> tags for cyan accent
+  subtitle?: string;
+  centered?: boolean;
+  light?: boolean; // true = white text for use on dark sections
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  centered = false,
+  light = false,
+} = Astro.props;
+---
+
+<div class:list={[
+  'mb-12',
+  centered ? 'text-center max-w-[700px] mx-auto' : 'max-w-[720px]',
+]}>
+  <div class="eyebrow mb-4">{eyebrow}</div>
+  <h2
+    class:list={[
+      'font-serif text-4xl leading-[1.15] tracking-tighter mb-5',
+      light ? 'text-white' : 'text-navy-900',
+    ]}
+    set:html={title}
+  />
+  {subtitle && (
+    <p class:list={[
+      'text-lg leading-relaxed',
+      light ? 'text-white/68' : 'text-slate-600',
+    ]}>
+      {subtitle}
+    </p>
+  )}
+</div>

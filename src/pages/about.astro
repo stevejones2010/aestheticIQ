@@ -1,0 +1,360 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+import SectionHeader from '@components/SectionHeader.astro';
+
+// =====================================================
+// CAPABILITY STATS - "What we've built"
+// =====================================================
+const capStats = [
+  { num: '15k+', title: 'Clinic records', desc: "Near-complete coverage of the UK's active aesthetic providers." },
+  { num: '28', title: 'Treatment categories', desc: 'Purpose-built taxonomy from injectables to emerging modalities.' },
+  { num: '50+', title: 'Data points per record', desc: 'Identity, location, treatments, practitioners, compliance, commercial signals.' },
+  { num: '50k+', title: 'Live prices monitored', desc: 'Continuous pricing intelligence across the UK clinic channel.' },
+];
+
+// =====================================================
+// PRINCIPLES - four non-negotiables
+// =====================================================
+const principles = [
+  {
+    num: '01',
+    title: 'Aesthetic-native, not aesthetic-adjacent',
+    body: 'We do one thing. We do not cover primary care, hospitals, or the NHS. Those are adequately served by generalist data providers. UK aesthetics is all we build for, and our depth shows.',
+  },
+  {
+    num: '02',
+    title: 'Primary research beats pure scraping',
+    body: 'The strongest data point is one the clinic owner has verified directly. Our dataset is continuously augmented by primary research from clinics themselves, a depth no scrape-only competitor can replicate.',
+  },
+  {
+    num: '03',
+    title: 'Regulatory-aware by design',
+    body: 'Compliance is not a feature we bolted on. Every field is structured around the regulatory frameworks that matter: MAH obligations, CAP Code, licensing tiers, GMC/NMC credentials. Because our customers are audited against those frameworks.',
+  },
+  {
+    num: '04',
+    title: 'UK-first, deep rather than broad',
+    body: 'Our focus is the United Kingdom. Not because we cannot see the value of international coverage, but because depth in one market beats thin coverage across many for the buyers we serve.',
+  },
+];
+
+// =====================================================
+// TEAM - company structure
+// =====================================================
+const teamRoles = [
+  { icon: 'F', name: 'Founder and CEO', desc: 'Product, commercial, and data strategy. Ex-IQVIA.' },
+  { icon: 'D', name: 'Data operations', desc: 'Pipeline development, source integration, AI-powered enrichment and classification.' },
+  { icon: 'A', name: 'Advisory network', desc: 'Pharmaceutical marketing, aesthetic industry, and regulatory experience.' },
+  { icon: 'P', name: 'Delivery partners', desc: 'Print and mailhouse, digital audience activation, specialist analytics.' },
+];
+
+// =====================================================
+// CLINICSCORE - features
+// =====================================================
+const csFeatures = [
+  "Your clinic's local competitive position",
+  'Digital presence vs. peer clinics',
+  'Pricing benchmarks in your region',
+  '2027 licensing regime readiness',
+  'Verified clinic record',
+];
+
+// =====================================================
+// LOOKING AHEAD - three priorities
+// =====================================================
+const roadmap = [
+  {
+    title: 'Deeper data',
+    body: 'Expanding primary-research coverage through ClinicScore, adding new treatment categories as they emerge, and building out the practitioner-credentials layer.',
+  },
+  {
+    title: 'Broader customers',
+    body: 'Scaling across all six industries we serve, starting from our core in pharma and injectables, into devices, skincare, distributors, training, and investors.',
+  },
+  {
+    title: 'Native integrations',
+    body: 'Shipping production-ready Veeva CRM, Salesforce, and PV case-management integrations, so AestheticIQ becomes part of the commercial infrastructure.',
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description="AestheticIQ is a UK-based intelligence platform for the companies that sell into the aesthetic ecosystem. We exist because nobody else had built it."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'About' },
+    ]}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 1 - HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="ABOUT AESTHETICIQ"
+    title='We built the intelligence platform <em>the UK aesthetic market needed.</em>'
+    subtitle="AestheticIQ is a UK-based intelligence platform for the companies that sell into the aesthetic ecosystem: pharma, medical devices, professional skincare, distributors, training providers, and investors. We exist because nobody else had built it."
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 - THESIS                                    */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-tight">
+      <div class="eyebrow mb-4">THE THESIS</div>
+      <h2 class="display-title mb-8">Why now.</h2>
+
+      <div class="max-w-[780px]">
+        <p class="font-serif text-3xl text-navy-900 leading-snug tracking-tight mb-8">
+          The UK aesthetic market is a <span class="text-cyan-500">£3 billion commercial channel</span> hiding in plain sight. 15,000 clinics. 25,000 practitioners. Fragmented ownership. No consolidated source of truth. No purpose-built data infrastructure. No serious intelligence platform designed for the companies that actually sell into it.
+        </p>
+
+        <p class="text-[17px] text-navy-900 leading-relaxed mb-6">
+          Generalist healthcare data providers have always treated aesthetics as a rounding error. IQVIA OneKey, designed for GPs and hospitals, barely captures the channel. CQC, Save Face, JCCP: each capture a slice. Booking platforms are consumer-facing. Google Maps is a directory. Nobody had built the thing that was needed.
+        </p>
+
+        <p class="text-[17px] text-navy-900 leading-relaxed mb-6">
+          Meanwhile the UK sector is becoming more important, not less. The Health and Care Act 2022 will introduce licensing for non-surgical cosmetic procedures by 2027. Injectables, devices, and cosmeceutical skincare are all experiencing structural growth. And the companies selling into this space, from multinational pharma to independent training providers, need the same quality of commercial intelligence they have for every other healthcare channel.
+        </p>
+
+        <p class="text-[17px] text-navy-900 leading-relaxed font-medium">
+          AestheticIQ was built to fill that gap. Not as a generalist database with an aesthetic section, but as a UK-aesthetic-native platform designed specifically for how this market works, the buyers who sell into it, and the regulatory framework that is reshaping it.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 - WHAT WE'VE BUILT (dark navy)              */}
+  {/* ==================================================== */}
+  <section class="section-dark">
+    <div class="container-site relative z-10">
+      <div class="max-w-[720px] mb-10">
+        <div class="eyebrow mb-4">WHAT WE'VE BUILT</div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter text-white mb-4">
+          The UK's deepest aesthetic clinic intelligence asset.
+        </h2>
+        <p class="text-base text-white/68 leading-relaxed">
+          Built from the ground up, continuously refreshed, and validated directly by clinic owners.
+          The dataset behind every AestheticIQ product.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {capStats.map((stat) => (
+          <div class="bg-white/[0.03] border border-white/10 rounded-card p-6">
+            <div class="font-serif text-4xl text-cyan-500 leading-none mb-2">{stat.num}</div>
+            <h4 class="text-[13px] font-medium text-white mb-1">{stat.title}</h4>
+            <p class="text-[12px] text-white/65 leading-relaxed">{stat.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 4 - PRINCIPLES                                */}
+  {/* ==================================================== */}
+  <section class="section-alt">
+    <div class="container-site">
+      <SectionHeader
+        eyebrow="HOW WE WORK"
+        title="Four principles."
+        subtitle="The non-negotiables that shape every decision, every data source, every customer engagement."
+        centered
+      />
+
+      <div class="grid md:grid-cols-2 gap-5">
+        {principles.map((p) => (
+          <div class="bg-white border border-slate-200 rounded-card p-7">
+            <div class="font-serif text-4xl text-cyan-500 leading-none mb-3 tracking-tight">{p.num}</div>
+            <h3 class="font-serif text-xl text-navy-900 mb-3 leading-tight">{p.title}</h3>
+            <p class="text-[13.5px] text-slate-600 leading-relaxed">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 5 - TEAM                                      */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-16 items-start">
+        <div>
+          <div class="eyebrow mb-4">THE TEAM</div>
+          <h2 class="display-title mb-5">Specialist by design.</h2>
+          <p class="text-[14.5px] text-slate-600 leading-relaxed mb-5">
+            AestheticIQ operates as a specialist intelligence company, small by design, deep by
+            discipline. Our core team handles platform development, data operations, customer
+            engagement, and pharmacovigilance analysis. We extend reach through a network of
+            advisors and delivery partners in marketing services, clinical validation, and
+            commercial consulting.
+          </p>
+          <p class="text-[14.5px] text-slate-600 leading-relaxed mb-5">
+            Our founder spent three years at <strong class="text-navy-900 font-medium">IQVIA</strong> working
+            on OneKey, the industry-standard healthcare professional database, giving AestheticIQ
+            direct insight into how pharmaceutical companies procure, integrate, and operationalise
+            reference data. That experience shapes how we build, but it is the specialism that defines
+            us: <strong class="text-navy-900 font-medium">we do one thing, and we do it deeper than anyone else</strong>.
+          </p>
+          <p class="text-[14.5px] text-slate-600 leading-relaxed">
+            As we scale post-seed, the team expands in three directions: a dedicated commercial
+            and account-management function, a data-engineering team to support API and integration
+            customers, and a pharmacovigilance specialist to lead the Compliance and PV product.
+          </p>
+        </div>
+
+        {/* Company structure card */}
+        <div class="bg-white border border-slate-200 rounded-card p-7">
+          <div class="text-[10px] tracking-[1.5px] uppercase text-slate-500 font-medium mb-5">
+            COMPANY STRUCTURE
+          </div>
+
+          {teamRoles.map((role, idx) => (
+            <div
+              class="flex gap-3 items-start py-4"
+              style={idx < teamRoles.length - 1 ? 'border-bottom: 0.5px solid #f1f5f9;' : ''}
+            >
+              <div
+                class="w-10 h-10 rounded-lg flex items-center justify-center text-base font-semibold flex-shrink-0"
+                style="background: rgba(0,180,216,0.08); color: #00b4d8;"
+              >
+                {role.icon}
+              </div>
+              <div class="flex-1">
+                <div class="text-[13.5px] font-medium text-navy-900 mb-1">{role.name}</div>
+                <div class="text-[12px] text-slate-500 leading-relaxed">{role.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 6 - CLINICSCORE                               */}
+  {/* ==================================================== */}
+  <section class="section-alt">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-16 items-center">
+        <div>
+          <div class="eyebrow mb-4">OUR CONSUMER BRAND</div>
+          <h2 class="display-title mb-5">ClinicScore · the free clinic intelligence tool.</h2>
+          <p class="text-base text-slate-600 leading-relaxed mb-5">
+            AestheticIQ operates a free consumer-facing brand called <strong class="text-navy-900 font-medium">ClinicScore</strong>:
+            a personalised intelligence report for UK clinic owners. It is modelled loosely on the
+            ClearScore / Experian approach. Clinics receive a benchmarking report of their local
+            competitive position, digital presence, pricing, and regulatory readiness, for free.
+          </p>
+          <p class="text-base text-slate-600 leading-relaxed mb-5">
+            In exchange, clinic owners verify their own data, update treatment information, and confirm
+            practitioner details. This closes the loop that pure web scraping cannot, converting
+            clinic-owner intent into a primary-research data flywheel that strengthens the AestheticIQ
+            dataset used by our B2B customers.
+          </p>
+          <p class="text-[13.5px] text-slate-500 leading-relaxed">
+            ClinicScore and AestheticIQ are operated as separate brands with separate domains. The B2B
+            platform is available at aestheticiq.co.uk; the clinic-facing tool at clinicscore.co.uk.
+          </p>
+        </div>
+
+        {/* ClinicScore visual card */}
+        <div class="rounded-2xl p-8 relative overflow-hidden" style="background: linear-gradient(135deg, #1a202c, #2d3748);">
+          <div class="absolute -top-12 -right-8 w-56 h-56 rounded-full" style="background: rgba(193,91,55,0.1);"></div>
+          <div class="relative z-10">
+            <div class="font-serif text-2xl text-white mb-1">
+              Clinic<span style="color: #c15b37;">Score</span>
+            </div>
+            <div class="text-[12px] uppercase tracking-[1.5px] mb-6" style="color: rgba(255,255,255,0.55);">
+              Free · for UK aesthetic clinics
+            </div>
+
+            <div class="flex flex-col gap-2 mb-5">
+              {csFeatures.map((feature) => (
+                <div class="flex gap-2.5 items-start text-[12.5px] leading-relaxed" style="color: rgba(255,255,255,0.85);">
+                  <span class="flex-shrink-0" style="color: #c15b37;">→</span>
+                  {feature}
+                </div>
+              ))}
+            </div>
+
+            <a
+              href="https://clinicscore.co.uk"
+              class="inline-block px-4 py-2 rounded-pill text-[12px] font-medium"
+              style="background: rgba(193,91,55,0.15); color: #e89272; border: 0.5px solid rgba(193,91,55,0.35);"
+            >
+              Visit clinicscore.co.uk →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 7 - LOOKING AHEAD                             */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-tight">
+      <div class="eyebrow mb-4">WHERE WE'RE HEADED</div>
+      <h2 class="display-title mb-8">Looking ahead.</h2>
+
+      <div class="max-w-[720px] mb-10">
+        <p class="font-serif text-2xl text-navy-900 leading-snug tracking-tight mb-6">
+          The UK aesthetic market will consolidate, professionalise, and regulate over the next
+          three years, and the companies selling into it will need better intelligence, not less of it.
+        </p>
+        <p class="text-base text-slate-600 leading-relaxed">
+          Our priorities over the coming 24 months centre on <strong class="text-navy-900 font-medium">deepening the dataset</strong>,
+          <strong class="text-navy-900 font-medium">broadening the customer base</strong>, and
+          <strong class="text-navy-900 font-medium">building the integrations</strong> that make AestheticIQ a native
+          part of our customers' commercial and regulatory workflow.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        {roadmap.map((item) => (
+          <div class="p-6 bg-white rounded-r-card" style="border-left: 2px solid #00b4d8;">
+            <h4 class="text-[12.5px] font-medium text-navy-900 mb-2">{item.title}</h4>
+            <p class="text-[12.5px] text-slate-500 leading-relaxed">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 8 - FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          GET IN TOUCH
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          We'd like to hear what you're working on.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          Whether you're scoping a commercial project, reviewing vendors, researching the UK
+          aesthetic market, or thinking about investing in the space, we're happy to talk.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Book a demo →</a>
+          <a href="/contact/" class="btn-secondary-light">Contact us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

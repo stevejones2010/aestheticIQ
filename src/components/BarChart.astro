@@ -1,0 +1,71 @@
+---
+/**
+ * BarChart — proportional horizontal bar chart for visual data displays.
+ *
+ * Why this exists: Tailwind's JIT compiler sometimes misses dynamically-rendered
+ * size and colour classes (h-2, bg-cyan-500, h-full) when they appear inside .map()
+ * loops. Using inline styles for the bar geometry bypasses Tailwind entirely,
+ * making bars 100% reliable.
+ *
+ * Use this for any "category — bar — value" pattern on industry or solution pages.
+ *
+ * Example usage:
+ *   <BarChart
+ *     items={[
+ *       { label: 'Botox', value: 42, valueLabel: '42%', highlight: true },
+ *       { label: 'Azzalure', value: 28, valueLabel: '28%' },
+ *     ]}
+ *     scale={2}  // multiplier — 42% becomes 84% width
+ *   />
+ */
+
+export interface BarItem {
+  label: string;
+  value: number;          // numeric value driving the bar width
+  valueLabel: string;     // displayed value e.g. "42%" or "1240 HCPs"
+  highlight?: boolean;    // makes this row use cyan instead of slate
+}
+
+export interface Props {
+  items: BarItem[];
+  scale?: number;         // multiplier on value to determine bar width % (default 1)
+  labelWidth?: string;    // CSS width for the label column (default 100px)
+  valueWidth?: string;    // CSS width for the value column (default 60px)
+}
+
+const {
+  items,
+  scale = 1,
+  labelWidth = '100px',
+  valueWidth = '60px',
+} = Astro.props;
+
+const gridCols = `${labelWidth}_1fr_${valueWidth}`;
+---
+
+<div class="space-y-2.5">
+  {items.map((item) => (
+    <div
+      class="grid gap-3 items-center text-[11px]"
+      style={`grid-template-columns: ${labelWidth} 1fr ${valueWidth};`}
+    >
+      <div class:list={[
+        'font-medium',
+        item.highlight ? 'text-cyan-700' : 'text-navy-900',
+      ]}>
+        {item.label}
+      </div>
+
+      {/* Bar track and fill — inline styles bypass Tailwind */}
+      <div style="height: 8px; background: #f1f5f9; border-radius: 3px; overflow: hidden;">
+        <div
+          style={`height: 100%; background: ${item.highlight ? '#00b4d8' : '#94a3b8'}; border-radius: 3px; width: ${Math.min(item.value * scale, 100)}%;`}
+        />
+      </div>
+
+      <div class="text-slate-600 text-right text-[10.5px] font-medium">
+        {item.valueLabel}
+      </div>
+    </div>
+  ))}
+</div>

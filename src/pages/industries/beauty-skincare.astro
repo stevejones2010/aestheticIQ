@@ -1,0 +1,337 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+import RoleSection from '@components/RoleSection.astro';
+import RelatedLinks from '@components/RelatedLinks.astro';
+import ScoredList from '@components/ScoredList.astro';
+import BarChart from '@components/BarChart.astro';
+import RecordList from '@components/RecordList.astro';
+
+// =====================================================
+// DOMAIN-FLUENCY CARDS - section 2
+// =====================================================
+const domainCards = [
+  {
+    label: 'ACCOUNT TERMS',
+    title: 'Account & territory',
+    body: 'Clinic-channel account management, <strong>regional reps</strong>, visual merchandising visits, training-linked stocking.',
+  },
+  {
+    label: 'BRAND TERMS',
+    title: 'Brand visibility',
+    body: 'Share of shelf, social media mentions, <strong>clinic endorsement</strong>, before/after content featuring brand, UGC tracking.',
+  },
+  {
+    label: 'COMMERCIAL TERMS',
+    title: 'Wholesale & partnerships',
+    body: 'Wholesale account activation, <strong>brand ambassador</strong> identification, clinic-partnership KPIs, retention tracking.',
+  },
+];
+
+// =====================================================
+// DATA STACK ROWS - section 3
+// =====================================================
+const stackRows = [
+  {
+    type: 'generalist',
+    letter: 'R',
+    name: 'Retail analytics',
+    sub: 'Nielsen, Circana: scan data from retail chains',
+  },
+  {
+    type: 'generalist',
+    letter: 'W',
+    name: 'Wholesale / ERP',
+    sub: 'Your active B2B customer orders and shipments',
+  },
+  {
+    type: 'specialist',
+    letter: 'A',
+    name: 'AestheticIQ, clinic-channel layer',
+    sub: 'Visibility, brand mention & stocking across 15,000 UK clinics',
+  },
+];
+---
+
+<BaseLayout
+  title="Professional Beauty & Skincare"
+  description="Clinic-channel brand intelligence for professional skincare brands. Track brand visibility, competitor share, and new partner opportunities across 15,000 UK aesthetic clinics."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Industries', href: '/industries/' },
+      { label: 'Professional Beauty & Skincare' },
+    ]}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 1 - HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="FOR PROFESSIONAL BEAUTY & SKINCARE"
+    title="Your brand lives <em>on clinic shelves and on Instagram</em>, but nobody tracks that."
+    subtitle="Retail data tracks supermarket scans. Pharma data tracks prescriptions. Neither captures the UK's 15,000 aesthetic clinics where cosmeceutical skincare actually retails. AestheticIQ tracks which clinics stock your brand, which stock competitors, and how that changes week by week."
+    primaryCta={{ label: 'Book a demo →', href: '/contact/' }}
+    secondaryCta={{ label: 'See a sample dataset', href: '/contact/' }}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 - DOMAIN FLUENCY PROOF                      */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-tight">
+      <div class="eyebrow mb-4">WE SPEAK YOUR LANGUAGE</div>
+      <h2 class="font-serif text-3xl md:text-4xl text-navy-900 leading-tight tracking-tighter mb-12">
+        Professional skincare is a <em class="text-cyan-500 not-italic">clinic-channel business</em>.
+        Retail brand tracking doesn't work. Pharma sales reporting doesn't apply. You need intelligence
+        built for how this market actually operates.
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-5">
+        {domainCards.map((card) => (
+          <div class="bg-slate-50 border border-slate-200 rounded-card p-6">
+            <div class="text-[10px] tracking-eyebrow uppercase text-slate-500 font-medium mb-2.5">
+              {card.label}
+            </div>
+            <h4 class="text-[13px] text-navy-900 font-medium mb-2">{card.title}</h4>
+            <p class="text-[12px] text-slate-600 leading-relaxed" set:html={card.body} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 - STACK POSITIONING                         */}
+  {/* ==================================================== */}
+  <section class="section-alt border-b border-slate-200">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-[1.1fr_1fr] gap-14 items-center">
+        <div>
+          <div class="eyebrow mb-4">WHERE WE FIT</div>
+          <h2 class="display-title mb-5">The clinic-channel intelligence retail analytics can't give you.</h2>
+          <p class="text-lg text-slate-600 leading-relaxed mb-4">
+            Your retail data tells you what's selling through Boots and Sephora. Your wholesale system
+            tells you which accounts have ordered. AestheticIQ tells you something neither can:
+            <strong class="text-navy-900 font-medium">which of the 15,000 UK aesthetic clinics stock your
+            brand, or a competitor's, and how prominently they display it.</strong>
+          </p>
+          <p class="text-lg text-slate-600 leading-relaxed">
+            Salesforce or HubSpot integration. Same account-record structure. Imports straight into your
+            commercial workflow.
+          </p>
+        </div>
+
+        {/* Stack visual */}
+        <div class="bg-white border border-slate-200 rounded-card p-6 shadow-card-strong">
+          <div class="text-[11px] uppercase tracking-eyebrow text-slate-500 font-medium mb-4">
+            A typical UK skincare data stack
+          </div>
+
+          {stackRows.map((row) => (
+            <div
+              class:list={[
+                'flex items-center gap-3 px-4 py-3.5 rounded-lg mb-2',
+                row.type === 'specialist'
+                  ? 'bg-cyan-500/[0.06] border border-cyan-500/30'
+                  : 'bg-slate-100 border border-slate-200',
+              ]}
+            >
+              <div
+                class:list={[
+                  'w-8 h-8 rounded-lg flex items-center justify-center text-sm font-semibold flex-shrink-0',
+                  row.type === 'specialist'
+                    ? 'bg-cyan-500 text-white'
+                    : 'bg-slate-300 text-slate-600',
+                ]}
+              >
+                {row.letter}
+              </div>
+              <div class="flex-1">
+                <div class="text-[13px] font-medium text-navy-900 mb-0.5">{row.name}</div>
+                <div class="text-[11px] text-slate-500 leading-snug">{row.sub}</div>
+              </div>
+            </div>
+          ))}
+
+          <div class="text-[11.5px] text-slate-500 text-center mt-4 italic leading-relaxed">
+            The missing view: who's actually stocking your brand in the clinic channel.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 4 - ROLES INTRO                               */}
+  {/* ==================================================== */}
+  <section class="pt-16 pb-6">
+    <div class="container-tight text-center">
+      <div class="eyebrow mb-4">HOW TEAMS USE IT</div>
+      <h2 class="display-title mb-5">Three teams. Three use cases.</h2>
+      <p class="text-lg text-slate-600 leading-relaxed">
+        Specific commercial, brand, and business-development challenges in cosmeceutical clinic retail.
+      </p>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* ROLE 01 - REGIONAL SALES                              */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Role 01 · Regional Sales"
+    title="For regional sales teams and account managers."
+    description="Your reps cover wide UK territories with hundreds of clinic accounts: active, lapsed, and never-contacted. Knowing which clinics are worth visiting is 80% of the job. AestheticIQ scores every UK clinic for brand fit and flags which of your active accounts show signs of brand defection before sales data catches it."
+    questions={[
+      "Which clinics in my rep's territory are new to professional skincare?",
+      'Which active accounts have mentioned a competitor brand in the last 60 days?',
+      'Which non-customer clinics fit our "premium independent" profile?',
+      'Which accounts are ripe for brand-ambassador or training upgrade conversations?',
+      'Where should we expand regional coverage based on clinic density?',
+    ]}
+    outcome='Shifts rep time from cold-list calling to warm, data-qualified visits. <strong>Early signals on brand defection before they show up in order data.</strong>'
+  >
+    <div>
+      <div class="flex flex-wrap gap-1.5 mb-3">
+        <span class="text-[10px] px-3 py-1 rounded-pill border font-medium" style="background: rgba(0,180,216,0.08); color: #0284a8; border-color: rgba(0,180,216,0.25);">Premium profile</span>
+        <span class="text-[10px] px-3 py-1 rounded-pill border font-medium" style="background: rgba(0,180,216,0.08); color: #0284a8; border-color: rgba(0,180,216,0.25);">4+ treatments</span>
+        <span class="text-[10px] px-3 py-1 rounded-pill border font-medium" style="background: rgba(0,180,216,0.08); color: #0284a8; border-color: rgba(0,180,216,0.25);">No competitor</span>
+      </div>
+      <ScoredList
+        header="Prospects · SE Region"
+        subheader="183 clinics"
+        rows={[
+          { name: 'The Bloom Clinic', details: 'London E14', score: 'A+', scoreLabel: '4.8 ★', scoreTone: 'green' },
+          { name: 'Skinoza Clinic', details: 'Greenwich SE10', score: 'A+', scoreLabel: '4.9 ★', scoreTone: 'green' },
+          { name: 'Nova Aesthetic Clinic', details: 'Islington N1', score: 'A', scoreLabel: '4.6 ★', scoreTone: 'green' },
+          { name: 'InnovaSkin', details: 'Canary Wharf E14', score: 'B+', scoreLabel: '4.5 ★', scoreTone: 'amber' },
+          { name: 'Moda Donna Beauty', details: 'Canary Wharf E14', score: 'B+', scoreLabel: '4.8 ★', scoreTone: 'amber' },
+        ]}
+        footer="Stylised example · Salesforce / HubSpot delivery"
+      />
+    </div>
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* ROLE 02 - BRAND MARKETING                             */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Role 02 · Brand Marketing"
+    title="For brand, category, and marketing teams."
+    description="Clinic-channel brand visibility is the leading indicator for everything else: social following, wholesale orders, training applications. AestheticIQ gives your brand team continuous tracking of how your brand is performing on clinic websites, Instagram feeds, and before/after content, so you see share shift early and can respond before it shows up in sales numbers."
+    questions={[
+      'How does our clinic-channel visibility compare to SkinCeuticals, ZO, and AlumierMD?',
+      'Which clinics are our strongest brand advocates on Instagram?',
+      'Which hero products drive the most clinic-website mentions?',
+      'Has our campaign translated into clinic-level brand mention uplift?',
+      'What message frames are working for our competitors in UGC?',
+    ]}
+    outcome='Replaces ad-hoc brand tracking studies (typically <strong>£20–35k per wave</strong>) with continuous clinic-channel visibility tracking.'
+    reverse={true}
+    alt={true}
+  >
+    <div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+        <div class="text-xs font-medium text-navy-900">Clinic-channel brand visibility · UK</div>
+        <div class="text-[10px] text-slate-400">Q1 2026</div>
+      </div>
+
+      <BarChart
+        items={[
+          { label: 'Your brand', value: 24, valueLabel: '24%', highlight: true },
+          { label: 'SkinCeuticals', value: 34, valueLabel: '34%' },
+          { label: 'ZO Skin Health', value: 21, valueLabel: '21%' },
+          { label: 'AlumierMD', value: 14, valueLabel: '14%' },
+          { label: 'Mesoestetic', value: 7, valueLabel: '7%' },
+        ]}
+        scale={2}
+        labelWidth="95px"
+      />
+
+      <div class="mt-4 pt-3 border-t border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+        Share of clinic websites that mention the brand prominently. Also measured: Instagram mentions,
+        before/after content featuring brand, training-certification signals.
+      </div>
+
+      <div class="mt-3 pt-3 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+        Stylised example · continuous web + social tracking
+      </div>
+    </div>
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* ROLE 03 - BUSINESS DEVELOPMENT                        */}
+  {/* ==================================================== */}
+  <RoleSection
+    badge="Role 03 · Business Development"
+    title="For BD, partnerships, and new-market expansion."
+    description="Clinic partnerships are won by identifying rising clinics before competitors do: new openings, chains expanding into new regions, clinics moving upmarket. AestheticIQ surfaces those signals continuously, so your BD team closes flagship partnerships with clinics before they've been scouted by every brand in the category."
+    questions={[
+      'Which new clinics opened in the last 90 days that match our brand-ambassador profile?',
+      'Which independent clinics have expanded into multi-site operations recently?',
+      'Which clinics are moving from budget to premium positioning, signal they\'re open to new brands?',
+      'Which UK regions have underserved clinic density relative to their demographic profile?',
+    ]}
+    outcome="First-mover advantage on rising clinics. Data-driven expansion planning that goes beyond gut feel."
+  >
+    <div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+        <div class="text-xs font-medium text-navy-900">New partner candidates · Q1 2026</div>
+        <div class="text-[10px] text-slate-400">24 clinics</div>
+      </div>
+
+      <RecordList
+        items={[
+          { severity: 'good', icon: '★', title: 'The Bloom Clinic · London E14', sub: 'Opened Nov 2025 · premium positioning · GMC prescriber', time: 'New' },
+          { severity: 'good', icon: '+', title: 'Skinoza Clinic · 2nd site Glasgow', sub: 'Multi-site expansion · training programme active', time: '2w' },
+          { severity: 'warn', icon: '↑', title: 'Nova Aesthetic Clinic · repositioning', sub: 'Moved from mid-market to premium · dropped 2 budget brands', time: '1m' },
+          { severity: 'good', icon: '★', title: 'InnovaSkin · Manchester launch', sub: 'Founded by KOL practitioner · building brand partnerships', time: '3w' },
+        ]}
+      />
+
+      <div class="mt-4 pt-3 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+        Stylised example · continuous discovery monitoring
+      </div>
+    </div>
+  </RoleSection>
+
+  {/* ==================================================== */}
+  {/* SECTION 5 - FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          GET STARTED
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          Show us your brand. We'll show you the clinic channel.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          20-minute demo using real data from your brand's UK clinic footprint, vs. your top three competitors.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Book a demo →</a>
+          <a href="/contact/" class="btn-secondary-light">Download sample dataset</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedLinks
+    label="OTHER INDUSTRIES WE SERVE"
+    links={[
+      { label: 'Pharma & Injectables', href: '/industries/pharma/' },
+      { label: 'Medical Devices', href: '/industries/medical-devices/' },
+      { label: 'Distributors', href: '/industries/distributors/' },
+      { label: 'Training Providers', href: '/industries/training/' },
+      { label: 'Investors', href: '/industries/investors/' },
+    ]}
+  />
+</BaseLayout>

@@ -1,0 +1,101 @@
+---
+/**
+ * ScoredList — ranked records with score badges.
+ *
+ * Used for: Investors (M&A targets, portfolio benchmarking), Devices (lead
+ * scoring), any "list of named entities with a fit score or rating" display.
+ *
+ * Each row has:
+ *   - Name (bold)
+ *   - Details line below (sites, revenue, region etc.)
+ *   - Score on the right: large value + small label (Fit / Score / Status)
+ *
+ * Example usage:
+ *   <ScoredList
+ *     header="Acquisition targets · SE platform"
+ *     subheader="Filter: 3-10 sites · £3-8m est."
+ *     rows={[
+ *       { name: 'Skinoza Group', details: '5 sites · London + SE · est. £6.2m · CH 11234567', score: 'A+', scoreLabel: 'Fit' },
+ *       { name: 'InnovaSkin Holdings', details: '4 sites · SE · est. £4.8m', score: 'A', scoreLabel: 'Fit' },
+ *     ]}
+ *     footer="Stylised example · revenue estimates from Companies House"
+ *   />
+ *
+ * For portfolio benchmarking with arrows, use score values like '↑', '↓', '=' and scoreLabel like 'Over', 'Under', 'At'.
+ */
+
+export interface ScoredRow {
+  name: string;
+  details?: string;
+  score: string;            // e.g. 'A+', '↑', '94'
+  scoreLabel?: string;      // e.g. 'Fit', 'Over', 'Score'
+  scoreTone?: 'cyan' | 'green' | 'amber' | 'red'; // default 'cyan'
+}
+
+export interface Props {
+  header: string;
+  subheader?: string;
+  rows: ScoredRow[];
+  footer?: string;
+}
+
+const { header, subheader, rows, footer } = Astro.props;
+
+// Score colour palette - inline to bypass Tailwind JIT
+const scoreColors: Record<string, string> = {
+  cyan: '#00b4d8',
+  green: '#15803d',
+  amber: '#854d0e',
+  red: '#b91c1c',
+};
+---
+
+<div class="bg-white border border-slate-200 rounded-card p-5 shadow-card-strong">
+  {/* Header */}
+  <div class="flex justify-between items-center pb-3 border-b border-slate-200 mb-4">
+    <div class="text-[12px] font-medium text-navy-900">{header}</div>
+    {subheader && (
+      <div class="text-[10px] text-slate-400">{subheader}</div>
+    )}
+  </div>
+
+  {/* Rows */}
+  {rows.map((row, idx) => (
+    <div
+      class="grid items-center py-3"
+      style={`grid-template-columns: 1fr 80px; gap: 10px; ${idx < rows.length - 1 ? 'border-bottom: 0.5px solid #f1f5f9;' : ''}`}
+    >
+      <div>
+        <div class="text-[11.5px] text-navy-900 font-medium">{row.name}</div>
+        {row.details && (
+          <div class="text-slate-500 mt-0.5" style="font-size: 10.5px;">
+            {row.details}
+          </div>
+        )}
+      </div>
+      <div class="text-right">
+        <div
+          class="font-serif leading-none"
+          style={`font-size: 1.1rem; color: ${scoreColors[row.scoreTone || 'cyan']};`}
+        >
+          {row.score}
+        </div>
+        {row.scoreLabel && (
+          <div
+            class="text-slate-400 uppercase mt-0.5"
+            style="font-size: 9px; letter-spacing: 0.5px;"
+          >
+            {row.scoreLabel}
+          </div>
+        )}
+      </div>
+    </div>
+  ))}
+
+  {/* Footer */}
+  {footer && (
+    <div class="pt-3 mt-2 border-t border-slate-200 text-[10px] text-slate-400 text-center leading-relaxed italic">
+      {footer}
+    </div>
+  )}
+</div>

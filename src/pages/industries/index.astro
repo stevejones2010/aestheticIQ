@@ -1,0 +1,159 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BreadcrumbBar from '@components/BreadcrumbBar.astro';
+import Hero from '@components/Hero.astro';
+
+// =====================================================
+// INDUSTRY CARDS - all 6 industries
+// =====================================================
+const industries = [
+  {
+    icon: '💉',
+    badge: 'Flagship',
+    badgeTone: 'hot',
+    title: 'Pharma & Injectables',
+    description: 'Sales targeting, brand visibility, prescriber verification, and pharmacovigilance for botulinum toxin, dermal fillers, and biostimulators.',
+    question: "Which clinics in my territory use my competitor's toxin brand?",
+    customers: 'AbbVie/Allergan, Galderma, Merz, Ipsen, Evolus, Teoxane, IBSA',
+    href: '/industries/pharma/',
+  },
+  {
+    icon: '⚡',
+    title: 'Medical Devices',
+    description: 'Geographic targeting and clinic-type intelligence for capital equipment: lasers, IPL, RF, HIFU, and body contouring platforms.',
+    question: 'Which clinics in the South East have no RF device yet but three injectors on staff?',
+    customers: 'Cynosure, Candela, Sciton, Alma, BTL, Fotona, Sofwave, Lumenis, Hydrafacial',
+    href: '/industries/medical-devices/',
+  },
+  {
+    icon: '🧴',
+    badge: 'Fast-growing',
+    badgeTone: 'growing',
+    title: 'Professional Beauty & Skincare',
+    description: 'Territory planning, account prioritisation, and competitor brand tracking for cosmeceutical skincare sold through clinics.',
+    question: "Which clinics are retailing a competitor's professional skincare but not ours?",
+    customers: 'Obagi, ZO Skin Health, SkinCeuticals, AlumierMD, Mesoestetic, Medik8',
+    href: '/industries/beauty-skincare/',
+  },
+  {
+    icon: '📦',
+    title: 'Distributors & Specialist Pharmacies',
+    description: 'New-clinic discovery, prescriber verification, and account-level territory intelligence for wholesale and prescription fulfilment.',
+    question: 'Which new clinics opened in Scotland this quarter, and do they have a prescriber?',
+    customers: 'Healthxchange, Wigmore Medical, Fox Pharma, Med-Fx, AesthetiCare',
+    href: '/industries/distributors/',
+  },
+  {
+    icon: '🎓',
+    title: 'Training Providers',
+    description: 'Audience identification, practitioner qualification tracking, and regional demand mapping for accredited aesthetic training.',
+    question: 'Which new clinics have practitioners approaching licence-renewal dates in my region?',
+    customers: 'Harley Academy, Derma Medical, Acquisition Aesthetics, Cosmetic Courses, Interface Aesthetics',
+    href: '/industries/training/',
+  },
+  {
+    icon: '📈',
+    title: 'Investors & Corporate Finance',
+    description: 'Market sizing, white-space mapping, buy-and-build target lists, and portfolio monitoring for PE, VC, M&A and healthcare lenders.',
+    question: 'Which UK regions have the most fragmented clinic ownership?',
+    customers: 'PE/VC funds, investment banks, CF boutiques, healthcare lenders',
+    href: '/industries/investors/',
+  },
+];
+---
+
+<BaseLayout
+  title="Industries"
+  description="AestheticIQ's clinic intelligence powers commercial, regulatory, and investment decisions across every industry that sells into the UK aesthetic ecosystem."
+>
+  <BreadcrumbBar
+    items={[
+      { label: 'Home', href: '/' },
+      { label: 'Industries' },
+    ]}
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 1 - HERO                                      */}
+  {/* ==================================================== */}
+  <Hero
+    eyebrow="INDUSTRIES"
+    title="Six industries. <em>One dataset.</em> Built aesthetic-native."
+    subtitle="AestheticIQ's clinic intelligence powers commercial, regulatory, and investment decisions across every industry that sells into the UK aesthetic ecosystem. Select yours."
+  />
+
+  {/* ==================================================== */}
+  {/* SECTION 2 - SIX INDUSTRY CARDS                        */}
+  {/* ==================================================== */}
+  <section class="section">
+    <div class="container-site">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {industries.map((ind) => (
+          <a
+            href={ind.href}
+            class="card-base card-hover block p-7 cursor-pointer h-full flex flex-col relative"
+          >
+            {ind.badge && (
+              <span
+                class="absolute top-4 right-4 text-[9px] uppercase tracking-wider font-medium px-2.5 py-1 rounded-pill"
+                style={ind.badgeTone === 'hot'
+                  ? 'background: rgba(0,180,216,0.1); color: #0284a8;'
+                  : 'background: rgba(34,197,94,0.1); color: #15803d;'}
+              >
+                {ind.badge}
+              </span>
+            )}
+
+            <div class="text-2xl mb-3">{ind.icon}</div>
+
+            <h3 class="font-serif text-xl text-navy-900 mb-3 leading-tight">{ind.title}</h3>
+
+            <p class="text-[13px] text-slate-600 leading-relaxed mb-4">{ind.description}</p>
+
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg mb-4">
+              <div class="text-[10px] text-slate-400 uppercase tracking-wider font-medium mb-1">Sample question</div>
+              <div class="text-[12px] text-navy-900 leading-relaxed italic">{ind.question}</div>
+            </div>
+
+            <div class="mt-auto pt-4 border-t border-slate-100">
+              <div class="text-[9px] uppercase tracking-wider text-slate-400 font-medium mb-1">TYPICAL CUSTOMER</div>
+              <div class="text-[11px] text-slate-500 leading-relaxed">{ind.customers}</div>
+            </div>
+
+            <div class="mt-4 text-[12.5px] text-cyan-500 font-medium">
+              Explore →
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ==================================================== */}
+  {/* SECTION 3 - FINAL CTA                                 */}
+  {/* ==================================================== */}
+  <section class="bg-navy-900 text-white py-20 relative overflow-hidden">
+    <div
+      class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full"
+      style="background: rgba(0,180,216,0.05);"
+    />
+    <div class="container-site relative z-10">
+      <div class="text-center max-w-[680px] mx-auto">
+        <div class="text-[10px] tracking-eyebrow uppercase text-cyan-500 font-medium mb-4">
+          NOT SURE WHERE YOU FIT?
+        </div>
+        <h2 class="font-serif text-4xl leading-tight tracking-tighter mb-4">
+          Tell us your category. We'll show you what we cover.
+        </h2>
+        <p class="text-[15px] text-white/70 leading-relaxed mb-8">
+          If your company sells into aesthetic clinics in the UK, we probably have intelligence that
+          matters to you. A 20-minute call is the fastest way to find out.
+        </p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="/contact/" class="btn-primary">Book a demo →</a>
+          <a href="/contact/" class="btn-secondary-light">Contact us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
