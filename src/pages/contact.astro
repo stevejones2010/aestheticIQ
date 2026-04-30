@@ -136,7 +136,23 @@ const dataProtectionRows = [
           class="absolute -top-20 -right-16 w-[280px] h-[280px] rounded-full"
           style="background: rgba(0,180,216,0.06);"
         />
-        <div class="demo-form-grid relative z-10 gap-12 items-start">
+        <form
+          id="demo-form"
+          action="https://api.web3forms.com/submit"
+          method="POST"
+          class="demo-form-grid relative z-10 gap-12 items-start"
+        >
+          {/* ── Web3Forms hidden fields ── */}
+          {/* TODO: Replace with your real access key from https://web3forms.com
+               1. Go to web3forms.com
+               2. Enter steven.jones@aestheticiq.co.uk
+               3. Verify your email
+               4. Copy the access key and paste it below */}
+          <input type="hidden" name="access_key" value="ec885cdb-dfd6-419c-8c09-5f41ff62ef98" />
+          <input type="hidden" name="subject" value="New demo request from AestheticIQ website" />
+          <input type="hidden" name="from_name" value="AestheticIQ Website" />
+          {/* Honeypot spam protection */}
+          <input type="checkbox" name="botcheck" class="hidden" style="display:none;" />
 
           {/* Left: intro */}
           <div>
@@ -167,6 +183,8 @@ const dataProtectionRows = [
               </label>
               <input
                 type="text"
+                name="name"
+                required
                 placeholder="Jane Smith"
                 class="w-full rounded-[10px] px-4 py-3 text-[13px] text-white font-sans placeholder:text-white/35"
                 style="background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.15);"
@@ -178,6 +196,8 @@ const dataProtectionRows = [
               </label>
               <input
                 type="email"
+                name="email"
+                required
                 placeholder="jane@example-company.com"
                 class="w-full rounded-[10px] px-4 py-3 text-[13px] text-white font-sans placeholder:text-white/35"
                 style="background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.15);"
@@ -189,6 +209,8 @@ const dataProtectionRows = [
               </label>
               <input
                 type="text"
+                name="company"
+                required
                 placeholder="Example Pharmaceuticals Ltd"
                 class="w-full rounded-[10px] px-4 py-3 text-[13px] text-white font-sans placeholder:text-white/35"
                 style="background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.15);"
@@ -199,6 +221,7 @@ const dataProtectionRows = [
                 Your role
               </label>
               <select
+                name="role"
                 class="w-full rounded-[10px] px-4 py-3 text-[13px] text-white font-sans appearance-none"
                 style="background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.15); background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(255,255,255,0.5)' stroke-width='1' fill='none'/%3E%3C/svg%3E&quot;); background-repeat: no-repeat; background-position: right 14px center;"
               >
@@ -212,6 +235,7 @@ const dataProtectionRows = [
                 What are you hoping to see?
               </label>
               <textarea
+                name="message"
                 placeholder="e.g. 'We're launching a new dermal filler in the UK and want to see coverage of London clinics offering injectables.'"
                 rows="3"
                 class="w-full rounded-[10px] px-4 py-3 text-[13px] text-white font-sans placeholder:text-white/35 resize-y"
@@ -219,16 +243,17 @@ const dataProtectionRows = [
               />
             </div>
             <button
-              type="button"
+              type="submit"
+              id="demo-submit"
               class="btn-primary mt-2"
             >
               Request demo
             </button>
-            <p class="text-[11px] text-white/40 leading-relaxed mt-3">
+            <p id="form-status" class="text-[11px] text-white/40 leading-relaxed mt-3">
               We typically respond within one working day. No marketing follow-up without consent.
             </p>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </section>
@@ -294,6 +319,42 @@ const dataProtectionRows = [
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  const form = document.getElementById('demo-form') as HTMLFormElement;
+  const btn = document.getElementById('demo-submit') as HTMLButtonElement;
+  const status = document.getElementById('form-status') as HTMLElement;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        status.textContent = 'Thank you. We will be in touch within one working day.';
+        status.style.color = '#34d399';
+        form.reset();
+      } else {
+        status.textContent = 'Something went wrong. Please email steven.jones@aestheticiq.co.uk directly.';
+        status.style.color = '#f87171';
+      }
+    } catch {
+      status.textContent = 'Network error. Please email steven.jones@aestheticiq.co.uk directly.';
+      status.style.color = '#f87171';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Request demo';
+    }
+  });
+</script>
 
 <style>
   /* Contact route cards: 4-col on desktop, 2-col tablet, 1-col mobile */
